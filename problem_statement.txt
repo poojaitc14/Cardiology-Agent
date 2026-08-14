@@ -1,0 +1,129 @@
+Cardiologist Clinical Patient Review & Decision-Support Agent
+
+Problem Statement
+
+Cardiologists need to review information from multiple sources when assessing a patient's cardiovascular condition. Relevant information such as patient history, medications, allergies, laboratory results, clinical guidelines, and drug information may be stored in different systems.
+This fragmented workflow can make it difficult to quickly obtain a complete, evidence-backed view of a patient's cardiovascular status.
+The proposed solution is a Cardiologist Clinical Patient Review & Decision-Support Agent that uses an AI agent to retrieve and synthesize information from three specialized tools:
+Primary user: Cardiologist
+
+Example workflow
+
+A cardiologist is reviewing a patient with a history of hypertension and heart disease.
+Instead of manually checking several sources, the cardiologist can ask:
+
+"Review patient P1005's cardiovascular history, current medications, recent laboratory results, and relevant cardiology guidelines. Highlight information that may require my attention."
+
+The agent determines which tools are required.
+
+DynamoDB data fields:
+
+Complete example:
+{
+  "patient_id": "P1005",
+  "first_name": "John",
+  "last_name": "Smith",
+  "date_of_birth": "1975-06-15",
+  "gender": "Male",
+  "smoking_status": "Former smoker",
+  "family_history_cardiovascular_disease": true,
+  "primary_cardiologist": "DR101",
+
+  "conditions": [
+    {
+      "record_id": "C001",
+      "condition_name": "Hypertension",
+      "condition_category": "Cardiovascular",
+      "diagnosis_date": "2020-04-10",
+      "condition_status": "Active",
+      "severity": "Moderate",
+      "notes": "Blood pressure remains elevated",
+      "created_at": "2020-04-10T10:00:00Z",
+      "updated_at": "2026-08-13T10:00:00Z",
+      "source": "Hospital EHR",
+      "status": "Active"    }
+  ],
+
+  "medications": [
+    {
+      "record_id": "M001",
+      "drug_name": "Lisinopril",
+      "dose": 10,
+      "dose_unit": "mg",
+      "frequency": "Once daily",
+      "route": "Oral",
+      "medication_status": "Active",
+      "start_date": "2025-01-15",
+      "end_date": null,
+      "prescriber": "DR101",
+      "indication": "Hypertension",
+      "created_at": "2025-01-15T09:00:00Z",
+      "updated_at": "2026-08-10T12:00:00Z",
+      "source": "Hospital EHR",
+      "status": "Active"    }
+  ],
+
+  "allergies": [
+    {
+      "record_id": "A001",
+      "allergen": "Penicillin",
+      "allergy_type": "Allergy",
+      "reaction": "Skin rash",
+      "severity": "Moderate",
+      "allergy_status": "Active",
+      "recorded_date": "2024-06-20",
+      "notes": "Reaction occurred in childhood",
+      "created_at": "2024-06-20T10:00:00Z",
+      "updated_at": "2024-06-20T10:00:00Z",
+      "source": "Patient reported",
+      "status": "Active"    }
+  ],
+
+  "lab_results": [
+    {
+      "record_id": "L001",
+      "test_name": "Potassium",
+      "test_value": 5.4,
+      "test_unit": "mmol/L",
+      "reference_range": "3.5–5.0",
+      "interpretation": "High",
+      "test_date": "2026-08-10T09:15:00Z",
+      "created_at": "2026-08-10T09:30:00Z",
+      "updated_at": "2026-08-10T09:30:00Z",
+      "source": "Hospital laboratory",
+      "status": "Final"    }
+  ],
+
+  "vital_signs": [
+    {
+      "record_id": "V001",
+      "systolic_bp": 154,
+      "diastolic_bp": 96,
+      "heart_rate": 78,
+      "weight": 82.5,
+      "weight_unit": "kg",
+      "oxygen_saturation": 97,
+      "measured_at": "2026-08-13T09:30:00Z",
+      "created_at": "2026-08-13T09:31:00Z",
+      "updated_at": "2026-08-13T09:31:00Z",
+      "source": "Cardiology clinic",
+      "status": "Final"    }
+  ],
+
+  "cardiology_tests": [
+    {
+      "record_id": "T001",
+      "test_or_procedure_name": "Echocardiogram",
+      "performed_date": "2026-07-20T14:00:00Z",
+      "result_summary": "LVEF 45%",
+      "notes": "Mildly reduced systolic function",
+      "created_at": "2026-07-20T15:00:00Z",
+      "updated_at": "2026-07-20T15:00:00Z",
+      "source": "Cardiology department",
+      "status": "Final"    }
+  ],
+
+  "created_at": "2026-01-01T10:00:00Z",
+  "updated_at": "2026-08-13T10:00:00Z",
+  "source": "Training dataset",
+  "status": "Active"}
