@@ -1,4 +1,5 @@
-"""Read-only DynamoDB repository for one patient's clinical records."""
+"""DynamoDB repository for one patient's clinical records: read-only lookups,
+plus a single explicit write path for registering a brand-new patient."""
 
 from __future__ import annotations
 
@@ -8,18 +9,25 @@ from typing import Any, Protocol
 
 import boto3
 from boto3.dynamodb.conditions import Key
+from botocore.exceptions import ClientError
 
 from backend.models.patient import PatientDataResult, PatientRecordScope, SCOPE_PREFIXES
 
 PATIENT_ID_PATTERN = re.compile(r"^P[0-9]{4,12}$")
 
 
+class PatientAlreadyExistsError(Exception):
+    """Raised by create_patient() when the target patient ID already has a PROFILE record."""
+
+
 class DynamoTable(Protocol):
-    """Small DynamoDB table surface needed by this read-only repository."""
+    """Small DynamoDB table surface needed by this repository."""
 
     def get_item(self, **kwargs: Any) -> dict[str, Any]: ...
 
     def query(self, **kwargs: Any) -> dict[str, Any]: ...
+
+    def put_item(self, **kwargs: Any) -> dict[str, Any]: ...
 
 
 class PatientRepository:
@@ -66,6 +74,26 @@ class PatientRepository:
             source=f"DynamoDB / Patient {patient_id}",
             found=bool(records),
         )
+
+    def create_patient(self, profile: dict[str, Any]) -> str:
+        """Create a brand-new patient PROFILE record.
+
+        This is the application's only write path, used exclusively by the
+        interactive patient-registration endpoint -- the agent runtime never
+        calls it and continues to only read via get_records(). Rejected with
+        PatientAlreadyExistsError if the patient ID is already in use, so a
+        registration can never silently overwrite an existing patient's profile.
+        """
+        patient_id = profile["patient_id"]
+        self._validate_patient_id(patient_id)
+        item = {**profile, "PK": self._patient_pk(patient_id), "SK": "PROFILE", "entity_type": "PATIENT_PROFILE"}
+        try:
+            self._table.put_item(Item=item, ConditionExpression="attribute_not_exists(PK)")
+        except ClientError as error:
+            if error.response.get("Error", {}).get("Code") == "ConditionalCheckFailedException":
+                raise PatientAlreadyExistsError(f"Patient {patient_id} already exists.") from error
+            raise
+        return patient_id
 
     @staticmethod
     def _validate_patient_id(patient_id: str) -> None:

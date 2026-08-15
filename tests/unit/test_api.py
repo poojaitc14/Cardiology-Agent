@@ -252,3 +252,119 @@ class TestErrorHandling:
         with patch("backend.main.patient_repository", None):
             response = client.get("/patient/P1005")
             assert response.status_code == 503
+
+
+class TestCreatePatientEndpoint:
+    """Tests for the POST /patients endpoint."""
+
+    VALID_PAYLOAD = {
+        "first_name": "Jordan",
+        "last_name": "Reed",
+        "date_of_birth": "1970-01-01",
+        "gender": "Non-binary",
+        "smoking_status": "Never smoker",
+    }
+
+    def test_create_patient_returns_503_when_repository_not_initialized(self, client):
+        with patch("backend.main.patient_repository", None):
+            response = client.post("/patients", json=self.VALID_PAYLOAD)
+            assert response.status_code == 503
+
+    def test_create_patient_generates_id_when_omitted(self, client):
+        with patch("backend.main.patient_repository") as mock_repo:
+            mock_repo.create_patient.side_effect = lambda profile: profile["patient_id"]
+            response = client.post("/patients", json=self.VALID_PAYLOAD)
+            assert response.status_code == 201
+            data = response.json()
+            assert data["patient_id"].startswith("P")
+            assert "registered" in data["message"].lower()
+
+    def test_create_patient_uses_explicit_id(self, client):
+        with patch("backend.main.patient_repository") as mock_repo:
+            mock_repo.create_patient.side_effect = lambda profile: profile["patient_id"]
+            response = client.post("/patients", json={**self.VALID_PAYLOAD, "patient_id": "P200481"})
+            assert response.status_code == 201
+            assert response.json()["patient_id"] == "P200481"
+
+    def test_create_patient_rejects_malformed_id(self, client):
+        response = client.post("/patients", json={**self.VALID_PAYLOAD, "patient_id": "not-an-id"})
+        assert response.status_code == 422
+
+    def test_create_patient_rejects_invalid_date(self, client):
+        response = client.post("/patients", json={**self.VALID_PAYLOAD, "date_of_birth": "not-a-date"})
+        assert response.status_code == 422
+
+    def test_create_patient_returns_409_on_duplicate(self, client):
+        from backend.services.patient_repository import PatientAlreadyExistsError
+
+        with patch("backend.main.patient_repository") as mock_repo:
+            mock_repo.create_patient.side_effect = PatientAlreadyExistsError("Patient P200481 already exists.")
+            response = client.post("/patients", json={**self.VALID_PAYLOAD, "patient_id": "P200481"})
+            assert response.status_code == 409
+
+
+class TestRAGDocumentEndpoints:
+    """Tests for the /rag/documents endpoints."""
+
+    def test_list_documents_returns_503_when_not_initialized(self, client):
+        with patch("backend.main.rag_admin_service", None):
+            response = client.get("/rag/documents")
+            assert response.status_code == 503
+
+    def test_list_documents_returns_documents(self, client):
+        with patch("backend.main.rag_admin_service") as mock_admin:
+            mock_admin.list_documents.return_value = [
+                {"document_name": "Policy A", "version": "1.0", "effective_date": "2026-01-01", "source": "Src", "chunk_count": 3}
+            ]
+            response = client.get("/rag/documents")
+            assert response.status_code == 200
+            assert response.json()[0]["document_name"] == "Policy A"
+
+    def test_upsert_document_returns_503_when_not_initialized(self, client):
+        with patch("backend.main.rag_admin_service", None):
+            response = client.post(
+                "/rag/documents",
+                json={"document_name": "Policy A", "version": "1.0", "effective_date": "2026-01-01", "source": "Src", "content": "## Scope\ntext"},
+            )
+            assert response.status_code == 503
+
+    def test_upsert_document_success(self, client):
+        with patch("backend.main.rag_admin_service") as mock_admin:
+            mock_admin.upsert_document.return_value = (0, 2)
+            response = client.post(
+                "/rag/documents",
+                json={"document_name": "Policy A", "version": "1.0", "effective_date": "2026-01-01", "source": "Src", "content": "## Scope\ntext"},
+            )
+            assert response.status_code == 201
+            data = response.json()
+            assert data["chunks_indexed"] == 2
+            assert "Added" in data["message"]
+
+    def test_upsert_document_rejects_empty_content(self, client):
+        response = client.post(
+            "/rag/documents",
+            json={"document_name": "Policy A", "version": "1.0", "effective_date": "2026-01-01", "source": "Src", "content": ""},
+        )
+        assert response.status_code == 422
+
+    def test_upsert_document_returns_400_on_validation_error(self, client):
+        with patch("backend.main.rag_admin_service") as mock_admin:
+            mock_admin.upsert_document.side_effect = ValueError("No content sections found.")
+            response = client.post(
+                "/rag/documents",
+                json={"document_name": "Policy A", "version": "1.0", "effective_date": "2026-01-01", "source": "Src", "content": "plain text"},
+            )
+            assert response.status_code == 400
+
+    def test_delete_document_returns_404_when_nothing_deleted(self, client):
+        with patch("backend.main.rag_admin_service") as mock_admin:
+            mock_admin.delete_document.return_value = 0
+            response = client.delete("/rag/documents/Nonexistent")
+            assert response.status_code == 404
+
+    def test_delete_document_success(self, client):
+        with patch("backend.main.rag_admin_service") as mock_admin:
+            mock_admin.delete_document.return_value = 3
+            response = client.delete("/rag/documents/Policy%20A")
+            assert response.status_code == 200
+            assert response.json()["chunks_deleted"] == 3

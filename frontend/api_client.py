@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -93,6 +94,69 @@ class APIClient:
             raise
         except httpx.HTTPStatusError as e:
             logger.error(f"Get patient returned error: {e.response.status_code}")
+            raise
+
+    def create_patient(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Register a new patient.
+
+        Args:
+            payload: Fields matching the backend's PatientCreateRequest
+
+        Returns:
+            PatientCreateResponse with the new patient_id and a confirmation message
+
+        Raises:
+            httpx.RequestError: If request fails
+            httpx.HTTPStatusError: If validation fails (422), the ID collides (409), or a service error occurs
+        """
+        try:
+            response = self.client.post(f"{self.base_url}/patients", json=payload)
+            response.raise_for_status()
+            return response.json()
+        except httpx.RequestError as e:
+            logger.error(f"Create patient request failed: {e}")
+            raise
+        except httpx.HTTPStatusError as e:
+            logger.error(f"Create patient returned error: {e.response.status_code} - {e.response.text}")
+            raise
+
+    def list_rag_documents(self) -> list[dict[str, Any]]:
+        """List every document currently indexed in the cardiology guideline knowledge base."""
+        try:
+            response = self.client.get(f"{self.base_url}/rag/documents")
+            response.raise_for_status()
+            return response.json()
+        except httpx.RequestError as e:
+            logger.error(f"List RAG documents request failed: {e}")
+            raise
+        except httpx.HTTPStatusError as e:
+            logger.error(f"List RAG documents returned error: {e.response.status_code}")
+            raise
+
+    def upsert_rag_document(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Add a new guideline document, or replace an existing one with the same name."""
+        try:
+            response = self.client.post(f"{self.base_url}/rag/documents", json=payload)
+            response.raise_for_status()
+            return response.json()
+        except httpx.RequestError as e:
+            logger.error(f"Upsert RAG document request failed: {e}")
+            raise
+        except httpx.HTTPStatusError as e:
+            logger.error(f"Upsert RAG document returned error: {e.response.status_code} - {e.response.text}")
+            raise
+
+    def delete_rag_document(self, document_name: str) -> dict[str, Any]:
+        """Delete every indexed chunk belonging to `document_name`."""
+        try:
+            response = self.client.delete(f"{self.base_url}/rag/documents/{quote(document_name, safe='')}")
+            response.raise_for_status()
+            return response.json()
+        except httpx.RequestError as e:
+            logger.error(f"Delete RAG document request failed: {e}")
+            raise
+        except httpx.HTTPStatusError as e:
+            logger.error(f"Delete RAG document returned error: {e.response.status_code}")
             raise
 
     def close(self):

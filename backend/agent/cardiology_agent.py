@@ -79,6 +79,7 @@ class AgentResponse:
     citations: tuple[Citation, ...]
     tools_used: tuple[str, ...]
     errors: tuple[str, ...]
+    steps: tuple[str, ...] = ()
 
 
 class CardiologistAgent:
@@ -106,61 +107,81 @@ class CardiologistAgent:
         """
         if not question.strip():
             return AgentResponse("A question is required for clinical decision support.", (), (), ())
+        steps: list[str] = ["Parsed the question for a patient ID, known drug names, and guideline/policy keywords."]
         patient_id = (patient_id or "").strip().upper() or self._patient_id(question)
         drug_name = self._drug_name(question)
         use_rag = bool(re.search(r"\b(policy|guideline|protocol|hospital)\b", question, re.IGNORECASE))
         tools, citations, facts, errors = [], [], [], []
         if patient_id:
+            steps.append(f"Patient ID {patient_id} identified -- querying the patient database.")
             tools.append("patient_database_tool")
             try:
                 result = self._patient_database_tool(patient_id, self._patient_scope(question))
                 if result.found:
+                    steps.append(f"Retrieved {len(result.records)} record(s) for {patient_id} from the patient database.")
                     facts.append(f"Patient record evidence for {patient_id}: {self._summarize_records(result.records)}")
                     citations.append(Citation(result.source, f"Patient {patient_id}"))
                 else:
+                    steps.append(f"No records were found for {patient_id} in the patient database.")
                     facts.append(result.no_record_message or "No corresponding information was found in the available patient record.")
             except Exception:
+                steps.append("The patient database tool raised an error; continuing without it.")
                 errors.append("Patient record information is temporarily unavailable.")
+        else:
+            steps.append("No patient ID was supplied or found in the question.")
         if drug_name:
+            steps.append(f"Drug name '{drug_name}' detected -- querying the OpenFDA drug-label tool.")
             tools.append("openfda_drug_tool")
             try:
                 result = self._openfda_drug_tool(drug_name)
                 if result.found and result.label:
+                    steps.append(f"OpenFDA label evidence retrieved for {drug_name}.")
                     facts.append(f"OpenFDA label evidence was retrieved for {drug_name}: generic name(s) {', '.join(result.label.generic_names) or 'not listed'}.")
                     citations.append(Citation("OpenFDA", drug_name))
                 else:
+                    steps.append(f"No OpenFDA label was found for {drug_name}.")
                     facts.append(result.user_message)
             except Exception:
+                steps.append("The OpenFDA tool raised an error; continuing without it.")
                 errors.append("Drug-label information is temporarily unavailable.")
         if use_rag:
+            steps.append("Guideline/policy keywords detected -- searching the cardiology knowledge base.")
             tools.append("cardiology_rag_tool")
             try:
                 result = self._cardiology_rag_tool(question, 5)
                 if result.results:
+                    steps.append(f"Retrieved {len(result.results)} guideline passage(s) from the knowledge base.")
                     for item in result.results:
                         facts.append(f"Retrieved policy evidence: {item.document}, section {item.section}.")
                         citations.append(Citation(item.metadata.source, f"{item.document} {item.metadata.version}, {item.section}"))
                 else:
+                    steps.append("No matching guideline passages were found in the knowledge base.")
                     facts.append(result.user_message or "Sufficient evidence was not found in the knowledge base.")
             except Exception:
+                steps.append("The cardiology guideline search raised an error; continuing without it.")
                 errors.append("Clinical document retrieval is temporarily unavailable.")
         if not tools:
+            steps.append("No tool matched this question; asking the clinician for more specific input.")
             facts.append("Please provide a patient ID for patient-specific information, a drug name, or a clinical-policy question.")
             content = "Decision support only; a qualified healthcare professional must review this information. " + " ".join(facts)
         elif self._llm_tool is not None:
+            steps.append("Synthesizing a grounded answer from the retrieved evidence with the clinical language model.")
             try:
                 patient_summary = next(
                     (fact for fact in facts if fact.startswith("Patient record evidence")),
                     "No specific patient record was retrieved for this question.",
                 )
                 generated = self._llm_tool(patient_summary, question, facts)
+                steps.append("Answer synthesis complete.")
                 content = "Decision support only; a qualified healthcare professional must review this information.\n\n" + generated
             except Exception:
+                steps.append("Language-model synthesis failed; falling back to the retrieved evidence directly.")
                 errors.append("Clinical answer generation is temporarily unavailable; showing retrieved evidence only.")
                 content = "Decision support only; a qualified healthcare professional must review this information. " + " ".join(facts)
         else:
+            steps.append("No language model is configured; returning the retrieved evidence directly.")
             content = "Decision support only; a qualified healthcare professional must review this information. " + " ".join(facts)
-        return AgentResponse(content, tuple(citations), tuple(tools), tuple(errors))
+        return AgentResponse(content, tuple(citations), tuple(tools), tuple(errors), tuple(steps))
 
     @staticmethod
     def _patient_id(question: str) -> str | None:

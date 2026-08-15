@@ -118,8 +118,25 @@ $env:FASTAPI_URL = "http://localhost:8000"
 streamlit run frontend/streamlit_app.py
 ```
 
-Enter a patient ID (e.g. `P1005`) in the sidebar and ask a clinical question,
-e.g. "Review patient medications" or "What are the side effects of Warfarin?".
+The app has three tabs:
+
+- **💬 Ask a Question** — enter a patient ID (e.g. `P1005`) in the sidebar and ask a
+  clinical question, e.g. "Review patient medications" or "What are the side effects
+  of Warfarin?". Before the answer appears, a "🧠 Agent is thinking..." panel replays
+  the agent's actual tool-routing trace (which tools it called, what each one found)
+  in the order it happened — this is the real `steps` list returned by `/query`,
+  not a fabricated animation.
+- **🆕 Register Patient** — writes a brand-new patient profile straight to DynamoDB
+  (`POST /patients`). Leave Patient ID blank to auto-generate one, or supply your
+  own (format `P` + 4-12 digits). This is the only write path in the application;
+  every other patient-data interaction remains read-only.
+- **📚 Manage Guidelines** — lists every document indexed in the cardiology RAG
+  knowledge base, and lets you add a new one or replace an existing one (same
+  document name = replace) via `POST /rag/documents`, or remove one via
+  `DELETE /rag/documents/{name}`. Content uses `## Section Name` markdown headings
+  to define retrievable sections. OpenSearch Serverless indexes near-real-time, not
+  instantly, so a newly added or deleted document can take up to ~15 seconds to be
+  reflected in search results and in this tab's list.
 
 ## 7. Run everything with Docker Compose (alternative to steps 5-6)
 

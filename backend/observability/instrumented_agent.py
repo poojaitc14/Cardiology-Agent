@@ -43,14 +43,16 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
         if not question.strip():
             return AgentResponse("A question is required for clinical decision support.", (), (), ())
 
+        steps: list[str] = ["Parsed the question for a patient ID, known drug names, and guideline/policy keywords."]
         patient_id = (patient_id or "").strip().upper() or self._patient_id(question)
         drug_name = self._drug_name(question)
         use_rag = self._should_use_rag(question)
-        
+
         tools, citations, facts, errors = [], [], [], []
 
         # Trace patient database tool call
         if patient_id:
+            steps.append(f"Patient ID {patient_id} identified -- querying the patient database.")
             tools.append("patient_database_tool")
             span = trace_tool_call(
                 "patient_database_tool",
@@ -64,24 +66,30 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
                     trace_tool_result(span, result)
                     
                     if result.found:
+                        steps.append(f"Retrieved {len(result.records)} record(s) for {patient_id} from the patient database.")
                         facts.append(
                             f"Patient record evidence for {patient_id}: "
                             f"{self._summarize_records(result.records)}"
                         )
                         citations.append(Citation(result.source, f"Patient {patient_id}"))
                     else:
+                        steps.append(f"No records were found for {patient_id} in the patient database.")
                         facts.append(
                             result.no_record_message
                             or "No corresponding information was found in the available patient record."
                         )
             except Exception as e:
                 error_msg = f"Patient record information is temporarily unavailable: {str(e)}"
+                steps.append("The patient database tool raised an error; continuing without it.")
                 errors.append("Patient record information is temporarily unavailable.")
                 trace_tool_result(span, error=error_msg)
                 logger.error(error_msg)
+        else:
+            steps.append("No patient ID was supplied or found in the question.")
 
         # Trace OpenFDA tool call
         if drug_name:
+            steps.append(f"Drug name '{drug_name}' detected -- querying the OpenFDA drug-label tool.")
             tools.append("openfda_drug_tool")
             span = trace_tool_call(
                 "openfda_drug_tool",
@@ -94,21 +102,25 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
                     
                     if result.found and result.label:
                         generic_names = ", ".join(result.label.generic_names) or "not listed"
+                        steps.append(f"OpenFDA label evidence retrieved for {drug_name}.")
                         facts.append(
                             f"OpenFDA label evidence was retrieved for {drug_name}: "
                             f"generic name(s) {generic_names}."
                         )
                         citations.append(Citation("OpenFDA", drug_name))
                     else:
+                        steps.append(f"No OpenFDA label was found for {drug_name}.")
                         facts.append(result.user_message)
             except Exception as e:
                 error_msg = f"Drug-label information is temporarily unavailable: {str(e)}"
+                steps.append("The OpenFDA tool raised an error; continuing without it.")
                 errors.append("Drug-label information is temporarily unavailable.")
                 trace_tool_result(span, error=error_msg)
                 logger.error(error_msg)
 
         # Trace RAG tool call
         if use_rag:
+            steps.append("Guideline/policy keywords detected -- searching the cardiology knowledge base.")
             tools.append("cardiology_rag_tool")
             span = trace_tool_call(
                 "cardiology_rag_tool",
@@ -120,6 +132,7 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
                     trace_tool_result(span, result)
                     
                     if result.results:
+                        steps.append(f"Retrieved {len(result.results)} guideline passage(s) from the knowledge base.")
                         for item in result.results:
                             facts.append(
                                 f"Retrieved policy evidence: {item.document}, "
@@ -132,17 +145,20 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
                                 )
                             )
                     else:
+                        steps.append("No matching guideline passages were found in the knowledge base.")
                         facts.append(
                             result.user_message
                             or "Sufficient evidence was not found in the knowledge base."
                         )
             except Exception as e:
                 error_msg = f"Clinical document retrieval is temporarily unavailable: {str(e)}"
+                steps.append("The cardiology guideline search raised an error; continuing without it.")
                 errors.append("Clinical document retrieval is temporarily unavailable.")
                 trace_tool_result(span, error=error_msg)
                 logger.error(error_msg)
 
         if not tools:
+            steps.append("No tool matched this question; asking the clinician for more specific input.")
             facts.append(
                 "Please provide a patient ID for patient-specific information, "
                 "a drug name, or a clinical-policy question."
@@ -152,6 +168,7 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
                 + " ".join(facts)
             )
         elif self._llm_tool is not None:
+            steps.append("Synthesizing a grounded answer from the retrieved evidence with the clinical language model.")
             span = TracingSpan(
                 "llm_generation",
                 span_type="generation",
@@ -164,12 +181,14 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
                         "No specific patient record was retrieved for this question.",
                     )
                     generated = self._llm_tool(patient_summary, question, facts)
+                steps.append("Answer synthesis complete.")
                 content = (
                     "Decision support only; a qualified healthcare professional must review this information.\n\n"
                     + generated
                 )
             except Exception as e:
                 error_msg = f"Clinical answer generation is temporarily unavailable: {str(e)}"
+                steps.append("Language-model synthesis failed; falling back to the retrieved evidence directly.")
                 errors.append("Clinical answer generation is temporarily unavailable; showing retrieved evidence only.")
                 trace_tool_result(span, error=error_msg)
                 logger.error(error_msg)
@@ -178,11 +197,12 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
                     + " ".join(facts)
                 )
         else:
+            steps.append("No language model is configured; returning the retrieved evidence directly.")
             content = (
                 "Decision support only; a qualified healthcare professional must review this information. "
                 + " ".join(facts)
             )
-        return AgentResponse(content, tuple(citations), tuple(tools), tuple(errors))
+        return AgentResponse(content, tuple(citations), tuple(tools), tuple(errors), tuple(steps))
 
     def _should_use_rag(self, question: str) -> bool:
         """Check if RAG should be used."""

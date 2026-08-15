@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import logging
 import os
+import random
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from typing import Any
 
 from dotenv import load_dotenv
@@ -27,13 +29,20 @@ from backend.observability.tracing import (
 from backend.schemas import (
     Citation,
     HealthResponse,
+    PatientCreateRequest,
+    PatientCreateResponse,
     PatientResponse,
     QueryRequest,
     QueryResponse,
+    RAGDocumentDeleteResponse,
+    RAGDocumentInfo,
+    RAGDocumentUpsertRequest,
+    RAGDocumentUpsertResponse,
 )
 from backend.services.azure_openai import AzureOpenAIConfig, AzureOpenAILLM
 from backend.services.openfda import OpenFDAService
-from backend.services.patient_repository import PatientRepository
+from backend.services.patient_repository import PatientAlreadyExistsError, PatientRepository
+from rag.ingestion.admin import RAGDocumentAdminService
 from rag.retrieval.cardiology_rag import CardiologyRAGService
 
 # Configure logging
@@ -48,13 +57,14 @@ logger = logging.getLogger(__name__)
 patient_repository: PatientRepository | None = None
 openfda_service: OpenFDAService | None = None
 cardiology_rag_service: CardiologyRAGService | None = None
+rag_admin_service: RAGDocumentAdminService | None = None
 agent: CardiologistAgent | None = None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Initialize services on startup and clean up on shutdown."""
-    global patient_repository, openfda_service, cardiology_rag_service, agent
+    global patient_repository, openfda_service, cardiology_rag_service, rag_admin_service, agent
 
     logger.info("Starting Cardiology Decision Support Agent API")
 
@@ -73,6 +83,14 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             logger.warning(f"CardiologyRAGService initialization failed: {e}")
             cardiology_rag_service = None
+
+        # RAG document admin (write path for the "Manage Guidelines" UI) is optional
+        try:
+            rag_admin_service = RAGDocumentAdminService.from_environment()
+            logger.info("RAGDocumentAdminService initialized")
+        except Exception as e:
+            logger.warning(f"RAGDocumentAdminService initialization failed: {e}")
+            rag_admin_service = None
 
         # LLM-backed answer generation is optional (may fail gracefully)
         llm_tool = None
@@ -207,12 +225,17 @@ async def query(request: QueryRequest) -> QueryResponse:
                 for citation in agent_response.citations
             ]
 
+            # steps is a newer field; tolerate older/mocked AgentResponse objects that lack it
+            raw_steps = getattr(agent_response, "steps", ())
+            steps = list(raw_steps) if isinstance(raw_steps, (list, tuple)) else []
+
             response = QueryResponse(
                 answer=agent_response.content,
                 sources=sources,
                 tools_used=list(agent_response.tools_used),
                 errors=list(agent_response.errors),
                 trace_id=trace_id,
+                steps=steps,
             )
 
             logger.debug(f"Query response prepared with trace ID: {trace_id}")
@@ -287,6 +310,166 @@ async def get_patient(patient_id: str) -> PatientResponse:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to retrieve patient information",
         )
+
+
+def _generate_patient_id() -> str:
+    """Generate a candidate patient ID outside the seeded P1001-P1100 range."""
+    return f"P{random.randint(200000, 999999)}"
+
+
+@app.post("/patients", response_model=PatientCreateResponse, status_code=status.HTTP_201_CREATED)
+async def create_patient(request: PatientCreateRequest) -> PatientCreateResponse:
+    """
+    Register a brand-new patient and write their profile to DynamoDB.
+
+    Args:
+        request: PatientCreateRequest with the new patient's profile fields
+
+    Returns:
+        PatientCreateResponse with the (possibly auto-generated) patient ID
+
+    Raises:
+        HTTPException: On invalid input, an ID collision, or a service error
+    """
+    if patient_repository is None:
+        logger.error("PatientRepository not initialized")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Patient repository is not available",
+        )
+
+    now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    profile = {
+        "first_name": request.first_name,
+        "last_name": request.last_name,
+        "date_of_birth": request.date_of_birth,
+        "gender": request.gender,
+        "smoking_status": request.smoking_status,
+        "family_history_cardiovascular_disease": request.family_history_cardiovascular_disease,
+        "primary_cardiologist": request.primary_cardiologist or "Unassigned",
+        "record_status": "Active",
+        "source": "Registered via clinician UI",
+        "created_at": now,
+        "updated_at": now,
+    }
+
+    try:
+        if request.patient_id:
+            profile["patient_id"] = request.patient_id
+            patient_id = patient_repository.create_patient(profile)
+        else:
+            patient_id = None
+            for _ in range(5):
+                candidate = _generate_patient_id()
+                try:
+                    profile["patient_id"] = candidate
+                    patient_id = patient_repository.create_patient(profile)
+                    break
+                except PatientAlreadyExistsError:
+                    continue
+            if patient_id is None:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail="Could not generate a unique patient ID; please try again",
+                )
+    except PatientAlreadyExistsError as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error registering patient: {type(e).__name__}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to register patient",
+        )
+
+    logger.info(f"Patient {patient_id} registered successfully")
+    return PatientCreateResponse(patient_id=patient_id, message=f"Patient {patient_id} registered successfully.")
+
+
+@app.get("/rag/documents", response_model=list[RAGDocumentInfo])
+async def list_rag_documents() -> list[RAGDocumentInfo]:
+    """List every document currently indexed in the cardiology guideline knowledge base."""
+    if rag_admin_service is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="RAG document management is not available",
+        )
+    try:
+        documents = rag_admin_service.list_documents()
+    except Exception as e:
+        logger.error(f"Error listing RAG documents: {type(e).__name__}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to list RAG documents",
+        )
+    return [RAGDocumentInfo(**document) for document in documents]
+
+
+@app.post("/rag/documents", response_model=RAGDocumentUpsertResponse, status_code=status.HTTP_201_CREATED)
+async def upsert_rag_document(request: RAGDocumentUpsertRequest) -> RAGDocumentUpsertResponse:
+    """
+    Add a new guideline document, or replace an existing one with the same document_name.
+
+    Content is split into sections on '## Section Name' markdown headings, chunked,
+    embedded, and indexed the same way the original 15 synthetic documents were.
+    """
+    if rag_admin_service is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="RAG document management is not available",
+        )
+    try:
+        replaced, indexed = rag_admin_service.upsert_document(
+            document_name=request.document_name,
+            version=request.version,
+            effective_date=request.effective_date,
+            source=request.source,
+            content_markdown=request.content,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    except Exception as e:
+        logger.error(f"Error indexing RAG document '{request.document_name}': {type(e).__name__}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to index RAG document",
+        )
+
+    action = "Replaced" if replaced else "Added"
+    logger.info(f"{action} RAG document '{request.document_name}' ({indexed} chunk(s) indexed)")
+    return RAGDocumentUpsertResponse(
+        document_name=request.document_name,
+        chunks_replaced=replaced,
+        chunks_indexed=indexed,
+        message=f"{action} '{request.document_name}' -- {indexed} chunk(s) indexed.",
+    )
+
+
+@app.delete("/rag/documents/{document_name}", response_model=RAGDocumentDeleteResponse)
+async def delete_rag_document(document_name: str) -> RAGDocumentDeleteResponse:
+    """Delete every indexed chunk belonging to `document_name`."""
+    if rag_admin_service is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="RAG document management is not available",
+        )
+    try:
+        deleted = rag_admin_service.delete_document(document_name)
+    except Exception as e:
+        logger.error(f"Error deleting RAG document '{document_name}': {type(e).__name__}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to delete RAG document",
+        )
+    if deleted == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"No chunks found for document '{document_name}'",
+        )
+    return RAGDocumentDeleteResponse(document_name=document_name, chunks_deleted=deleted)
 
 
 if __name__ == "__main__":

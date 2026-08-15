@@ -32,12 +32,12 @@ class HashEmbeddingProvider:
         return [value / magnitude for value in vector] if magnitude else vector
 
 
-def extract_markdown(path: Path, document_name: str, version: str, effective_date: str, source: str) -> list[tuple[str, str, DocumentMetadata]]:
-    """Extract markdown sections as data; the text is never interpreted as instructions."""
+def extract_markdown_text(text: str, document_name: str, version: str, effective_date: str, source: str) -> list[tuple[str, str, DocumentMetadata]]:
+    """Extract markdown sections from raw text as data; never interpreted as instructions."""
     sections: list[tuple[str, str, DocumentMetadata]] = []
     section_name = "Overview"
     lines: list[str] = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for line in text.splitlines():
         if line.startswith("## "):
             if lines:
                 sections.append((section_name, "\n".join(lines).strip(), DocumentMetadata(document_name, version, section_name, effective_date, source)))
@@ -47,6 +47,11 @@ def extract_markdown(path: Path, document_name: str, version: str, effective_dat
     if lines:
         sections.append((section_name, "\n".join(lines).strip(), DocumentMetadata(document_name, version, section_name, effective_date, source)))
     return [section for section in sections if section[1]]
+
+
+def extract_markdown(path: Path, document_name: str, version: str, effective_date: str, source: str) -> list[tuple[str, str, DocumentMetadata]]:
+    """Extract markdown sections from a file as data; the text is never interpreted as instructions."""
+    return extract_markdown_text(path.read_text(encoding="utf-8"), document_name, version, effective_date, source)
 
 
 def chunk_sections(sections: list[tuple[str, str, DocumentMetadata]], chunk_size: int = 180, overlap: int = 30) -> list[DocumentChunk]:
