@@ -1,0 +1,1666 @@
+{
+  "seed": 20260814,
+  "count": 100,
+  "cases": [
+    {
+      "id": "Q001",
+      "category": "A_demographic",
+      "patient_id": "P1003",
+      "question": "What is patient P1003's date of birth?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1003"
+      ],
+      "expected_fact_substrings": [
+        "1949-12-27"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q002",
+      "category": "A_demographic",
+      "patient_id": "P1005",
+      "question": "What is the gender recorded for patient P1005?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1005"
+      ],
+      "expected_fact_substrings": [
+        "Non-binary"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q003",
+      "category": "A_demographic",
+      "patient_id": "P1012",
+      "question": "What is patient P1012's smoking status?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1012"
+      ],
+      "expected_fact_substrings": [
+        "Never smoker"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q004",
+      "category": "A_demographic",
+      "patient_id": "P1017",
+      "question": "What is patient P1017's date of birth?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1017"
+      ],
+      "expected_fact_substrings": [
+        "1950-02-05"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q005",
+      "category": "A_demographic",
+      "patient_id": "P1021",
+      "question": "What is the gender recorded for patient P1021?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1021"
+      ],
+      "expected_fact_substrings": [
+        "Male"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q006",
+      "category": "A_demographic",
+      "patient_id": "P1028",
+      "question": "What is patient P1028's smoking status?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1028"
+      ],
+      "expected_fact_substrings": [
+        "Current smoker"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q007",
+      "category": "A_demographic",
+      "patient_id": "P1033",
+      "question": "What is patient P1033's date of birth?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1033"
+      ],
+      "expected_fact_substrings": [
+        "1968-08-16"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q008",
+      "category": "A_demographic",
+      "patient_id": "P1040",
+      "question": "What is the gender recorded for patient P1040?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1040"
+      ],
+      "expected_fact_substrings": [
+        "Male"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q009",
+      "category": "A_demographic",
+      "patient_id": "P1045",
+      "question": "What is this patient's full name?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1045"
+      ],
+      "expected_fact_substrings": [
+        "Morgan Patel"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q010",
+      "category": "A_demographic",
+      "patient_id": "P1050",
+      "question": "What is patient P1050's smoking status?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1050"
+      ],
+      "expected_fact_substrings": [
+        "Current smoker"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q011",
+      "category": "B_medication",
+      "patient_id": "P1003",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1003"
+      ],
+      "expected_fact_substrings": [
+        "Lisinopril"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q012",
+      "category": "B_medication",
+      "patient_id": "P1005",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1005"
+      ],
+      "expected_fact_substrings": [
+        "Lisinopril"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q013",
+      "category": "B_medication",
+      "patient_id": "P1012",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1012"
+      ],
+      "expected_fact_substrings": [
+        "Atorvastatin"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q014",
+      "category": "B_medication",
+      "patient_id": "P1017",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1017"
+      ],
+      "expected_fact_substrings": [
+        "Atorvastatin"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q015",
+      "category": "B_medication",
+      "patient_id": "P1021",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1021"
+      ],
+      "expected_fact_substrings": [
+        "Metoprolol"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q016",
+      "category": "B_medication",
+      "patient_id": "P1028",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1028"
+      ],
+      "expected_fact_substrings": [
+        "Metoprolol"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q017",
+      "category": "B_medication",
+      "patient_id": "P1033",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1033"
+      ],
+      "expected_fact_substrings": [
+        "Metoprolol"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q018",
+      "category": "B_medication",
+      "patient_id": "P1040",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1040"
+      ],
+      "expected_fact_substrings": [
+        "Metoprolol"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q019",
+      "category": "B_medication",
+      "patient_id": "P1045",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1045"
+      ],
+      "expected_fact_substrings": [
+        "Metoprolol"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q020",
+      "category": "B_medication",
+      "patient_id": "P1050",
+      "question": "What medications is this patient currently taking?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1050"
+      ],
+      "expected_fact_substrings": [
+        "Lisinopril"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q021",
+      "category": "C_allergy",
+      "patient_id": "P1058",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1058"
+      ],
+      "expected_fact_substrings": [
+        "Penicillin"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q022",
+      "category": "C_allergy",
+      "patient_id": "P1063",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1063"
+      ],
+      "expected_fact_substrings": [
+        "Aspirin"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q023",
+      "category": "C_allergy",
+      "patient_id": "P1070",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1070"
+      ],
+      "expected_fact_substrings": [
+        "Aspirin"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q024",
+      "category": "C_allergy",
+      "patient_id": "P1077",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1077"
+      ],
+      "expected_fact_substrings": [
+        "None known"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q025",
+      "category": "C_allergy",
+      "patient_id": "P1089",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1089"
+      ],
+      "expected_fact_substrings": [
+        "Penicillin"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q026",
+      "category": "C_allergy",
+      "patient_id": "P1003",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1003"
+      ],
+      "expected_fact_substrings": [
+        "Penicillin"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q027",
+      "category": "C_allergy",
+      "patient_id": "P1005",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1005"
+      ],
+      "expected_fact_substrings": [
+        "Aspirin"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q028",
+      "category": "C_allergy",
+      "patient_id": "P1012",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1012"
+      ],
+      "expected_fact_substrings": [
+        "Penicillin"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q029",
+      "category": "C_allergy",
+      "patient_id": "P1017",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1017"
+      ],
+      "expected_fact_substrings": [
+        "None known"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q030",
+      "category": "C_allergy",
+      "patient_id": "P1021",
+      "question": "Does this patient have any known drug allergies?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1021"
+      ],
+      "expected_fact_substrings": [
+        "None known"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q031",
+      "category": "D_lab",
+      "patient_id": "P1003",
+      "question": "What lab results are on file for this patient?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1003"
+      ],
+      "expected_fact_substrings": [
+        "LDL cholesterol"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q032",
+      "category": "D_lab",
+      "patient_id": "P1005",
+      "question": "What lab results are on file for this patient?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1005"
+      ],
+      "expected_fact_substrings": [
+        "Potassium"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q033",
+      "category": "D_lab",
+      "patient_id": "P1012",
+      "question": "What lab results are on file for this patient?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1012"
+      ],
+      "expected_fact_substrings": [
+        "Creatinine"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q034",
+      "category": "D_lab",
+      "patient_id": "P1017",
+      "question": "What lab results are on file for this patient?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1017"
+      ],
+      "expected_fact_substrings": [
+        "Creatinine"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q035",
+      "category": "D_lab",
+      "patient_id": "P1021",
+      "question": "What lab results are on file for this patient?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1021"
+      ],
+      "expected_fact_substrings": [
+        "LDL cholesterol"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q036",
+      "category": "D_lab",
+      "patient_id": "P1028",
+      "question": "What lab results are on file for this patient?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1028"
+      ],
+      "expected_fact_substrings": [
+        "LDL cholesterol"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q037",
+      "category": "D_lab",
+      "patient_id": "P1033",
+      "question": "What lab results are on file for this patient?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1033"
+      ],
+      "expected_fact_substrings": [
+        "LDL cholesterol"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q038",
+      "category": "D_lab",
+      "patient_id": "P1040",
+      "question": "What lab results are on file for this patient?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1040"
+      ],
+      "expected_fact_substrings": [
+        "Potassium"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q039",
+      "category": "E_vital",
+      "patient_id": "P1045",
+      "question": "What are this patient's latest vital signs?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1045"
+      ],
+      "expected_fact_substrings": [
+        "158"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q040",
+      "category": "E_vital",
+      "patient_id": "P1050",
+      "question": "What are this patient's latest vital signs?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1050"
+      ],
+      "expected_fact_substrings": [
+        "142"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q041",
+      "category": "E_vital",
+      "patient_id": "P1058",
+      "question": "What are this patient's latest vital signs?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1058"
+      ],
+      "expected_fact_substrings": [
+        "168"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q042",
+      "category": "E_vital",
+      "patient_id": "P1063",
+      "question": "What are this patient's latest vital signs?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1063"
+      ],
+      "expected_fact_substrings": [
+        "165"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q043",
+      "category": "E_vital",
+      "patient_id": "P1070",
+      "question": "What are this patient's latest vital signs?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1070"
+      ],
+      "expected_fact_substrings": [
+        "129"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q044",
+      "category": "E_vital",
+      "patient_id": "P1077",
+      "question": "What are this patient's latest vital signs?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1077"
+      ],
+      "expected_fact_substrings": [
+        "138"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q045",
+      "category": "E_vital",
+      "patient_id": "P1089",
+      "question": "What are this patient's latest vital signs?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1089"
+      ],
+      "expected_fact_substrings": [
+        "162"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q046",
+      "category": "E_vital",
+      "patient_id": "P1003",
+      "question": "What are this patient's latest vital signs?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1003"
+      ],
+      "expected_fact_substrings": [
+        "114"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q047",
+      "category": "F_cardiology_test",
+      "patient_id": "P1005",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1005"
+      ],
+      "expected_fact_substrings": [
+        "Echocardiogram"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q048",
+      "category": "F_cardiology_test",
+      "patient_id": "P1012",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1012"
+      ],
+      "expected_fact_substrings": [
+        "Echocardiogram"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q049",
+      "category": "F_cardiology_test",
+      "patient_id": "P1017",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1017"
+      ],
+      "expected_fact_substrings": [
+        "Echocardiogram"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q050",
+      "category": "F_cardiology_test",
+      "patient_id": "P1021",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1021"
+      ],
+      "expected_fact_substrings": [
+        "Echocardiogram"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q051",
+      "category": "F_cardiology_test",
+      "patient_id": "P1028",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1028"
+      ],
+      "expected_fact_substrings": [
+        "Echocardiogram"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q052",
+      "category": "F_cardiology_test",
+      "patient_id": "P1033",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1033"
+      ],
+      "expected_fact_substrings": [
+        "Echocardiogram"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q053",
+      "category": "F_cardiology_test",
+      "patient_id": "P1040",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1040"
+      ],
+      "expected_fact_substrings": [
+        "Echocardiogram"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q054",
+      "category": "F_cardiology_test",
+      "patient_id": "P1045",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1045"
+      ],
+      "expected_fact_substrings": [
+        "Echocardiogram"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q055",
+      "category": "G_condition",
+      "patient_id": "P1050",
+      "question": "Please review this patient's cardiovascular condition.",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1050"
+      ],
+      "expected_fact_substrings": [
+        "Coronary artery disease"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q056",
+      "category": "G_condition",
+      "patient_id": "P1058",
+      "question": "Please review this patient's cardiovascular condition.",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1058"
+      ],
+      "expected_fact_substrings": [
+        "Hypertension"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q057",
+      "category": "G_condition",
+      "patient_id": "P1063",
+      "question": "Please review this patient's cardiovascular condition.",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1063"
+      ],
+      "expected_fact_substrings": [
+        "Coronary artery disease"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q058",
+      "category": "G_condition",
+      "patient_id": "P1070",
+      "question": "Please review this patient's cardiovascular condition.",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1070"
+      ],
+      "expected_fact_substrings": [
+        "Hypertension"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q059",
+      "category": "G_condition",
+      "patient_id": "P1077",
+      "question": "Please review this patient's cardiovascular condition.",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1077"
+      ],
+      "expected_fact_substrings": [
+        "Hypertension"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q060",
+      "category": "G_condition",
+      "patient_id": "P1089",
+      "question": "Please review this patient's cardiovascular condition.",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1089"
+      ],
+      "expected_fact_substrings": [
+        "Coronary artery disease"
+      ],
+      "expect_error": false,
+      "notes": ""
+    },
+    {
+      "id": "Q061",
+      "category": "H_drug_label",
+      "patient_id": "P1003",
+      "question": "What are the side effects and warnings for Warfarin?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Warfarin"
+    },
+    {
+      "id": "Q062",
+      "category": "H_drug_label",
+      "patient_id": "P1005",
+      "question": "What are the side effects and warnings for Warfarin?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Warfarin"
+    },
+    {
+      "id": "Q063",
+      "category": "H_drug_label",
+      "patient_id": "P1012",
+      "question": "What are the side effects and warnings for Warfarin?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Warfarin"
+    },
+    {
+      "id": "Q064",
+      "category": "H_drug_label",
+      "patient_id": "P1017",
+      "question": "What are the side effects and warnings for Atorvastatin?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Atorvastatin"
+    },
+    {
+      "id": "Q065",
+      "category": "H_drug_label",
+      "patient_id": "P1021",
+      "question": "What are the side effects and warnings for Atorvastatin?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Atorvastatin"
+    },
+    {
+      "id": "Q066",
+      "category": "H_drug_label",
+      "patient_id": "P1028",
+      "question": "What are the side effects and warnings for Atorvastatin?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Atorvastatin"
+    },
+    {
+      "id": "Q067",
+      "category": "H_drug_label",
+      "patient_id": "P1033",
+      "question": "What are the side effects and warnings for Lisinopril?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Lisinopril"
+    },
+    {
+      "id": "Q068",
+      "category": "H_drug_label",
+      "patient_id": "P1040",
+      "question": "What are the side effects and warnings for Lisinopril?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Lisinopril"
+    },
+    {
+      "id": "Q069",
+      "category": "H_drug_label",
+      "patient_id": "P1045",
+      "question": "What are the side effects and warnings for Metoprolol?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Metoprolol"
+    },
+    {
+      "id": "Q070",
+      "category": "H_drug_label",
+      "patient_id": "P1050",
+      "question": "What are the side effects and warnings for Metoprolol?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Metoprolol"
+    },
+    {
+      "id": "Q071",
+      "category": "I_rag_policy",
+      "patient_id": "P1003",
+      "question": "What does the hospital guideline say about acute coronary syndromes?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Acute Coronary Syndromes"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Acute Coronary Syndromes"
+    },
+    {
+      "id": "Q072",
+      "category": "I_rag_policy",
+      "patient_id": "P1005",
+      "question": "What does the hospital guideline say about chronic coronary syndromes?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Chronic Coronary Syndromes"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Chronic Coronary Syndromes"
+    },
+    {
+      "id": "Q073",
+      "category": "I_rag_policy",
+      "patient_id": "P1012",
+      "question": "What does the hospital guideline say about heart failure?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Heart Failure"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Heart Failure"
+    },
+    {
+      "id": "Q074",
+      "category": "I_rag_policy",
+      "patient_id": "P1017",
+      "question": "What does the hospital guideline say about atrial fibrillation?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Atrial Fibrillation"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Atrial Fibrillation"
+    },
+    {
+      "id": "Q075",
+      "category": "I_rag_policy",
+      "patient_id": "P1021",
+      "question": "What does the hospital guideline say about hypertension?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Hypertension"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Hypertension"
+    },
+    {
+      "id": "Q076",
+      "category": "I_rag_policy",
+      "patient_id": "P1028",
+      "question": "What does the hospital guideline say about dyslipidaemias?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Dyslipidaemias"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Dyslipidaemias"
+    },
+    {
+      "id": "Q077",
+      "category": "I_rag_policy",
+      "patient_id": "P1033",
+      "question": "What does the hospital guideline say about cardiomyopathies?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Cardiomyopathies"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Cardiomyopathies"
+    },
+    {
+      "id": "Q078",
+      "category": "I_rag_policy",
+      "patient_id": "P1040",
+      "question": "What does the hospital guideline say about ventricular arrhythmias and sudden cardiac death?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Ventricular Arrhythmias & Sudden Cardiac Death"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Ventricular Arrhythmias & Sudden Cardiac Death"
+    },
+    {
+      "id": "Q079",
+      "category": "I_rag_policy",
+      "patient_id": "P1045",
+      "question": "What does the hospital guideline say about valvular heart disease?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Valvular Heart Disease"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Valvular Heart Disease"
+    },
+    {
+      "id": "Q080",
+      "category": "I_rag_policy",
+      "patient_id": "P1050",
+      "question": "What does the hospital guideline say about pericardial diseases?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Pericardial Diseases"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Pericardial Diseases"
+    },
+    {
+      "id": "Q081",
+      "category": "I_rag_policy",
+      "patient_id": "P1058",
+      "question": "What does the hospital guideline say about pulmonary hypertension?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Pulmonary Hypertension"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Pulmonary Hypertension"
+    },
+    {
+      "id": "Q082",
+      "category": "I_rag_policy",
+      "patient_id": "P1063",
+      "question": "What does the hospital guideline say about endocarditis?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Endocarditis"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Endocarditis"
+    },
+    {
+      "id": "Q083",
+      "category": "I_rag_policy",
+      "patient_id": "P1070",
+      "question": "What does the hospital guideline say about cardiovascular disease prevention?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "ESC Guidelines for Cardiovascular Disease Prevention"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=ESC Guidelines for Cardiovascular Disease Prevention"
+    },
+    {
+      "id": "Q084",
+      "category": "I_rag_policy",
+      "patient_id": "P1077",
+      "question": "What does the hospital protocol say about anticoagulation and antiplatelet therapy?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "Anticoagulation / Antiplatelet Therapy Protocol"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=Anticoagulation / Antiplatelet Therapy Protocol"
+    },
+    {
+      "id": "Q085",
+      "category": "I_rag_policy",
+      "patient_id": "P1089",
+      "question": "What does the hospital hospital policy say about cardiology medication and monitoring?",
+      "expected_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "Hospital Cardiology Medication & Monitoring Policy"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "document=Hospital Cardiology Medication & Monitoring Policy"
+    },
+    {
+      "id": "Q086",
+      "category": "J_combined",
+      "patient_id": "P1003",
+      "question": "Review this patient's Warfarin therapy against the anticoagulation protocol.",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Warfarin"
+    },
+    {
+      "id": "Q087",
+      "category": "J_combined",
+      "patient_id": "P1005",
+      "question": "Review this patient's Lisinopril therapy against the hospital medication policy.",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Lisinopril"
+    },
+    {
+      "id": "Q088",
+      "category": "J_combined",
+      "patient_id": "P1012",
+      "question": "Review this patient's Atorvastatin therapy against the dyslipidaemia guideline.",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Atorvastatin"
+    },
+    {
+      "id": "Q089",
+      "category": "J_combined",
+      "patient_id": "P1017",
+      "question": "Review this patient's Atorvastatin therapy against the chronic coronary syndromes guideline.",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Atorvastatin"
+    },
+    {
+      "id": "Q090",
+      "category": "J_combined",
+      "patient_id": "P1021",
+      "question": "Review this patient's Metoprolol therapy against the atrial fibrillation guideline.",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Metoprolol"
+    },
+    {
+      "id": "Q091",
+      "category": "J_combined",
+      "patient_id": "P1028",
+      "question": "Review this patient's Metoprolol therapy against the heart failure guideline.",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Metoprolol"
+    },
+    {
+      "id": "Q092",
+      "category": "J_combined",
+      "patient_id": "P1033",
+      "question": "Review this patient's Metoprolol therapy against the hospital cardiology monitoring policy.",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Metoprolol"
+    },
+    {
+      "id": "Q093",
+      "category": "J_combined",
+      "patient_id": "P1050",
+      "question": "Review this patient's Lisinopril therapy against the hypertension guideline.",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug=Lisinopril"
+    },
+    {
+      "id": "Q094",
+      "category": "K_edge",
+      "patient_id": "P12",
+      "question": "Can you review this patient's overall status?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [],
+      "expected_fact_substrings": [],
+      "expect_error": true,
+      "notes": "malformed patient_id (fails P\\d{4,12} format) -> repository ValueError, must degrade gracefully, not crash"
+    },
+    {
+      "id": "Q095",
+      "category": "K_edge",
+      "patient_id": "P9999",
+      "question": "Can you review this patient's overall status?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [],
+      "expected_fact_substrings": [
+        "No corresponding information"
+      ],
+      "expect_error": false,
+      "notes": "well-formed but nonexistent patient -> must say not found, not fabricate a record"
+    },
+    {
+      "id": "Q096",
+      "category": "K_edge",
+      "patient_id": "p1005",
+      "question": "What is this patient's gender?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1005"
+      ],
+      "expected_fact_substrings": [
+        "Non-binary"
+      ],
+      "expect_error": false,
+      "notes": "lowercase patient_id must be normalized/uppercased and still resolve"
+    },
+    {
+      "id": "Q097",
+      "category": "K_edge",
+      "patient_id": "  P1012  ",
+      "question": "What is this patient's smoking status?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [
+        "Patient P1012"
+      ],
+      "expected_fact_substrings": [
+        "Never smoker"
+      ],
+      "expect_error": false,
+      "notes": "whitespace-padded patient_id must still resolve"
+    },
+    {
+      "id": "Q098",
+      "category": "K_edge",
+      "patient_id": "P1005",
+      "question": "Is aspirin safe to combine with this patient's other medications?",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "'aspirin' is NOT in the hardcoded known-drug list -> openfda_drug_tool must NOT fire (routing gap, not a crash)"
+    },
+    {
+      "id": "Q099",
+      "category": "K_edge",
+      "patient_id": "P1005",
+      "question": "Any concerns about WARFARIN for this patient?",
+      "expected_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "expected_citation_substrings": [
+        "OpenFDA"
+      ],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "drug matching must be case-insensitive"
+    },
+    {
+      "id": "Q100",
+      "category": "K_edge",
+      "patient_id": "P1005",
+      "question": "Please check this patient's insurance policyholder status.",
+      "expected_tools": [
+        "patient_database_tool"
+      ],
+      "expected_citation_substrings": [],
+      "expected_fact_substrings": [],
+      "expect_error": false,
+      "notes": "'policyholder' must NOT word-boundary-match the RAG trigger 'policy' -> cardiology_rag_tool must NOT fire"
+    }
+  ]
+}

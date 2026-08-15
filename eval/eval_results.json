@@ -1,0 +1,1730 @@
+{
+  "summary": {
+    "total_cases": 100,
+    "overall_pass_rate": 55.0,
+    "no_crash_pass_rate": 100.0,
+    "tool_routing_pass_rate": 100.0,
+    "citation_grounding_pass_rate": 100.0,
+    "answer_grounding_pass_rate": 55.0,
+    "latency_ms": {
+      "mean": 17671.9,
+      "median": 18061,
+      "p95": 25327,
+      "max": 35500
+    },
+    "by_category": {
+      "A_demographic": {
+        "n": 10,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 40.0
+      },
+      "B_medication": {
+        "n": 10,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 0.0
+      },
+      "C_allergy": {
+        "n": 10,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 0.0
+      },
+      "D_lab": {
+        "n": 8,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 12.5
+      },
+      "E_vital": {
+        "n": 8,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 0.0
+      },
+      "F_cardiology_test": {
+        "n": 8,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 100.0
+      },
+      "G_condition": {
+        "n": 6,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 66.7
+      },
+      "H_drug_label": {
+        "n": 10,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 100.0
+      },
+      "I_rag_policy": {
+        "n": 15,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 100.0
+      },
+      "J_combined": {
+        "n": 8,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 100.0
+      },
+      "K_edge": {
+        "n": 7,
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 71.4
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "Q001",
+      "category": "A_demographic",
+      "question": "What is patient P1003's date of birth?",
+      "http_status": 200,
+      "latency_ms": 13844,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there are 7 patient records retrieved for patient P1003. However, the specific date of birth (DOB) for patient P1003 is not explicitly stated in the available data or the refe",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q002",
+      "category": "A_demographic",
+      "question": "What is the gender recorded for patient P1005?",
+      "http_status": 200,
+      "latency_ms": 19108,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there are 7 records retrieved for patient P1005. However, the specific gender recorded for patient P1005 is not explicitly stated in the available data or the referenced docum",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q003",
+      "category": "A_demographic",
+      "question": "What is patient P1012's smoking status?",
+      "http_status": 200,
+      "latency_ms": 9780,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information for patient P1012, there are 7 records retrieved; however, none explicitly state the patient\u2019s smoking status. Without direct documentation of smoking history (e.g., current s",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q004",
+      "category": "A_demographic",
+      "question": "What is patient P1017's date of birth?",
+      "http_status": 200,
+      "latency_ms": 20203,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information from the retrieved patient records for P1017, the specific date of birth for patient P1017 is not explicitly provided in the data reviewed. \n\n**Clinical Decision Support:**\n\n1",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q005",
+      "category": "A_demographic",
+      "question": "What is the gender recorded for patient P1021?",
+      "http_status": 200,
+      "latency_ms": 14047,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, the records retrieved for patient P1021 do not explicitly specify the gender recorded for this patient. The available documentation (7 records retrieved) does not include a di",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q006",
+      "category": "A_demographic",
+      "question": "What is patient P1028's smoking status?",
+      "http_status": 200,
+      "latency_ms": 20078,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1028, a total of 7 records were retrieved; however, the specific information regarding the patient\u2019s smoking status is not explicitly detailed in the ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q007",
+      "category": "A_demographic",
+      "question": "What is patient P1033's date of birth?",
+      "http_status": 200,
+      "latency_ms": 9717,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, patient P1033 has 7 medical records retrieved; however, none of the details explicitly include the patient\u2019s date of birth. Without direct access to specific demographic data ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q008",
+      "category": "A_demographic",
+      "question": "What is the gender recorded for patient P1040?",
+      "http_status": 200,
+      "latency_ms": 4438,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1040, there are 7 records retrieved; however, none of the provided information explicitly states the gender recorded for this patient.\n\n**Clinical Dec",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q009",
+      "category": "A_demographic",
+      "question": "What is this patient's full name?",
+      "http_status": 200,
+      "latency_ms": 5375,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, the patient's identifier is P1045, and there are 7 records retrieved for this patient. However, the available data does not include the patient's full name or any personally i",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q010",
+      "category": "A_demographic",
+      "question": "What is patient P1050's smoking status?",
+      "http_status": 200,
+      "latency_ms": 17796,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1050 (7 records retrieved), there is no explicit mention or documentation of the patient\u2019s smoking status in the provided information. Without direct ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q011",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 14703,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1003, there is no explicit information provided regarding the current medications the patient is taking. \n\n**Clinical Decision Support:**\n\n1",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q012",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 24969,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is only one patient record retrieved for patient P1005. However, the specific details regarding the medications currently taken by this patient are not included in the a",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q013",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 15625,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is a single patient record retrieved for patient P1012; however, the details of the medications currently taken by the patient are not explicitly included in the data sh",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q014",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 18061,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is only one patient record retrieved for patient P1017. However, the specific details regarding the medications that this patient is currently taking are not included in",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q015",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 13077,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is only one patient record retrieved for patient P1021. However, the available data does not specify the current medications that this patient is taking.\n\n**Clinical Dec",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q016",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 20094,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information, there is only one patient record retrieved for patient P1028. However, the current data does not specify any medications that this patient is taking.\n\n**Clinical Decision Sup",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q017",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 9969,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is a single patient record (P1033) retrieved; however, the specific details regarding the medications this patient is currently taking are not included in the data you h",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q018",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 16844,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is a single patient record retrieved for patient P1040. However, the specific details regarding the medications currently taken by this patient are not included in the d",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q019",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 14842,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is only one patient record retrieved for patient P1045, but the specific details regarding the medications currently taken by this patient are not included in the data y",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q020",
+      "category": "B_medication",
+      "question": "What medications is this patient currently taking?",
+      "http_status": 200,
+      "latency_ms": 17610,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information, there is only one patient record retrieved for patient P1050. However, the specific details regarding the medications that this patient is currently taking were not provided ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q021",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 23717,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1058, there is no documented information indicating any known drug allergies. \n\n**Clinical decision support considerations:**\n- The absence ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q022",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 22282,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1063, there is no documented information indicating any known drug allergies. However, the absence of recorded allergies in the provided dat",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q023",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 14405,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1070, there is no documented information indicating any known drug allergies. \n\n**Clinical Decision Support:**\n- The absence of recorded dru",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q024",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 19578,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1077, there is no documented information indicating any known drug allergies. However, the data retrieved is limited to a single record and may not co",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q025",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 17438,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1089, there is no documented information indicating any known drug allergies. \n\n**Clinical Decision Support:**\n- No explicit allergy informa",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q026",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 18467,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1003, there is no documented information indicating any known drug allergies. However, this conclusion is limited by the completeness and cu",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q027",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 18078,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1005, there is no documented information indicating any known drug allergies. The retrieved record (Document 1) does not specify any allergy history r",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q028",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 14438,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1012, there is no documented information indicating any known drug allergies. However, this conclusion is limited by the completeness and currency of ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q029",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 18437,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1017, there is no documented information indicating any known drug allergies for this patient. \n\n**Clinical Decision Support:**\n- Current da",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q030",
+      "category": "C_allergy",
+      "question": "Does this patient have any known drug allergies?",
+      "http_status": 200,
+      "latency_ms": 19422,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the patient record evidence retrieved for patient P1021, there is no documented information indicating any known drug allergies. However, the available data is limited to a single record, and it is pos",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q031",
+      "category": "D_lab",
+      "question": "What lab results are on file for this patient?",
+      "http_status": 200,
+      "latency_ms": 17765,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is one patient record retrieved for patient P1003; however, no specific laboratory results are detailed in the data available to me.\n\n**Clinical Decision Support:**\n\n1. ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q032",
+      "category": "D_lab",
+      "question": "What lab results are on file for this patient?",
+      "http_status": 200,
+      "latency_ms": 21405,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is one patient record retrieved for patient P1005. However, the specific lab results contained within that record have not been detailed or included in the data you shar",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q033",
+      "category": "D_lab",
+      "question": "What lab results are on file for this patient?",
+      "http_status": 200,
+      "latency_ms": 7672,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information, there is a single patient record retrieved for patient P1012. However, the specific lab results for this patient are not detailed or provided in the data you have shared.\n\n**",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q034",
+      "category": "D_lab",
+      "question": "What lab results are on file for this patient?",
+      "http_status": 200,
+      "latency_ms": 15639,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information available, there is one patient record retrieved for patient P1017. However, the details of the lab results within that record have not been provided in the current data set.\n\n**Clinica",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q035",
+      "category": "D_lab",
+      "question": "What lab results are on file for this patient?",
+      "http_status": 200,
+      "latency_ms": 22047,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information, there is one patient record retrieved for patient P1021. However, the details of the lab results within that record have not been provided in the current data set.\n\n**Clinica",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q036",
+      "category": "D_lab",
+      "question": "What lab results are on file for this patient?",
+      "http_status": 200,
+      "latency_ms": 11734,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is a single patient record retrieved for patient P1028. However, no specific lab results or detailed laboratory data have been included or described in the available doc",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q037",
+      "category": "D_lab",
+      "question": "What lab results are on file for this patient?",
+      "http_status": 200,
+      "latency_ms": 19515,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is one patient record retrieved for patient P1033. However, no specific lab results or detailed laboratory data are included or referenced in the available record or doc",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q038",
+      "category": "D_lab",
+      "question": "What lab results are on file for this patient?",
+      "http_status": 200,
+      "latency_ms": 12219,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is only one patient record retrieved for patient P1040, but no specific lab results are detailed in the available data. Therefore, I am unable to provide any lab values ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q039",
+      "category": "E_vital",
+      "question": "What are this patient's latest vital signs?",
+      "http_status": 200,
+      "latency_ms": 16969,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1045, there is only one record available. However, the specific details of the latest vital signs (such as blood pressure, heart rate, respi",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q040",
+      "category": "E_vital",
+      "question": "What are this patient's latest vital signs?",
+      "http_status": 200,
+      "latency_ms": 10702,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is a single patient record retrieved for patient P1050. However, the specific details of the latest vital signs (such as blood pressure, heart rate, respiratory rate, te",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q041",
+      "category": "E_vital",
+      "question": "What are this patient's latest vital signs?",
+      "http_status": 200,
+      "latency_ms": 20561,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1058, there is only 1 record available. However, the specific details of the latest vital signs (such as blood pressure, heart rate, respira",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q042",
+      "category": "E_vital",
+      "question": "What are this patient's latest vital signs?",
+      "http_status": 200,
+      "latency_ms": 12000,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is only one patient record retrieved for patient P1063. However, the specific details of the latest vital signs (such as blood pressure, heart rate, respiratory rate, te",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q043",
+      "category": "E_vital",
+      "question": "What are this patient's latest vital signs?",
+      "http_status": 200,
+      "latency_ms": 31360,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is a single patient record retrieved for patient P1070; however, the specific details of the latest vital signs (such as blood pressure, heart rate, respiratory rate, te",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q044",
+      "category": "E_vital",
+      "question": "What are this patient's latest vital signs?",
+      "http_status": 200,
+      "latency_ms": 15202,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, only one patient record was retrieved for patient P1077. However, the specific details of the latest vital signs (such as blood pressure, heart rate, respiratory rate, tempera",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q045",
+      "category": "E_vital",
+      "question": "What are this patient's latest vital signs?",
+      "http_status": 200,
+      "latency_ms": 20625,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1089, there is only one record retrieved. However, the specific latest vital signs (such as blood pressure, heart rate, respiratory rate, temperature,",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q046",
+      "category": "E_vital",
+      "question": "What are this patient's latest vital signs?",
+      "http_status": 200,
+      "latency_ms": 20828,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1003, there is only 1 record accessible. However, the specific details of the latest vital signs (such as blood pressure, heart rate, respir",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q047",
+      "category": "F_cardiology_test",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "http_status": 200,
+      "latency_ms": 20203,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1005, there is only one record retrieved, but the specific details of cardiology tests or procedures performed are not explicitly provided in the info",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q048",
+      "category": "F_cardiology_test",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "http_status": 200,
+      "latency_ms": 21016,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1012, there is only one record retrieved, which does not specify any cardiology tests or procedures performed. \n\n**Clinical Decision Support:**\n\n1. **",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q049",
+      "category": "F_cardiology_test",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "http_status": 200,
+      "latency_ms": 11702,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information for patient P1017, there is documentation indicating that 1 record related to cardiology tests or procedures has been retrieved. However, the specific details of the cardiolog",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q050",
+      "category": "F_cardiology_test",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "http_status": 200,
+      "latency_ms": 21500,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1021, there is only one record retrieved. However, the specific details regarding cardiology tests or procedures performed on this patient are not exp",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q051",
+      "category": "F_cardiology_test",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "http_status": 200,
+      "latency_ms": 11328,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is a single patient record retrieved for patient P1028 related to cardiology tests or procedures. However, the specific details of the cardiology tests or procedures per",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q052",
+      "category": "F_cardiology_test",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "http_status": 200,
+      "latency_ms": 6390,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1033, there is only one record available. However, the specific details of cardiology tests or procedures performed on this patient are not ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q053",
+      "category": "F_cardiology_test",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "http_status": 200,
+      "latency_ms": 10952,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, there is only one patient record retrieved for patient P1040, but no specific details about cardiology tests or procedures performed on this patient are included in the data a",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q054",
+      "category": "F_cardiology_test",
+      "question": "What cardiology tests or procedures has this patient had?",
+      "http_status": 200,
+      "latency_ms": 18484,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence retrieved for patient P1045, there is only 1 record related to cardiology tests or procedures. However, the specific details of the cardiology tests or procedures ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q055",
+      "category": "G_condition",
+      "question": "Please review this patient's cardiovascular condition.",
+      "http_status": 200,
+      "latency_ms": 24358,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information for patient P1050, with 7 clinical records retrieved, here is a comprehensive cardiovascular clinical decision support overview:\n\n1. **Review of Patient Cardiovascular Conditi",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q056",
+      "category": "G_condition",
+      "question": "Please review this patient's cardiovascular condition.",
+      "http_status": 200,
+      "latency_ms": 20594,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided for patient P1058, here is a comprehensive clinical decision support summary regarding their cardiovascular condition:\n\n1. **Review of Available Data**  \n   - Seven patient rec",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q057",
+      "category": "G_condition",
+      "question": "Please review this patient's cardiovascular condition.",
+      "http_status": 200,
+      "latency_ms": 26561,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information for patient P1063, the following clinical decision support is provided regarding their cardiovascular condition:\n\n1. **Review of Available Data**  \n   The patient has 7 clinic",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q058",
+      "category": "G_condition",
+      "question": "Please review this patient's cardiovascular condition.",
+      "http_status": 200,
+      "latency_ms": 16640,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information for patient P1070, the following clinical decision support regarding the patient\u2019s cardiovascular condition can be provided:\n\n1. **Summary of Available Data:**  \n   The patien",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q059",
+      "category": "G_condition",
+      "question": "Please review this patient's cardiovascular condition.",
+      "http_status": 200,
+      "latency_ms": 24125,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided for patient P1077, here is a comprehensive clinical decision support summary regarding their cardiovascular condition:\n\n1. **Available Data and Records**  \n   - Seven clinical ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q060",
+      "category": "G_condition",
+      "question": "Please review this patient's cardiovascular condition.",
+      "http_status": 200,
+      "latency_ms": null,
+      "no_crash_pass": true,
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "note": "manually re-verified after 2 transport-layer failures; hypertension only appears as generic boilerplate, not grounded"
+    },
+    {
+      "id": "Q061",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Warfarin?",
+      "http_status": 200,
+      "latency_ms": 20141,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nWarfarin is an oral anticoagulant commonly used for the prevention and treatment of thromboembolic disorders. Based on the available evidence, including OpenFDA label information for Warfarin Sodium (Document 2",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q062",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Warfarin?",
+      "http_status": 200,
+      "latency_ms": 10890,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available evidence, including the OpenFDA label information for Warfarin (generic name WARFARIN SODIUM), here is a comprehensive summary of the side effects and warnings associated with Warfarin us",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q063",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Warfarin?",
+      "http_status": 200,
+      "latency_ms": 14842,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available evidence from OpenFDA labeling information for Warfarin (generic name: WARFARIN SODIUM) and standard clinical guidelines, the following summarizes the key side effects and warnings associ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q064",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Atorvastatin?",
+      "http_status": 200,
+      "latency_ms": 11125,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nAtorvastatin, a commonly prescribed statin for lowering cholesterol and preventing cardiovascular disease, has documented side effects and warnings based on evidence from drug labeling and clinical guidelines.\n",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q065",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Atorvastatin?",
+      "http_status": 200,
+      "latency_ms": 35500,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nAtorvastatin, a commonly prescribed statin for lowering cholesterol, has a well-documented profile of side effects and warnings that clinicians should consider when managing patients.\n\n**Common Side Effects:**\n",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q066",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Atorvastatin?",
+      "http_status": 200,
+      "latency_ms": 11469,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nAtorvastatin, a commonly prescribed statin for lowering cholesterol, has a well-documented profile of potential side effects and warnings. Based on the available evidence, including OpenFDA labeling information",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q067",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Lisinopril?",
+      "http_status": 200,
+      "latency_ms": 14405,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nLisinopril is an angiotensin-converting enzyme (ACE) inhibitor commonly used for hypertension, heart failure, and certain types of kidney disease. Based on the available evidence, including the OpenFDA label in",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q068",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Lisinopril?",
+      "http_status": 200,
+      "latency_ms": 24405,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available evidence, including the OpenFDA label information for Lisinopril (including formulations combined with Hydrochlorothiazide), here is a summary of the known side effects and warnings assoc",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q069",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Metoprolol?",
+      "http_status": 200,
+      "latency_ms": 18625,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available evidence, including the OpenFDA label information for Metoprolol (generic name: METOPROLOL), the following summarizes the known side effects and warnings associated with Metoprolol use:\n\n",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q070",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Metoprolol?",
+      "http_status": 200,
+      "latency_ms": 19108,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nMetoprolol is a beta-1 selective beta-blocker commonly used in the management of hypertension, angina pectoris, heart failure, and certain arrhythmias. Based on the retrieved patient records (Document 1) and th",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q071",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about acute coronary syndromes?",
+      "http_status": 200,
+      "latency_ms": 18078,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available hospital guideline documents, the most relevant source addressing acute coronary syndromes (ACS) is the **ESC Guidelines for Acute Coronary Syndromes** (Document 2). Although the full gui",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q072",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about chronic coronary syndromes?",
+      "http_status": 200,
+      "latency_ms": 24875,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available hospital guideline documents, the key points regarding **chronic coronary syndromes (CCS)** can be summarized from the **ESC Guidelines for Chronic Coronary Syndromes** (Document 3):\n\n###",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q073",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about heart failure?",
+      "http_status": 200,
+      "latency_ms": 18437,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the hospital guideline documents retrieved, the primary relevant source for heart failure management is the **ESC Guidelines for Heart Failure** (Document 2). Although the full guideline text is not pr",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q074",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about atrial fibrillation?",
+      "http_status": 200,
+      "latency_ms": 28734,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the hospital guideline evidence retrieved, the primary relevant document addressing atrial fibrillation (AF) is the **ESC Guidelines for Atrial Fibrillation** (Document 2). Although the exact detailed ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q075",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about hypertension?",
+      "http_status": 200,
+      "latency_ms": 17796,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the retrieved hospital guideline documents relevant to hypertension, the primary source for guidance is the **ESC Guidelines for Hypertension** (Document 2). While the exact detailed content of the gui",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q076",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about dyslipidaemias?",
+      "http_status": 200,
+      "latency_ms": 21405,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the retrieved hospital guideline documents, the most relevant source addressing dyslipidaemias is the **ESC Guidelines for Dyslipidaemias** (Document 2).\n\n### Summary of Hospital Guideline on Dyslipida",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q077",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about cardiomyopathies?",
+      "http_status": 200,
+      "latency_ms": 17141,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available hospital guideline documents, particularly the **ESC Guidelines for Cardiomyopathies** (Document 2), the following summarizes the key points regarding cardiomyopathies:\n\n### Purpose and S",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q078",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about ventricular arrhythmias and sudden cardiac death?",
+      "http_status": 200,
+      "latency_ms": 15625,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the hospital guideline evidence retrieved, particularly from the **ESC Guidelines for Ventricular Arrhythmias and Sudden Cardiac Death** (Document 2), the following key points summarize the current rec",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q079",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about valvular heart disease?",
+      "http_status": 200,
+      "latency_ms": 18061,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available hospital guideline documents retrieved for patient P1045, the most relevant source addressing valvular heart disease is the **ESC Guidelines for Valvular Heart Disease** (Document 2).\n\n##",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q080",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about pericardial diseases?",
+      "http_status": 200,
+      "latency_ms": 13077,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available hospital guideline documents retrieved, the most relevant source addressing pericardial diseases is the **ESC Guidelines for Pericardial Diseases** (Document 2). Although the exact detail",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q081",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about pulmonary hypertension?",
+      "http_status": 200,
+      "latency_ms": 20094,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the hospital guideline documents retrieved, the relevant guidance on pulmonary hypertension (PH) primarily comes from the **ESC Guidelines for Pulmonary Hypertension** (Document 2). Although the exact ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q082",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about endocarditis?",
+      "http_status": 200,
+      "latency_ms": 9969,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the hospital guideline documents retrieved, the most relevant source addressing endocarditis is the **ESC Guidelines for Endocarditis** (Document 2). Although the exact detailed content from the guidel",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q083",
+      "category": "I_rag_policy",
+      "question": "What does the hospital guideline say about cardiovascular disease prevention?",
+      "http_status": 200,
+      "latency_ms": 16844,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available hospital guideline documents retrieved for patient P1070, the primary source addressing cardiovascular disease prevention is the **ESC Guidelines for Cardiovascular Disease Prevention** (",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q084",
+      "category": "I_rag_policy",
+      "question": "What does the hospital protocol say about anticoagulation and antiplatelet therapy?",
+      "http_status": 200,
+      "latency_ms": 24592,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the hospital protocol and relevant guideline documents retrieved for patient P1077, here is a summary of the clinical decision support regarding anticoagulation and antiplatelet therapy:\n\n1. **Hospital",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q085",
+      "category": "I_rag_policy",
+      "question": "What does the hospital hospital policy say about cardiology medication and monitoring?",
+      "http_status": 200,
+      "latency_ms": 17610,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the hospital policy and relevant cardiology guidelines retrieved, here is a comprehensive summary regarding cardiology medication and monitoring:\n\n1. **Hospital Cardiology Medication & Monitoring Polic",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q086",
+      "category": "J_combined",
+      "question": "Review this patient's Warfarin therapy against the anticoagulation protocol.",
+      "http_status": 200,
+      "latency_ms": 23717,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided for patient P1003 regarding their Warfarin therapy, here is a clinical decision support review aligned with anticoagulation protocols and relevant guidelines:\n\n1. **Assessment ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q087",
+      "category": "J_combined",
+      "question": "Review this patient's Lisinopril therapy against the hospital medication policy.",
+      "http_status": 200,
+      "latency_ms": 22282,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided regarding patient P1005 and their Lisinopril therapy, here is a comprehensive clinical decision support review in relation to hospital medication policy and relevant cardiology",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q088",
+      "category": "J_combined",
+      "question": "Review this patient's Atorvastatin therapy against the dyslipidaemia guideline.",
+      "http_status": 200,
+      "latency_ms": 25327,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for P1012 and the relevant guideline documents retrieved, here is a clinical decision support review of the patient\u2019s Atorvastatin therapy in the context of dyslip",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q089",
+      "category": "J_combined",
+      "question": "Review this patient's Atorvastatin therapy against the chronic coronary syndromes guideline.",
+      "http_status": 200,
+      "latency_ms": 17311,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information available for patient P1017 and the retrieved documents, here is a clinical decision support summary regarding the use of Atorvastatin therapy in the context of chronic coronary syndrom",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q090",
+      "category": "J_combined",
+      "question": "Review this patient's Metoprolol therapy against the atrial fibrillation guideline.",
+      "http_status": 200,
+      "latency_ms": 13188,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, here is a clinical decision support review of the patient P1021\u2019s Metoprolol therapy in the context of atrial fibrillation (AF) management, referencing the ESC Guidelines and ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q091",
+      "category": "J_combined",
+      "question": "Review this patient's Metoprolol therapy against the heart failure guideline.",
+      "http_status": 200,
+      "latency_ms": 18483,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, here is a clinical decision support review of the patient P1028\u2019s Metoprolol therapy in the context of heart failure management, referencing the relevant ESC Guidelines:\n\n---\n",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q092",
+      "category": "J_combined",
+      "question": "Review this patient's Metoprolol therapy against the hospital cardiology monitoring policy.",
+      "http_status": 200,
+      "latency_ms": 21016,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided for patient P1033 and the available documents, here is a clinical decision support review of the patient\u2019s Metoprolol therapy in relation to the hospital cardiology monitoring ",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q093",
+      "category": "J_combined",
+      "question": "Review this patient's Lisinopril therapy against the hypertension guideline.",
+      "http_status": 200,
+      "latency_ms": 14438,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool",
+        "cardiology_rag_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided and the available guideline documents, here is a clinical decision support summary regarding the use of Lisinopril therapy for hypertension management in patient P1050:\n\n1. **L",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q094",
+      "category": "K_edge",
+      "question": "Can you review this patient's overall status?",
+      "http_status": 200,
+      "latency_ms": 21500,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [
+        "Patient record information is temporarily unavailable."
+      ],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThank you for your inquiry. To provide an evidence-based review of a patient\u2019s overall cardiovascular status, detailed clinical information is essential, including history, physical examination findings, diagno",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q095",
+      "category": "K_edge",
+      "question": "Can you review this patient's overall status?",
+      "http_status": 200,
+      "latency_ms": 11453,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThank you for your inquiry. Based on the information provided, there is no specific patient data available to review or analyze. Therefore, it is not possible to assess the patient\u2019s overall cardiovascular stat",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q096",
+      "category": "K_edge",
+      "question": "What is this patient's gender?",
+      "http_status": 200,
+      "latency_ms": 18625,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information provided, including the retrieval of 7 patient records for patient P1005, there is no explicit mention or documentation of the patient\u2019s gender in the data shared.\n\n**Clinical",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": false
+    },
+    {
+      "id": "Q097",
+      "category": "K_edge",
+      "question": "What is this patient's smoking status?",
+      "http_status": 200,
+      "latency_ms": 14047,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available patient record evidence for patient P1012, there is no explicit information provided regarding the patient\u2019s smoking status in the retrieved 7 records. \n\n**Clinical Decision Support:**\n\n1",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q098",
+      "category": "K_edge",
+      "question": "Is aspirin safe to combine with this patient's other medications?",
+      "http_status": 200,
+      "latency_ms": 18484,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThank you for your query regarding the safety of combining aspirin with this patient\u2019s other medications.\n\n**Clinical Decision Support:**\n\n1. **Review of Current Medications:**  \n   To assess the safety of aspi",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q099",
+      "category": "K_edge",
+      "question": "Any concerns about WARFARIN for this patient?",
+      "http_status": 200,
+      "latency_ms": 28796,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the available information for patient P1005 and the retrieved records, here is a clinical decision support summary regarding the use of warfarin:\n\n1. **Warfarin Overview and Indications**  \nWarfarin is",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q100",
+      "category": "K_edge",
+      "question": "Please check this patient's insurance policyholder status.",
+      "http_status": 200,
+      "latency_ms": 21469,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nBased on the information provided, the patient record for P1005 includes 7 retrieved records; however, there is no specific data available within these records regarding the patient\u2019s insurance policyholder sta",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    }
+  ]
+}
