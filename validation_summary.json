@@ -1,0 +1,38 @@
+{
+  "dataset": "Northbridge synthetic cardiology patient database",
+  "synthetic_only": true,
+  "seed": 20260817,
+  "patient_count": 100,
+  "patient_id_range": "P1001-P1100",
+  "scenario_counts": {
+    "routine_complete_history": 55,
+    "stale_monitoring": 7,
+    "medication_status_conflict": 6,
+    "allergy_medication_conflict": 5,
+    "high_potassium": 5,
+    "ace_or_arb_active": 5,
+    "preliminary_cardiology_test": 4,
+    "peri_procedure_plan_missing": 4,
+    "anticoagulant_active": 4,
+    "marked_bradycardia": 4,
+    "rate_limiting_medication": 4,
+    "severe_hypoxia": 4,
+    "emergency_symptom_proxy": 4,
+    "allergy_status_unknown": 3,
+    "unreviewed_abnormal_lab": 2,
+    "patient_record_inactive": 1
+  },
+  "record_counts": {
+    "conditions": 303,
+    "medications": 310,
+    "allergies": 35,
+    "lab_results": 825,
+    "vital_signs": 208,
+    "cardiology_tests": 208
+  },
+  "validation": {
+    "errors": [],
+    "passed": true
+  },
+  "important_limitation": "The requested schema has no signed-order ID, authorization timestamp, authorization status, or complete administration-instruction fields. Prescriber alone must not be treated as proof of FINAL_AUTHORIZED."
+}

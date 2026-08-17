@@ -1,0 +1,819 @@
+[
+  {
+    "patient_id": "P1001",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1002",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1003",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1004",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1005",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1006",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1007",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1008",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1009",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1010",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1011",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1012",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1013",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1014",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1015",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1016",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1017",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1018",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1019",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1020",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1021",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1022",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1023",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1024",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1025",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1026",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1027",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1028",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1029",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1030",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1031",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1032",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1033",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1034",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1035",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1036",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1037",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1038",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1039",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1040",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1041",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1042",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1043",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1044",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1045",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1046",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1047",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1048",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1049",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1050",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1051",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1052",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1053",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1054",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1055",
+    "scenario_tags": [
+      "routine_complete_history"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1056",
+    "scenario_tags": [
+      "stale_monitoring"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1057",
+    "scenario_tags": [
+      "stale_monitoring"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1058",
+    "scenario_tags": [
+      "stale_monitoring"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1059",
+    "scenario_tags": [
+      "stale_monitoring"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1060",
+    "scenario_tags": [
+      "stale_monitoring"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1061",
+    "scenario_tags": [
+      "stale_monitoring"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1062",
+    "scenario_tags": [
+      "stale_monitoring"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1063",
+    "scenario_tags": [
+      "medication_status_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1064",
+    "scenario_tags": [
+      "medication_status_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1065",
+    "scenario_tags": [
+      "medication_status_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1066",
+    "scenario_tags": [
+      "medication_status_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1067",
+    "scenario_tags": [
+      "medication_status_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1068",
+    "scenario_tags": [
+      "medication_status_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1069",
+    "scenario_tags": [
+      "allergy_medication_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1070",
+    "scenario_tags": [
+      "allergy_medication_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1071",
+    "scenario_tags": [
+      "allergy_medication_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1072",
+    "scenario_tags": [
+      "allergy_medication_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1073",
+    "scenario_tags": [
+      "allergy_medication_conflict"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1074",
+    "scenario_tags": [
+      "high_potassium",
+      "ace_or_arb_active"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1075",
+    "scenario_tags": [
+      "high_potassium",
+      "ace_or_arb_active"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1076",
+    "scenario_tags": [
+      "high_potassium",
+      "ace_or_arb_active"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1077",
+    "scenario_tags": [
+      "high_potassium",
+      "ace_or_arb_active"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1078",
+    "scenario_tags": [
+      "high_potassium",
+      "ace_or_arb_active"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1079",
+    "scenario_tags": [
+      "preliminary_cardiology_test"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1080",
+    "scenario_tags": [
+      "preliminary_cardiology_test"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1081",
+    "scenario_tags": [
+      "preliminary_cardiology_test"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1082",
+    "scenario_tags": [
+      "preliminary_cardiology_test"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1083",
+    "scenario_tags": [
+      "peri_procedure_plan_missing",
+      "anticoagulant_active"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1084",
+    "scenario_tags": [
+      "peri_procedure_plan_missing",
+      "anticoagulant_active"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1085",
+    "scenario_tags": [
+      "peri_procedure_plan_missing",
+      "anticoagulant_active"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1086",
+    "scenario_tags": [
+      "peri_procedure_plan_missing",
+      "anticoagulant_active"
+    ],
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1087",
+    "scenario_tags": [
+      "marked_bradycardia",
+      "rate_limiting_medication"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1088",
+    "scenario_tags": [
+      "marked_bradycardia",
+      "rate_limiting_medication"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1089",
+    "scenario_tags": [
+      "marked_bradycardia",
+      "rate_limiting_medication"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1090",
+    "scenario_tags": [
+      "marked_bradycardia",
+      "rate_limiting_medication"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1091",
+    "scenario_tags": [
+      "severe_hypoxia",
+      "emergency_symptom_proxy"
+    ],
+    "expected_review_status": "EMERGENCY_ESCALATION",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1092",
+    "scenario_tags": [
+      "severe_hypoxia",
+      "emergency_symptom_proxy"
+    ],
+    "expected_review_status": "EMERGENCY_ESCALATION",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1093",
+    "scenario_tags": [
+      "severe_hypoxia",
+      "emergency_symptom_proxy"
+    ],
+    "expected_review_status": "EMERGENCY_ESCALATION",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1094",
+    "scenario_tags": [
+      "severe_hypoxia",
+      "emergency_symptom_proxy"
+    ],
+    "expected_review_status": "EMERGENCY_ESCALATION",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1095",
+    "scenario_tags": [
+      "allergy_status_unknown"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1096",
+    "scenario_tags": [
+      "allergy_status_unknown"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1097",
+    "scenario_tags": [
+      "allergy_status_unknown"
+    ],
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1098",
+    "scenario_tags": [
+      "unreviewed_abnormal_lab"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1099",
+    "scenario_tags": [
+      "unreviewed_abnormal_lab"
+    ],
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1100",
+    "scenario_tags": [
+      "patient_record_inactive"
+    ],
+    "expected_review_status": "SYSTEM_UNAVAILABLE",
+    "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  }
+]
