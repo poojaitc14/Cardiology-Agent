@@ -1,0 +1,16 @@
+# Placeholder CodeBuild spec — not executed in local build.
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+    commands:
+      - pip install -e ".[dev]"
+  build:
+    commands:
+      - python -m cardiologist_agent.scripts.validate_artifacts
+      - pytest tests/unit tests/safety tests/integration -q
+      - pytest tests/evaluation/test_deterministic_status.py -q -m slow
+artifacts:
+  files:
+    - "**/*"

@@ -1,0 +1,86 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: cardiologist-api
+    env_file:
+      - ../.env
+    environment:
+      PATIENT_REPOSITORY_PROVIDER: local_json
+      POLICY_RETRIEVER_PROVIDER: local
+      MEDICATION_ORDER_PROVIDER: unavailable
+      ENABLE_DYNAMODB: "false"
+      ENABLE_OPENSEARCH: "false"
+      ENABLE_LANGFUSE: "false"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../data:/app/data:ro
+      - cardiologist_local:/app/.local
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 40s
+
+  ui:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: cardiologist-ui
+    env_file:
+      - ../.env
+    environment:
+      API_BASE_URL: http://api:8000
+      PATIENT_REPOSITORY_PROVIDER: local_json
+      POLICY_RETRIEVER_PROVIDER: local
+      MEDICATION_ORDER_PROVIDER: unavailable
+      ENABLE_DYNAMODB: "false"
+      ENABLE_OPENSEARCH: "false"
+      ENABLE_LANGFUSE: "false"
+    command:
+      - streamlit
+      - run
+      - streamlit_app/app.py
+      - --server.port=8501
+      - --server.address=0.0.0.0
+      - --server.headless=true
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../data:/app/data:ro
+      - cardiologist_local:/app/.local
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  test:
+    profiles: ["test"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    env_file:
+      - ../.env
+    environment:
+      PATIENT_REPOSITORY_PROVIDER: local_json
+      POLICY_RETRIEVER_PROVIDER: local
+      MEDICATION_ORDER_PROVIDER: unavailable
+      ENABLE_DYNAMODB: "false"
+      ENABLE_OPENSEARCH: "false"
+      ENABLE_LANGFUSE: "false"
+      LLM_PROVIDER: fake
+      OPENFDA_PROVIDER: fake
+    volumes:
+      - ../data:/app/data:ro
+      - cardiologist_local:/app/.local
+    command: pytest tests/safety tests/integration tests/evaluation/test_manifest.py tests/unit/test_narrative.py -q
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  cardiologist_local:

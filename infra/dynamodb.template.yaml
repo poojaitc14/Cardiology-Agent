@@ -1,0 +1,15 @@
+# AWS infrastructure definitions — not provisioned in local build.
+# Enable with ENABLE_DYNAMODB=true and configured AWS credentials.
+
+Resources:
+  PatientsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Patients
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: patient_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: patient_id
+          KeyType: HASH

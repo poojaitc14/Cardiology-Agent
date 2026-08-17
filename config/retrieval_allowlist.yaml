@@ -1,0 +1,11 @@
+runtime_eligible_corpus:
+  - runtime
+allowed_statuses:
+  - active
+denied_document_ids:
+  - NB-TRN-701
+  - NB-TRN-720
+denied_corpus_eligibility:
+  - evaluation
+min_retrieval_score: 0.05
+top_k: 5

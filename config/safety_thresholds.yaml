@@ -1,0 +1,28 @@
+reference_date: "2026-08-17"
+stale_lab_days: 120
+stale_vital_days: 180
+high_potassium_mmol: 5.0
+severe_hypoxia_spo2: 92
+marked_bradycardia_bpm: 50
+ace_arb_drugs:
+  - lisinopril
+  - losartan
+  - ramipril
+  - enalapril
+  - valsartan
+  - candesartan
+  - perindopril
+  - irbesartan
+anticoagulants:
+  - apixaban
+  - warfarin
+  - rivaroxaban
+  - dabigatran
+  - edoxaban
+rate_limiting_drugs:
+  - bisoprolol
+  - metoprolol
+  - carvedilol
+  - diltiazem
+  - verapamil
+  - atenolol

@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cardiologist-agent"
+version = "0.1.0"
+description = "Fictional cardiologist clinical review and decision-support training application"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.32.0",
+  "streamlit>=1.39.0",
+  "pydantic>=2.9.0",
+  "pydantic-settings>=2.5.0",
+  "langgraph>=0.2.0",
+  "langchain-core>=0.3.0",
+  "langchain-openai>=0.2.0",
+  "pypdf>=5.0.0",
+  "httpx>=0.27.0",
+  "python-dotenv>=1.0.0",
+  "pyyaml>=6.0.0",
+  "scikit-learn>=1.5.0",
+  "numpy>=1.26.0",
+  "requests>=2.32.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.0",
+  "pytest-asyncio>=0.24.0",
+  "httpx>=0.27.0",
+  "ruff>=0.7.0",
+  "mypy>=1.13.0",
+  "types-PyYAML",
+  "types-requests",
+]
+aws = ["boto3>=1.35.0"]
+ragas = ["ragas>=0.2.0", "datasets>=3.0.0"]
+langfuse = ["langfuse>=2.0.0"]
+all = ["cardiologist-agent[dev,aws,ragas,langfuse]"]
+
+[project.scripts]
+cardio-api = "cardiologist_agent.api.main:run"
+cardio-ingest = "cardiologist_agent.scripts.ingest_policies:main"
+cardio-eval = "cardiologist_agent.scripts.run_evaluation:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = [
+  "integration: integration tests requiring local index",
+  "slow: slow evaluation tests",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = false
+ignore_missing_imports = true

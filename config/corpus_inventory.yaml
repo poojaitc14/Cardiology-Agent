@@ -1,0 +1,111 @@
+# Explicit PDF inventory — runtime ingestion uses runtime_policies only.
+runtime_policies_dir: data/rag/runtime_policies
+governance_dir: data/rag/governance
+evaluation_dir: data/rag/evaluation-only
+
+documents:
+  - source_path: data/rag/runtime_policies/01_clinical_governance_and_authorisation.pdf
+    document_id: NB-GOV-001
+    category: clinical_governance
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/02_medication_initiation_monitoring_timelines.pdf
+    document_id: NB-MED-002
+    category: medication_monitoring
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/03_medication_administration_and_patient_instructions.pdf
+    document_id: NB-MED-003
+    category: medication_administration
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/04_booking_referrals_and_appointment_procedures.pdf
+    document_id: NB-ADM-004
+    category: booking
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/05_safety_escalation_and_red_flags.pdf
+    document_id: NB-SAF-005
+    category: safety_escalation
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/06_prohibited_actions_and_high_risk_controls.pdf
+    document_id: NB-SAF-006
+    category: prohibited_actions
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/07_staff_directory_and_contact_routes.pdf
+    document_id: NB-ADM-007
+    category: staff_directory
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/08_diagnostic_testing_and_results_management.pdf
+    document_id: NB-DIA-008
+    category: diagnostics
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/09_longitudinal_care_and_followup_plans.pdf
+    document_id: NB-CAR-009
+    category: longitudinal_care
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/11_data_quality_reconciliation_and_record_correction.pdf
+    document_id: NB-DQ-011
+    category: data_quality
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/12_uncertainty_conflict_resolution_and_abstention.pdf
+    document_id: NB-SAF-012
+    category: uncertainty
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/14_interactions_allergies_contraindications_and_duplication.pdf
+    document_id: NB-MED-014
+    category: interactions
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/15_knowledge_freshness_supersession_and_source_withdrawal.pdf
+    document_id: NB-GOV-015
+    category: knowledge_freshness
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/16_peri_procedure_and_temporary_medication_hold_policy.pdf
+    document_id: NB-MED-016
+    category: peri_procedure
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/17_downtime_dependency_failure_and_safe_degradation.pdf
+    document_id: NB-OPS-017
+    category: downtime
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/18_evidence_review_status_and_claim_citation_addendum.pdf
+    document_id: NB-GOV-018
+    category: evidence_citation
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/runtime_policies/19_final_medication_recommendation_authorisation_addendum.pdf
+    document_id: NB-GOV-102
+    category: authorization_addendum
+    corpus_eligibility: runtime
+    runtime_retrieval_allowed: true
+  - source_path: data/rag/governance/00_corpus_guide_and_retrieval_rules.pdf
+    document_id: NB-RAG-000
+    category: corpus_guide
+    corpus_eligibility: governance
+    runtime_retrieval_allowed: false
+  - source_path: data/rag/governance/13_rag_and_model_evaluation_governance.pdf
+    document_id: NB-AI-901
+    category: evaluation_governance
+    corpus_eligibility: governance
+    runtime_retrieval_allowed: false
+  - source_path: data/rag/evaluation-only/10_worked_synthetic_patient_review_cases.pdf
+    document_id: NB-TRN-701
+    category: worked_examples
+    corpus_eligibility: evaluation
+    runtime_retrieval_allowed: false
+  - source_path: data/rag/evaluation-only/20_adversarial_uncertainty_and_failure_worked_cases.pdf
+    document_id: NB-TRN-720
+    category: adversarial_cases
+    corpus_eligibility: evaluation
+    runtime_retrieval_allowed: false
