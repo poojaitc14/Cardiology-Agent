@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from types import SimpleNamespace
+from unittest.mock import MagicMock, patch
 
 from backend.agent.graph import LangGraphCardiologistAgent
 from backend.models.patient import PatientDataResult, PatientRecordScope
@@ -9,16 +10,30 @@ from rag.models import DocumentMetadata, RetrievalResponse, RetrievalResult
 
 
 class FakeChatModel:
-    def __init__(self, response_text: str | None = None, raises: Exception | None = None):
+    def __init__(
+        self,
+        response_text: str | None = None,
+        raises: Exception | None = None,
+        deployment_name: str = "gpt-4.1-mini",
+        usage_metadata: dict | None = None,
+        resolved_model: str | None = None,
+    ):
         self.response_text = response_text or "Synthesized clinical answer."
         self.raises = raises
         self.calls: list[list] = []
+        self.deployment_name = deployment_name
+        self.usage_metadata = usage_metadata
+        self.resolved_model = resolved_model
 
     def invoke(self, messages):
         self.calls.append(messages)
         if self.raises:
             raise self.raises
-        return SimpleNamespace(content=self.response_text)
+        return SimpleNamespace(
+            content=self.response_text,
+            usage_metadata=self.usage_metadata,
+            response_metadata={"model_name": self.resolved_model} if self.resolved_model else {},
+        )
 
 
 def agent(calls, chat_model=None):
@@ -205,3 +220,50 @@ class TestToolStatus:
         response = agent([]).review("What medications does P1005 take?")
         tools_with_status = {ts.tool for ts in response.tool_status}
         assert tools_with_status == {"patient_database_tool"}
+
+
+class TestLangfuseGenerationTracing:
+    """Regression coverage for the gap where no LLM generation, cost, or
+    token usage ever reached Langfuse: the active LangGraph agent's
+    synthesize step now sends model/input/output/usage to a real
+    'generation'-type observation."""
+
+    def test_generation_span_receives_model_input_output_and_usage(self):
+        fake_generation = MagicMock()
+        fake_client = MagicMock()
+        fake_client.generation.return_value = fake_generation
+
+        chat_model = FakeChatModel(
+            response_text="The patient's profile lists Jordan Reed.",
+            usage_metadata={"input_tokens": 19, "output_tokens": 2, "total_tokens": 21},
+            resolved_model="gpt-4.1-mini-2025-04-14",
+        )
+
+        with patch("backend.observability.tracing.get_langfuse_client", return_value=fake_client):
+            agent([], chat_model=chat_model).review("What medications does P1005 take?")
+
+        # created with the deployment name known before the call
+        _, create_kwargs = fake_client.generation.call_args
+        assert create_kwargs["model"] == "gpt-4.1-mini"
+        assert create_kwargs["input"][1]["content"]  # the human message content was captured
+
+        # ended with the real output, the resolved (dated) model, and token usage
+        _, end_kwargs = fake_generation.end.call_args
+        assert end_kwargs["output"] == "The patient's profile lists Jordan Reed."
+        assert end_kwargs["model"] == "gpt-4.1-mini-2025-04-14"
+        assert end_kwargs["usage"] == {"input": 19, "output": 2, "total": 21, "unit": "TOKENS"}
+
+    def test_no_usage_sent_when_chat_model_does_not_report_it(self):
+        """A fake/older chat model with no usage_metadata attribute at all
+        must not crash synthesis -- usage is simply omitted."""
+        fake_generation = MagicMock()
+        fake_client = MagicMock()
+        fake_client.generation.return_value = fake_generation
+        chat_model = FakeChatModel(response_text="An answer.")
+
+        with patch("backend.observability.tracing.get_langfuse_client", return_value=fake_client):
+            response = agent([], chat_model=chat_model).review("What medications does P1005 take?")
+
+        assert "An answer." in response.content
+        _, end_kwargs = fake_generation.end.call_args
+        assert "usage" not in end_kwargs

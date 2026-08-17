@@ -14,6 +14,7 @@ from backend.observability.tracing import (
     get_trace_id,
     set_trace_id,
     trace_agent_invocation,
+    trace_query,
     trace_tool_call,
     trace_tool_result,
 )
@@ -131,6 +132,94 @@ class TestTracingSpan:
         with TracingSpan("test_span") as span:
             span.update_metadata("key", "value")
             # Should not raise
+
+
+class TestGenerationSpan:
+    """Tests for the generation-specific fields (model/input/output/usage)
+    that make cost and token counts show up in Langfuse."""
+
+    def test_model_and_input_are_passed_at_creation(self):
+        fake_generation = MagicMock()
+        fake_client = MagicMock()
+        fake_client.generation.return_value = fake_generation
+        with patch("backend.observability.tracing.get_langfuse_client", return_value=fake_client):
+            with TracingSpan(
+                "llm_generation",
+                span_type="generation",
+                model="gpt-4.1-mini",
+                input=[{"role": "user", "content": "hello"}],
+            ):
+                pass
+        _, kwargs = fake_client.generation.call_args
+        assert kwargs["model"] == "gpt-4.1-mini"
+        assert kwargs["input"] == [{"role": "user", "content": "hello"}]
+
+    def test_set_output_sends_output_usage_and_model_at_end(self):
+        fake_generation = MagicMock()
+        fake_client = MagicMock()
+        fake_client.generation.return_value = fake_generation
+        with patch("backend.observability.tracing.get_langfuse_client", return_value=fake_client):
+            with TracingSpan("llm_generation", span_type="generation", model="gpt-4.1-mini") as span:
+                span.set_output(
+                    "the generated answer",
+                    usage={"input": 19, "output": 2, "total": 21, "unit": "TOKENS"},
+                    model="gpt-4.1-mini-2025-04-14",
+                )
+        _, kwargs = fake_generation.end.call_args
+        assert kwargs["output"] == "the generated answer"
+        assert kwargs["usage"] == {"input": 19, "output": 2, "total": 21, "unit": "TOKENS"}
+        # the more precise, resolved model name overrides the one set at creation
+        assert kwargs["model"] == "gpt-4.1-mini-2025-04-14"
+
+    def test_end_called_once_even_on_exception(self):
+        """Regression test: the original implementation called .end() twice
+        (once unconditionally, again in the error branch) -- now consolidated
+        into a single call built from end_kwargs."""
+        fake_generation = MagicMock()
+        fake_client = MagicMock()
+        fake_client.generation.return_value = fake_generation
+        with patch("backend.observability.tracing.get_langfuse_client", return_value=fake_client):
+            try:
+                with TracingSpan("llm_generation", span_type="generation"):
+                    raise ValueError("boom")
+            except ValueError:
+                pass
+        assert fake_generation.end.call_count == 1
+        _, kwargs = fake_generation.end.call_args
+        assert "boom" in kwargs["metadata"]["error"]
+
+    def test_no_output_kwargs_sent_when_set_output_never_called(self):
+        fake_generation = MagicMock()
+        fake_client = MagicMock()
+        fake_client.generation.return_value = fake_generation
+        with patch("backend.observability.tracing.get_langfuse_client", return_value=fake_client):
+            with TracingSpan("llm_generation", span_type="generation"):
+                pass
+        _, kwargs = fake_generation.end.call_args
+        assert "output" not in kwargs
+        assert "usage" not in kwargs
+
+
+class TestTraceQuery:
+    """Tests for trace_query()'s Langfuse trace creation."""
+
+    @pytest.mark.asyncio
+    async def test_trace_created_with_the_app_generated_trace_id(self):
+        """Regression test: Langfuse's Langfuse.trace() names its identity
+        parameter `id`, not `trace_id` (that name is only valid on child
+        observations like .span()/.generation(), which reference a parent
+        trace by id). Passing `trace_id=` here was silently absorbed into
+        **kwargs and ignored, so Langfuse generated its own random trace ID
+        -- completely disconnected from the one this app tracks internally
+        and returns to callers in QueryResponse.trace_id, making that ID
+        unfindable in the Langfuse dashboard."""
+        fake_client = MagicMock()
+        with patch("backend.observability.tracing.get_langfuse_client", return_value=fake_client):
+            async with trace_query("P1005", "What medications does this patient take?") as ctx:
+                app_trace_id = ctx["trace_id"]
+        _, kwargs = fake_client.trace.call_args
+        assert kwargs["id"] == app_trace_id
+        assert "trace_id" not in kwargs
 
 
 class TestToolTracing:

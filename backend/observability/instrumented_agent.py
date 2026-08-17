@@ -7,12 +7,12 @@ from typing import Any, Callable
 
 from backend.agent.cardiology_agent import (
     AGENT_PROMPT,
-    KNOWN_DRUGS,
     PATIENT_ID,
     TOOL_SCHEMAS,
     AgentResponse,
     Citation,
     CardiologistAgent as BaseCardiologistAgent,
+    extract_drug_name,
 )
 from backend.observability.tracing import (
     TracingSpan,
@@ -181,6 +181,12 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
                         "No specific patient record was retrieved for this question.",
                     )
                     generated = self._llm_tool(patient_summary, question, facts)
+                    # self._llm_tool only returns the generated text, not a
+                    # response object with token usage, so cost/tokens aren't
+                    # available here the way they are for LangGraphCardiologistAgent
+                    # (backend/agent/graph.py) -- this legacy path is unused by
+                    # backend/main.py and kept only as a rollback.
+                    span.set_output(generated)
                 steps.append("Answer synthesis complete.")
                 content = (
                     "Decision support only; a qualified healthcare professional must review this information.\n\n"
@@ -222,5 +228,4 @@ class InstrumentedCardiologistAgent(BaseCardiologistAgent):
 
     def _drug_name(self, question: str) -> str | None:
         """Extract drug name from question."""
-        match = KNOWN_DRUGS.search(question)
-        return match.group(1).capitalize() if match else None
+        return extract_drug_name(question)

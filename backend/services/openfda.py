@@ -85,8 +85,17 @@ class OpenFDAService:
             except httpx.TimeoutException:
                 LOGGER.warning("OpenFDA request timed out (attempt %d/%d)", attempt + 1, self._max_retries + 1, extra={"drug_name": name})
             except httpx.HTTPStatusError as e:
+                if e.response.status_code == 404:
+                    # OpenFDA's search API returns 404, not 200-with-empty-results,
+                    # when nothing matches the query -- this is "not found," not an
+                    # outage. Distinguishing it matters more now that drug-name
+                    # extraction isn't capped at a known-good list: a misspelling
+                    # or a name that genuinely doesn't exist should read as "no
+                    # matching drug-label information," not "temporarily unavailable."
+                    LOGGER.info("OpenFDA found no match", extra={"drug_name": name})
+                    return OpenFDAResult(name, False, True, None, None, "No matching drug-label information was found in OpenFDA.")
                 if e.response.status_code < 500:
-                    # A 4xx is not transient -- retrying the identical request won't help.
+                    # Any other 4xx is not transient -- retrying the identical request won't help.
                     LOGGER.warning("OpenFDA request rejected", extra={"drug_name": name}, exc_info=True)
                     return self._unavailable_result(name)
                 LOGGER.warning("OpenFDA server error (attempt %d/%d)", attempt + 1, self._max_retries + 1, extra={"drug_name": name})

@@ -1,23 +1,23 @@
 {
   "summary": {
     "total_cases": 100,
-    "overall_pass_rate": 97.0,
-    "no_crash_pass_rate": 98.0,
-    "tool_routing_pass_rate": 98.0,
-    "citation_grounding_pass_rate": 98.0,
-    "answer_grounding_pass_rate": 97.0,
+    "overall_pass_rate": 95.0,
+    "no_crash_pass_rate": 100.0,
+    "tool_routing_pass_rate": 99.0,
+    "citation_grounding_pass_rate": 97.0,
+    "answer_grounding_pass_rate": 99.0,
     "latency_ms": {
-      "mean": 8822.4,
-      "median": 9304.0,
-      "p95": 11859,
-      "max": 14389
+      "mean": 11423.4,
+      "median": 11007.0,
+      "p95": 19250,
+      "max": 33812
     },
     "by_category": {
       "A_demographic": {
         "n": 10,
         "tool_routing_pass_rate": 100.0,
         "citation_grounding_pass_rate": 100.0,
-        "answer_grounding_pass_rate": 90.0
+        "answer_grounding_pass_rate": 100.0
       },
       "B_medication": {
         "n": 10,
@@ -57,14 +57,14 @@
       },
       "H_drug_label": {
         "n": 10,
-        "tool_routing_pass_rate": 90.0,
-        "citation_grounding_pass_rate": 90.0,
-        "answer_grounding_pass_rate": 90.0
+        "tool_routing_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 100.0,
+        "answer_grounding_pass_rate": 100.0
       },
       "I_rag_policy": {
         "n": 15,
         "tool_routing_pass_rate": 100.0,
-        "citation_grounding_pass_rate": 100.0,
+        "citation_grounding_pass_rate": 80.0,
         "answer_grounding_pass_rate": 100.0
       },
       "J_combined": {
@@ -76,12 +76,11 @@
       "K_edge": {
         "n": 7,
         "tool_routing_pass_rate": 85.7,
-        "citation_grounding_pass_rate": 85.7,
+        "citation_grounding_pass_rate": 100.0,
         "answer_grounding_pass_rate": 85.7
       }
     },
-    "failure_count": 3,
-    "elapsed_seconds": 222.4
+    "failure_count": 5
   },
   "results": [
     {
@@ -89,13 +88,13 @@
       "category": "A_demographic",
       "question": "What is patient P1003's date of birth?",
       "http_status": 200,
-      "latency_ms": 5186,
+      "latency_ms": 4922,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1003's date of birth (DOB) is 1949-12-27, as explicitly stated in the retrieved patient record evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1003, Jordan Patel, was born on 1949-12-27 according to the retrieved patient record evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -105,13 +104,13 @@
       "category": "A_demographic",
       "question": "What is the gender recorded for patient P1005?",
       "http_status": 200,
-      "latency_ms": 10875,
+      "latency_ms": 10202,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe gender recorded for patient P1005 is \"Non-binary,\" as stated in the patient profile.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe gender recorded for patient P1005, Riley Shaw, is Non-binary according to the patient profile in the retrieved evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -121,13 +120,13 @@
       "category": "A_demographic",
       "question": "What is patient P1012's smoking status?",
       "http_status": 200,
-      "latency_ms": 12452,
+      "latency_ms": 10312,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1012's smoking status is recorded as \"Never smoker\" in the retrieved evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1012, Riley Reed, is documented as a \"Never smoker\" in the retrieved patient record evidence. This is the explicit smoking status available for clinical consideration.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -137,13 +136,13 @@
       "category": "A_demographic",
       "question": "What is patient P1017's date of birth?",
       "http_status": 200,
-      "latency_ms": 6656,
+      "latency_ms": 10891,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1017's date of birth (DOB) is 1950-02-05.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1017, Riley Taylor, has a date of birth of 1950-02-05 as documented in the patient record evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -153,13 +152,13 @@
       "category": "A_demographic",
       "question": "What is the gender recorded for patient P1021?",
       "http_status": 200,
-      "latency_ms": 6421,
+      "latency_ms": 16921,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe gender recorded for patient P1021 is Male.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe gender recorded for patient P1021, Alex Shaw, is Male, as documented in the patient profile (patient record evidence). Please consider this information in your clinical assessment.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -169,13 +168,13 @@
       "category": "A_demographic",
       "question": "What is patient P1028's smoking status?",
       "http_status": 200,
-      "latency_ms": 8797,
+      "latency_ms": 11953,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1028's smoking status is explicitly recorded as \"Current smoker\" in the retrieved evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1028, Avery Morgan, is documented as a \"Current smoker\" according to her profile in the retrieved patient record evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -185,13 +184,13 @@
       "category": "A_demographic",
       "question": "What is patient P1033's date of birth?",
       "http_status": 200,
-      "latency_ms": 6156,
+      "latency_ms": 8921,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1033's date of birth is 1968-08-16, as explicitly stated in the patient profile in the retrieved evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1033, Avery Hayes, was born on 1968-08-16 as per the retrieved patient record evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -201,13 +200,13 @@
       "category": "A_demographic",
       "question": "What is the gender recorded for patient P1040?",
       "http_status": 200,
-      "latency_ms": 11186,
+      "latency_ms": 10547,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe gender recorded for patient P1040 is Male. This is explicitly stated in the patient profile: \"profile: Male, DOB 1960-10-28, Never smoker, known cardiovascular family history.\"",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe gender recorded for patient P1040, Cameron Morgan, is Male, as documented in the patient profile (Patient record evidence for P1040). Please use this information in your clinical considerations.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -217,29 +216,29 @@
       "category": "A_demographic",
       "question": "What is this patient's full name?",
       "http_status": 200,
-      "latency_ms": 4125,
+      "latency_ms": 5202,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence for patient P1045 includes:\n\n- Allergy: Penicillin, reaction: Skin rash (Moderate)  \n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded result)  \n- Condition: C",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's full name is Morgan Patel, as documented in patient record P1045 profile information.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
-      "answer_grounding_pass": false
+      "answer_grounding_pass": true
     },
     {
       "id": "Q010",
       "category": "A_demographic",
       "question": "What is patient P1050's smoking status?",
       "http_status": 200,
-      "latency_ms": 6000,
+      "latency_ms": 10296,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1050's smoking status is explicitly recorded as: **Current smoker**.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1050, Taylor Shaw, is documented as a current smoker according to the patient profile in the record evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -249,13 +248,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 11578,
+      "latency_ms": 10375,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThis patient (P1003) is currently taking Lisinopril 10mg once daily (Active). No other medications are listed in the retrieved evidence. For further medication review or adjustments, please consult a qualified ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1003 is currently taking Lisinopril 10mg once daily, as an active medication (patient record evidence).",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -265,13 +264,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 9077,
+      "latency_ms": 5452,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1005 is currently taking Lisinopril 10mg once daily (Active). No other medications are listed in the retrieved evidence. For further medication review or changes, consultation with a qualified heal",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1005 is currently taking Lisinopril 10mg once daily, as indicated in their active medication list.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -281,13 +280,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 10436,
+      "latency_ms": 10687,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1012 is currently taking Atorvastatin 20mg once daily (Active). No other medications are listed in the retrieved evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1012 is currently taking Atorvastatin 20mg once daily, as indicated in the active medication record.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -297,13 +296,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 8765,
+      "latency_ms": 8969,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1017 is currently taking Atorvastatin 20mg once daily (Active). No other medications are documented in the retrieved evidence. For comprehensive medication review and management, consultation with ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1017 is currently taking Atorvastatin 20mg once daily as an active medication (patient record).",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -313,13 +312,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 9594,
+      "latency_ms": 13297,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1021 is currently taking Metoprolol 25mg once daily (Active). No other medications are listed in the retrieved evidence. For further medication review or management, consultation with a qualified h",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1021 is currently taking Metoprolol 25mg once daily, as indicated in the active medication record.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -329,13 +328,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 9577,
+      "latency_ms": 5233,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1028 is currently taking Metoprolol 25mg once daily (Active). No other medications are listed in the retrieved evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1028 is currently taking Metoprolol 25mg once daily, as documented in the patient record.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -345,13 +344,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 8797,
+      "latency_ms": 9000,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1033 is currently taking Metoprolol 25mg once daily (Active). No other medications were retrieved from the patient record evidence. For comprehensive medication review or management, please consult",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1033 is currently taking Metoprolol 25mg once daily, as indicated in the patient record.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -361,13 +360,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 9343,
+      "latency_ms": 11953,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1040 is currently taking Metoprolol 25mg once daily (Active). No other medications were retrieved from the patient record. For further medication review or management, please consult a qualified he",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1040 is currently taking Metoprolol 25mg once daily, as documented in the patient record.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -377,13 +376,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 10077,
+      "latency_ms": 9500,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1045 is currently taking Metoprolol 25mg once daily (Active). No other medications are listed in the retrieved evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1045 is currently taking Metoprolol 25mg once daily, as documented in the patient record.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -393,13 +392,13 @@
       "category": "B_medication",
       "question": "What medications is this patient currently taking?",
       "http_status": 200,
-      "latency_ms": 8031,
+      "latency_ms": 10078,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1050 is currently taking Lisinopril 10mg once daily (Active). No other medications are listed in the retrieved evidence. For further medication review or management, consultation with a qualified h",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1050 is currently taking Lisinopril 10mg once daily, as indicated in the active medication record.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -409,13 +408,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 10563,
+      "latency_ms": 25937,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1058 has a known drug allergy to Penicillin, with a reported reaction of Skin rash described as Moderate. No other drug allergies are documented in the retrieved evidence. Please consult a qualifie",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1058 has a documented allergy to Penicillin with a moderate skin rash reaction, according to the patient record evidence. Clinicians should consider this allergy when selecting antibiotics or other med",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -425,13 +424,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 9718,
+      "latency_ms": 2437,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient has a documented allergy to Aspirin with a reaction described as Nausea (Mild). No other drug allergies are noted in the retrieved evidence. Please consult with a qualified healthcare professional f",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1063 has a known allergy to Aspirin, with a reported mild reaction of nausea (patient record evidence). Please consider this allergy in clinical decision-making and consult relevant specialists as need",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -441,13 +440,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 8813,
+      "latency_ms": 15594,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence states that patient P1070 has a known allergy to Aspirin, with a reaction of Nausea described as Mild. There is no additional information on other drug allergies in the provided data. For",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1070 has a known drug allergy to Aspirin, with a reported reaction of mild nausea, as documented in the patient record. Clinicians should consider this allergy when prescribing or recommending medicati",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -457,13 +456,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 8452,
+      "latency_ms": 19250,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence for patient P1077 states: allergy: None known (). Therefore, this patient has no known drug allergies documented in the available patient record evidence. For clinical decisions, consulta",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1077 has no known drug allergies documented in the patient record (\"allergy: None known\") per the retrieved evidence. Clinician judgment should guide further allergy assessment as needed.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -473,13 +472,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 10906,
+      "latency_ms": 16592,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1089 has a known drug allergy to Penicillin, with a reported reaction of Skin rash described as Moderate. No other drug allergies are documented in the retrieved evidence. For clinical decisions in",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1089 has a known allergy to Penicillin, with a moderate skin rash reaction documented (patient record evidence). Please consider this allergy in clinical decision-making and medication selection.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -489,13 +488,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 8172,
+      "latency_ms": 14405,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1003 has a known drug allergy to Penicillin, with a reaction described as a skin rash (Moderate). No other drug allergies are documented in the retrieved evidence. Please consult a qualified health",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1003 has a known drug allergy to Penicillin, with a moderate skin rash reaction documented (patient record evidence). Please consider this allergy in clinical decision-making and drug selection.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -505,13 +504,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 9577,
+      "latency_ms": 11968,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1005 has a known drug allergy to Aspirin, with a reaction described as Nausea (Mild). No other drug allergies are documented in the retrieved evidence. Consultation with qualified healthcare profes",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1005 has a known drug allergy to Aspirin, with a reported mild reaction of nausea (patient record evidence). Please consider this allergy in clinical decisions and consult relevant specialists as neede",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -521,13 +520,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 7968,
+      "latency_ms": 5375,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1012 has a known drug allergy to Penicillin, with a reported reaction of Skin rash described as Moderate. No other drug allergies are documented in the retrieved evidence. Please consult with quali",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1012 has a known drug allergy to Penicillin, with a moderate skin rash reaction documented (patient record evidence). Please consider this allergy in clinical decisions and consult relevant specialists",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -537,13 +536,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 6859,
+      "latency_ms": 7547,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence for patient P1017 states: allergy: None known (). Therefore, this patient has no known drug allergies documented in the available record. For confirmation and clinical decisions, consulta",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1017 has no known drug allergies documented in the patient record (\"allergy: None known\") per the retrieved evidence. Clinicians should continue to monitor for any new allergies during care.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -553,13 +552,13 @@
       "category": "C_allergy",
       "question": "Does this patient have any known drug allergies?",
       "http_status": 200,
-      "latency_ms": 1905,
+      "latency_ms": 11578,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence for patient P1021 states: allergy: None known (). Therefore, this patient has no known drug allergies documented in the available record. For clinical decision-making, please confirm with",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1021 has no known drug allergies documented in the patient record (\"allergy: None known\") as per the retrieved evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -569,13 +568,13 @@
       "category": "D_lab",
       "question": "What lab results are on file for this patient?",
       "http_status": 200,
-      "latency_ms": 7063,
+      "latency_ms": 8391,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1003 is: LDL cholesterol = 163.3 synthetic-unit, measured on 2026-08-02T09:15:00Z, noted as within reference range. No other lab results are present in the retrieved evidence",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1003 has one lab result on file: LDL cholesterol measured at 163.3 synthetic-unit, which is noted as within the reference range, dated 2026-08-02T09:15:00Z.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -585,13 +584,13 @@
       "category": "D_lab",
       "question": "What lab results are on file for this patient?",
       "http_status": 200,
-      "latency_ms": 11000,
+      "latency_ms": 12906,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1005 is: Potassium = 65.5 synthetic-unit (High), dated 2026-08-10T09:15:00Z. No other lab results are present in the retrieved evidence. Please consult a qualified healthcare",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1005 is a potassium level of 65.5 synthetic-unit, which is marked as high, measured on 2026-08-10 at 09:15:00Z. Please review this elevated potassium level carefully and cons",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -601,13 +600,13 @@
       "category": "D_lab",
       "question": "What lab results are on file for this patient?",
       "http_status": 200,
-      "latency_ms": 6422,
+      "latency_ms": 15139,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1012 is:  \n- Creatinine = 16.0 synthetic-unit (Low), recorded on 2026-08-12T09:15:00Z.\n\nNo other lab results for this patient are present in the retrieved evidence.  \nPlease ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1012 has a lab result on file showing Creatinine = 16.0 synthetic-unit, which is noted as low, recorded on 2026-08-12T09:15:00Z. No other lab results are present in the retrieved evidence. Please c",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -617,13 +616,13 @@
       "category": "D_lab",
       "question": "What lab results are on file for this patient?",
       "http_status": 200,
-      "latency_ms": 8577,
+      "latency_ms": 10921,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1017 is: Creatinine = 140.2 synthetic-unit, reported as High, dated 2026-08-08T09:15:00Z. No other lab results are present in the retrieved evidence. Please consult a qualifi",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1017 has a lab result on file showing a Creatinine level of 140.2 synthetic-unit, recorded as high on 2026-08-08T09:15:00Z. No other lab results are present in the retrieved evidence. Please consider t",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -633,13 +632,13 @@
       "category": "D_lab",
       "question": "What lab results are on file for this patient?",
       "http_status": 200,
-      "latency_ms": 9938,
+      "latency_ms": 11639,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1021 is an LDL cholesterol value of 14.5 synthetic-unit, measured on 2026-08-07 at 09:15:00Z. This value is noted as within the reference range. No other lab results are pres",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1021 has a lab result on file showing an LDL cholesterol level of 14.5 synthetic-unit, which is reported as within the reference range, dated 2026-08-07T09:15:00Z. No other lab results are availabl",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -649,13 +648,13 @@
       "category": "D_lab",
       "question": "What lab results are on file for this patient?",
       "http_status": 200,
-      "latency_ms": 9827,
+      "latency_ms": 11312,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1028 is LDL cholesterol = 143.2 synthetic-unit, recorded on 2026-08-04 at 09:15:00 UTC. No other lab results are present in the retrieved evidence. For interpretation and man",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1028 is an LDL cholesterol level of 143.2 synthetic-unit, recorded on 2026-08-04 at 09:15 (Low). Please consider this value in your clinical assessment and management decisio",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -665,13 +664,13 @@
       "category": "D_lab",
       "question": "What lab results are on file for this patient?",
       "http_status": 200,
-      "latency_ms": 9469,
+      "latency_ms": 11641,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1033 is an LDL cholesterol level of 86.9 synthetic-unit, recorded as low on 2026-08-03 at 09:15:00 UTC. No other lab results are present in the retrieved evidence. For furthe",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1033 has one lab result on file: LDL cholesterol measured at 86.9 synthetic-unit, categorized as Low, dated 2026-08-03T09:15:00Z. No other lab results are retrieved in the evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -681,13 +680,13 @@
       "category": "D_lab",
       "question": "What lab results are on file for this patient?",
       "http_status": 200,
-      "latency_ms": 9297,
+      "latency_ms": 14046,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe lab result on file for patient P1040 is Potassium = 34.0 synthetic-unit, which is noted as Low, dated 2026-08-10T09:15:00Z. No other lab results are present in the retrieved evidence. Please consult a quali",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1040 has one lab result on file: Potassium level of 34.0 synthetic-unit, which is flagged as low, measured on 2026-08-10 at 09:15 UTC. Please review this critically low potassium value and consider",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -697,13 +696,13 @@
       "category": "E_vital",
       "question": "What are this patient's latest vital signs?",
       "http_status": 200,
-      "latency_ms": 8765,
+      "latency_ms": 9842,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's latest vital signs recorded on 2026-08-13 at 09:30:00 UTC are: blood pressure 158/82 mmHg, heart rate 77 beats per minute, and oxygen saturation (SpO2) 95%. Please consult a qualified healthcare p",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe latest vital signs for patient P1045 measured on 2026-08-13 at 09:30 are: blood pressure 158/82 mmHg, heart rate 77 bpm, and oxygen saturation (SpO2) 95%.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -713,13 +712,13 @@
       "category": "E_vital",
       "question": "What are this patient's latest vital signs?",
       "http_status": 200,
-      "latency_ms": 9765,
+      "latency_ms": 9687,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's latest vital signs recorded on 2026-08-13T09:30:00Z are:  \n- Blood pressure (BP): 142/91 mmHg  \n- Heart rate (HR): 77 beats per minute  \n- Oxygen saturation (SpO2): 97%  \n\nFor interpretation and c",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe latest vital signs for patient P1050, measured on 2026-08-13 at 09:30, are blood pressure 142/91 mmHg, heart rate 77 beats per minute, and oxygen saturation 97%.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -729,13 +728,13 @@
       "category": "E_vital",
       "question": "What are this patient's latest vital signs?",
       "http_status": 200,
-      "latency_ms": 10077,
+      "latency_ms": 11734,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's latest vital signs recorded on 2026-08-13 at 09:30:00Z are: blood pressure (BP) 168/81 mmHg, heart rate (HR) 98 beats per minute, and oxygen saturation (SpO2) 97%. For clinical interpretation and ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe latest vital signs for patient P1058, measured on 2026-08-13 at 09:30, are blood pressure 168/81 mmHg, heart rate 98 beats per minute, and oxygen saturation 97% (patient record evidence).",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -745,13 +744,13 @@
       "category": "E_vital",
       "question": "What are this patient's latest vital signs?",
       "http_status": 200,
-      "latency_ms": 10953,
+      "latency_ms": 13281,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's latest vital signs recorded on 2026-08-13 at 09:30:00 UTC are:  \n- Blood Pressure (BP): 165/102 mmHg  \n- Heart Rate (HR): 67 beats per minute  \n- Oxygen Saturation (SpO2): 98%  \n\nNo other vital si",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe latest vital signs for patient P1063, measured on 2026-08-13 at 09:30, are blood pressure 165/102 mmHg, heart rate 67 bpm, and oxygen saturation 98%.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -761,13 +760,13 @@
       "category": "E_vital",
       "question": "What are this patient's latest vital signs?",
       "http_status": 200,
-      "latency_ms": 10171,
+      "latency_ms": 10391,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's latest vital signs recorded on 2026-08-13 at 09:30:00 are: blood pressure 129/103 mmHg, heart rate 59 beats per minute, and oxygen saturation (SpO2) 97%. For clinical interpretation and management",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe latest vital signs for patient P1070, measured on 2026-08-13 at 09:30, are blood pressure 129/103 mmHg, heart rate 59 bpm, and oxygen saturation 97%.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -777,13 +776,13 @@
       "category": "E_vital",
       "question": "What are this patient's latest vital signs?",
       "http_status": 200,
-      "latency_ms": 9640,
+      "latency_ms": 8530,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's latest vital signs recorded on 2026-08-13T09:30:00Z are:  \n- Blood Pressure (BP): 138/95 mmHg  \n- Heart Rate (HR): 62 beats per minute  \n- Oxygen Saturation (SpO2): 99%  \n\nNo additional vital sign",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe latest vital signs for patient P1077, measured on 2026-08-13 at 09:30, are blood pressure 138/95 mmHg, heart rate 62 bpm, and oxygen saturation (SpO2) 99%.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -793,13 +792,13 @@
       "category": "E_vital",
       "question": "What are this patient's latest vital signs?",
       "http_status": 200,
-      "latency_ms": 4203,
+      "latency_ms": 17000,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe latest vital signs for patient P1089, measured on 2026-08-13 at 09:30 UTC, are: blood pressure 162/93 mmHg, heart rate 75 beats per minute, and oxygen saturation (SpO2) 95%. Please consult a qualified healt",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe latest vital signs for patient P1089 are blood pressure 162/93 mmHg, heart rate 75 beats per minute, and oxygen saturation 95%, measured on 2026-08-13 at 09:30. Please interpret these values in the context ",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -809,13 +808,13 @@
       "category": "E_vital",
       "question": "What are this patient's latest vital signs?",
       "http_status": 200,
-      "latency_ms": 11859,
+      "latency_ms": 10312,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's latest vital signs recorded on 2026-08-13T09:30:00Z are: blood pressure 114/102 mmHg, heart rate 94 beats per minute, and oxygen saturation (SpO2) 98%. For clinical interpretation and management, ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe latest vital signs for patient P1003, measured on 2026-08-13 at 09:30, are: blood pressure 114/102 mmHg, heart rate 94 beats per minute, and oxygen saturation 98%.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -825,13 +824,13 @@
       "category": "F_cardiology_test",
       "question": "What cardiology tests or procedures has this patient had?",
       "http_status": 200,
-      "latency_ms": 6656,
+      "latency_ms": 3375,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1005 has had an Echocardiogram performed on 2026-07-20 at 14:00:00 UTC as a cardiology test. No other cardiology tests or procedures are documented in the provided evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1005 has undergone an echocardiogram as a cardiology test on 2026-07-20 at 14:00 UTC, according to the patient record evidence. No other cardiology tests or procedures are documented in the retrieved e",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -841,13 +840,13 @@
       "category": "F_cardiology_test",
       "question": "What cardiology tests or procedures has this patient had?",
       "http_status": 200,
-      "latency_ms": 10000,
+      "latency_ms": 10219,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1012 has had an Echocardiogram performed on 2026-07-20 at 14:00:00 UTC, according to the retrieved patient record evidence. No other cardiology tests or procedures are documented in the provided da",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1012 has had an echocardiogram performed on 2026-07-20 at 14:00 UTC, according to the retrieved patient record evidence. No other cardiology tests or procedures are documented in the provided data.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -857,13 +856,13 @@
       "category": "F_cardiology_test",
       "question": "What cardiology tests or procedures has this patient had?",
       "http_status": 200,
-      "latency_ms": 6421,
+      "latency_ms": 11969,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1017 has had an Echocardiogram performed on 2026-07-20T14:00:00Z, as recorded in the cardiology test data. No other cardiology tests or procedures are documented in the retrieved evidence. For furt",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1017 has undergone an echocardiogram on 2026-07-20T14:00:00Z as per the retrieved cardiology test record. No other cardiology tests or procedures are documented in the available evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -873,13 +872,13 @@
       "category": "F_cardiology_test",
       "question": "What cardiology tests or procedures has this patient had?",
       "http_status": 200,
-      "latency_ms": 6078,
+      "latency_ms": 2766,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1021 has undergone the following cardiology test:\n\n- Echocardiogram on 2026-07-20 at 14:00 UTC.\n\nNo other cardiology tests or procedures are documented in the retrieved evidence. For further evalua",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1021 has undergone an echocardiogram on 2026-07-20T14:00:00Z, according to the retrieved patient record evidence. No other cardiology tests or procedures are documented in the provided evidence. Please",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -889,13 +888,13 @@
       "category": "F_cardiology_test",
       "question": "What cardiology tests or procedures has this patient had?",
       "http_status": 200,
-      "latency_ms": 6156,
+      "latency_ms": 7343,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1028 has undergone an Echocardiogram on 2026-07-20 at 14:00:00 UTC, as documented in the cardiology test records. No other cardiology tests or procedures are recorded in the provided evidence. For ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1028 has undergone an Echocardiogram on 2026-07-20 at 14:00 UTC, according to the retrieved patient record evidence. No other cardiology tests or procedures are documented in the current evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -905,13 +904,13 @@
       "category": "F_cardiology_test",
       "question": "What cardiology tests or procedures has this patient had?",
       "http_status": 200,
-      "latency_ms": 4515,
+      "latency_ms": 10858,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1033 has had an Echocardiogram performed on 2026-07-20T14:00:00Z, as recorded in the patient cardiology test data. No other cardiology tests or procedures are documented in the retrieved evidence.\n",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1033 has undergone an echocardiogram on 2026-07-20T14:00:00Z, as documented in the patient record. No other cardiology tests or procedures are noted in the retrieved evidence. Please consider this info",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -921,13 +920,13 @@
       "category": "F_cardiology_test",
       "question": "What cardiology tests or procedures has this patient had?",
       "http_status": 200,
-      "latency_ms": 11188,
+      "latency_ms": 11093,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1040 has had an Echocardiogram performed on 2026-07-20 at 14:00:00 UTC, as per the retrieved cardiology test record. No other cardiology tests or procedures are documented in the provided evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1040 has undergone an echocardiogram on 2026-07-20 at 14:00 UTC, as documented in the patient record. No other cardiology tests or procedures are noted in the retrieved evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -937,13 +936,13 @@
       "category": "F_cardiology_test",
       "question": "What cardiology tests or procedures has this patient had?",
       "http_status": 200,
-      "latency_ms": 8468,
+      "latency_ms": 10296,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1045 has had a cardiology test: an Echocardiogram performed on 2026-07-20 at 14:00:00 UTC. No other cardiology tests or procedures are documented in the retrieved evidence. For further interpretati",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1045 has had an echocardiogram performed on 2026-07-20 at 14:00 (patient record evidence). No other cardiology tests or procedures for this patient are present in the retrieved evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -953,13 +952,13 @@
       "category": "G_condition",
       "question": "Please review this patient's cardiovascular condition.",
       "http_status": 200,
-      "latency_ms": 11578,
+      "latency_ms": 14391,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1050 is a male born on 1958-12-27 with the following cardiovascular-related data:\n\n- Condition: Coronary artery disease, Moderate severity, Active, diagnosed on 2020-04-10.\n- Allergy: Penicillin, r",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient Taylor Shaw (DOB 1958-12-27) has active moderate coronary artery disease diagnosed on 2020-04-10. Current cardiovascular status includes blood pressure 142/91 mmHg, heart rate 77 bpm, and oxygen saturat",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -969,13 +968,13 @@
       "category": "G_condition",
       "question": "Please review this patient's cardiovascular condition.",
       "http_status": 200,
-      "latency_ms": 8015,
+      "latency_ms": 12922,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1058 is a female born on 1987-03-09 with an active diagnosis of Mild Hypertension since 2020-04-10. Current vital signs measured on 2026-08-13T09:30:00Z show blood pressure 168/81 mmHg, heart rate ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient Jordan Patel (female, DOB 1987-03-09) has an active mild hypertension diagnosis since 2020-04-10 and is currently treated with Lisinopril 10mg once daily. Her recent blood pressure reading is elevated a",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -985,13 +984,13 @@
       "category": "G_condition",
       "question": "Please review this patient's cardiovascular condition.",
       "http_status": 200,
-      "latency_ms": 9938,
+      "latency_ms": 12546,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient is a male born on 1946-05-19 with a documented allergy to Aspirin causing mild nausea. He has an active diagnosis of mild coronary artery disease since 2020-04-10. Current medications include Lisino",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient Riley Patel (DOB 1946-05-19) has mild active coronary artery disease diagnosed in 2020. Current cardiovascular risk factors include: LDL cholesterol elevated at 178.5 synthetic-unit (measured 2026-08-02",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1001,13 +1000,13 @@
       "category": "G_condition",
       "question": "Please review this patient's cardiovascular condition.",
       "http_status": 200,
-      "latency_ms": 9827,
+      "latency_ms": 11312,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1070 is a male born on 1972-01-01 with the following cardiovascular-related data:\n\n- Allergies: Aspirin, reaction: Nausea (Mild)  \n- Cardiovascular condition: Hypertension (Moderate, Active, diagno",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient Avery Taylor (DOB 1972-01-01) has moderate, active hypertension diagnosed in 2020. Current blood pressure is 129/103 mmHg, heart rate 59 bpm, and oxygen saturation 97%. LDL cholesterol is elevated at 13",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1017,13 +1016,13 @@
       "category": "G_condition",
       "question": "Please review this patient's cardiovascular condition.",
       "http_status": 200,
-      "latency_ms": 9469,
+      "latency_ms": 13297,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1077 is a male born on 1987-03-27 with a history of moderate, active hypertension diagnosed on 2020-04-10. Current medications include Metoprolol 25mg once daily. The patient has no known allergies. Ca",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient Taylor Quinn (DOB 1987-03-27) has a diagnosis of moderate active hypertension since 2020-04-10, currently managed with Metoprolol 25mg once daily. His recent blood pressure reading is 138/95 mmHg, which",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1033,13 +1032,13 @@
       "category": "G_condition",
       "question": "Please review this patient's cardiovascular condition.",
       "http_status": 200,
-      "latency_ms": 9311,
+      "latency_ms": 7233,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1089 has the following cardiovascular-related data documented:\n\n- Condition: Coronary artery disease, Moderate severity, Active, diagnosed on 2020-04-10.\n- Cardiology test: Echocardiogram performed on ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient Avery Quinn (DOB 1974-09-08) has active moderate coronary artery disease diagnosed in 2020. Current cardiovascular risk factors include hypertension (BP 162/93), ongoing smoking, and a known family hist",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1049,14 +1048,14 @@
       "category": "H_drug_label",
       "question": "What are the side effects and warnings for Warfarin?",
       "http_status": 200,
-      "latency_ms": 8765,
+      "latency_ms": 9858,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following relevant patient data for P1003: allergy to Penicillin with reaction of Skin rash (Moderate); diagnosis of Coronary artery disease (Moderate, Active, diagnosed 2020",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the generic name Warfarin Sodium but does not provide specific side effects or warnings for Warfarin. No detailed drug label information on Warfarin side effects or warnings was ",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1066,14 +1065,14 @@
       "category": "H_drug_label",
       "question": "What are the side effects and warnings for Warfarin?",
       "http_status": 200,
-      "latency_ms": 9765,
+      "latency_ms": 11953,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following relevant patient data for P1005:\n\n- Allergy: Aspirin, reaction: Nausea (Mild)\n- Condition: Hypertension (Moderate, Active, diagnosed 2020-04-10)\n- Lab result: Potas",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the generic name Warfarin Sodium but does not provide specific side effects or warnings for Warfarin. No detailed drug label information on side effects or warnings for Warfarin ",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1083,14 +1082,14 @@
       "category": "H_drug_label",
       "question": "What are the side effects and warnings for Warfarin?",
       "http_status": 200,
-      "latency_ms": 13125,
+      "latency_ms": 10469,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following patient-specific and drug label data:\n\n- Allergy: Penicillin, reaction: Skin rash (Moderate)\n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic re",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the generic name Warfarin Sodium but does not provide specific side effects or warnings for Warfarin. No detailed drug label information on Warfarin's side effects or warnings is",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1100,14 +1099,14 @@
       "category": "H_drug_label",
       "question": "What are the side effects and warnings for Atorvastatin?",
       "http_status": 200,
-      "latency_ms": 10953,
+      "latency_ms": 5125,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1017 is currently taking Atorvastatin 20mg once daily (generic name: ATORVASTATIN CALCIUM). No known allergies are recorded. \n\nThe retrieved evidence does not include specific side effects or warni",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes that the patient P1017 is currently on Atorvastatin 20mg once daily, with no known allergies. However, the specific OpenFDA label content detailing side effects and warnings for ",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1117,14 +1116,14 @@
       "category": "H_drug_label",
       "question": "What are the side effects and warnings for Atorvastatin?",
       "http_status": 200,
-      "latency_ms": 10171,
+      "latency_ms": 14953,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following relevant data:\n\n- Patient P1021 has no known allergies.\n- Current medication: Metoprolol 25mg once daily.\n- Condition: Atrial fibrillation (Moderate, Active, diagno",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the generic name Atorvastatin Calcium but does not provide specific details on side effects or warnings for Atorvastatin. Therefore, I cannot provide Atorvastatin's side effects ",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1134,14 +1133,14 @@
       "category": "H_drug_label",
       "question": "What are the side effects and warnings for Atorvastatin?",
       "http_status": 200,
-      "latency_ms": 9640,
+      "latency_ms": 21671,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following relevant values:\n\n- Patient allergy: Aspirin, reaction: Nausea (Mild)  \n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded result)  \n- Co",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the patient record for P1028 and confirmation that atorvastatin calcium is the generic name for Atorvastatin. However, the retrieved evidence does not include specific side effec",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1150,27 +1149,32 @@
       "id": "Q067",
       "category": "H_drug_label",
       "question": "What are the side effects and warnings for Lisinopril?",
-      "http_status": null,
-      "latency_ms": 2266,
-      "no_crash_pass": false,
-      "tool_routing_pass": false,
-      "citation_grounding_pass": false,
-      "answer_grounding_pass": false,
-      "error": "RemoteProtocolError: Server disconnected without sending a response."
-    },
-    {
-      "id": "Q068",
-      "category": "H_drug_label",
-      "question": "What are the side effects and warnings for Lisinopril?",
       "http_status": 200,
-      "latency_ms": 14389,
+      "latency_ms": 4843,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the drug label for Lisinopril under the generic name \"LISINOPRIL AND HYDROCHLOROTHIAZIDE TABLETS.\" However, the specific side effects and warnings for Lisinopril are not explicit",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the OpenFDA label for Lisinopril and Hydrochlorothiazide tablets but does not provide specific details on side effects or warnings for Lisinopril alone. No explicit side effect o",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
+    },
+    {
+      "id": "Q068",
+      "category": "H_drug_label",
+      "question": "What are the side effects and warnings for Lisinopril?",
+      "http_status": 200,
+      "latency_ms": 21358,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the OpenFDA label for Lisinopril and Hydrochlorothiazide tablets but does not specify the side effects or warnings for Lisinopril alone. The patient record for P1040 does not men",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1180,14 +1184,14 @@
       "category": "H_drug_label",
       "question": "What are the side effects and warnings for Metoprolol?",
       "http_status": 200,
-      "latency_ms": 10906,
+      "latency_ms": 16592,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1045 is currently prescribed Metoprolol 25mg once daily (Active). The retrieved evidence includes OpenFDA label data for Metoprolol (generic name METOPROLOL), but no specific side effects or warnin",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the patient's current medication Metoprolol 25mg once daily and confirms the generic name METOPROLOL from the OpenFDA label. However, no specific side effects or warnings for Met",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1197,14 +1201,14 @@
       "category": "H_drug_label",
       "question": "What are the side effects and warnings for Metoprolol?",
       "http_status": 200,
-      "latency_ms": 10875,
+      "latency_ms": 21952,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following values:\n\n- Allergy: Penicillin, reaction: Skin rash (Moderate)  \n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded result)  \n- Condition",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the Metoprolol generic name from OpenFDA but does not contain specific side effects or warnings for Metoprolol in this data. Therefore, I cannot provide side effects or warnings ",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1214,16 +1218,16 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about acute coronary syndromes?",
       "http_status": 200,
-      "latency_ms": 9577,
+      "latency_ms": 11953,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following patient-specific values:\n\n- Allergy: Penicillin, reaction: Skin rash (Moderate)  \n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded resu",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence does not include specific guidance on acute coronary syndromes from the hospital guideline or ESC guidelines. The available guideline excerpts pertain only to atrial fibrillation, pericar",
       "tool_routing_pass": true,
-      "citation_grounding_pass": true,
+      "citation_grounding_pass": false,
       "answer_grounding_pass": true
     },
     {
@@ -1231,16 +1235,16 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about chronic coronary syndromes?",
       "http_status": 200,
-      "latency_ms": 8797,
+      "latency_ms": 9062,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following patient-specific data for P1005:  \n- Allergy: Aspirin, reaction: Nausea (Mild)  \n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded resul",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence does not include specific information from the hospital guideline about chronic coronary syndromes. The available guideline excerpts pertain to pericardial diseases, cardiomyopathies, hea",
       "tool_routing_pass": true,
-      "citation_grounding_pass": true,
+      "citation_grounding_pass": false,
       "answer_grounding_pass": true
     },
     {
@@ -1248,14 +1252,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about heart failure?",
       "http_status": 200,
-      "latency_ms": 6843,
+      "latency_ms": 10547,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following relevant patient data for P1012:  \n- Allergy: Penicillin, reaction: Skin rash (Moderate)  \n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic reco",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved ESC Guidelines for Heart Failure section \"Purpose\" was accessed, but the specific content of the guideline regarding heart failure was not included in the retrieved evidence. Therefore, I cannot p",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1265,14 +1269,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about atrial fibrillation?",
       "http_status": 200,
-      "latency_ms": 8875,
+      "latency_ms": 4390,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence states the patient P1017 has Atrial fibrillation (Moderate, Active, diagnosed 2020-04-10). The hospital guideline relevant to atrial fibrillation is the \"ESC Guidelines for Atrial Fibrill",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe ESC Guidelines for Atrial Fibrillation, as retrieved, provide the purpose and framework for managing atrial fibrillation but the specific content of these guidelines beyond the \"Purpose\" section was not ret",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1282,14 +1286,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about hypertension?",
       "http_status": 200,
-      "latency_ms": 6000,
+      "latency_ms": 10812,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following relevant values:\n\n- Patient blood pressure (BP): 125/81 mmHg (measured 2026-08-13T09:30:00Z)  \n- Patient heart rate (HR): 96 bpm (measured 2026-08-13T09:30:00Z)  \n-",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the ESC Guidelines for Hypertension, but only the \"Purpose\" section is available. This section typically outlines the aim of the guideline rather than specific management recomme",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1299,14 +1303,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about dyslipidaemias?",
       "http_status": 200,
-      "latency_ms": 11000,
+      "latency_ms": 12906,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following values:\n\n- Allergy: Aspirin, reaction: Nausea (Mild)\n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded result)\n- Condition: Coronary art",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe ESC Guidelines for Dyslipidaemias state their purpose as providing evidence-based recommendations for the diagnosis, risk assessment, and management of dyslipidaemias to reduce cardiovascular risk and impro",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1316,14 +1320,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about cardiomyopathies?",
       "http_status": 200,
-      "latency_ms": 5186,
+      "latency_ms": 4156,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the \"ESC Guidelines for Cardiomyopathies, section Purpose,\" but the specific content or recommendations from that section are not provided in the retrieved data. Therefore, the e",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe ESC Guidelines for Cardiomyopathies, as retrieved, provide a purpose section specifically addressing cardiomyopathies. However, the detailed content of the guideline on cardiomyopathies beyond the purpose s",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1333,14 +1337,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about ventricular arrhythmias and sudden cardiac death?",
       "http_status": 200,
-      "latency_ms": 10436,
+      "latency_ms": 10687,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following relevant data:\n\n- Patient P1040 has a diagnosis of Atrial fibrillation (Moderate, Active, diagnosed 2020-04-10).\n- Lab result: Potassium = 34.0 synthetic-unit (Low,",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe ESC Guidelines for Ventricular Arrhythmias & Sudden Cardiac Death emphasize the purpose of providing a comprehensive framework for the diagnosis, risk stratification, and management of patients at risk of v",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1350,14 +1354,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about valvular heart disease?",
       "http_status": 200,
-      "latency_ms": 8765,
+      "latency_ms": 11639,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following relevant data:\n\n- Patient allergy: Penicillin, reaction: Skin rash (Moderate)  \n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded result",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the ESC Guidelines for Valvular Heart Disease, specifically the section labeled \"Purpose,\" but the content of that section is not provided in the retrieved data. Therefore, I can",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1367,14 +1371,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about pericardial diseases?",
       "http_status": 200,
-      "latency_ms": 9594,
+      "latency_ms": 13592,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following relevant guideline excerpt: \"ESC Guidelines for Pericardial Diseases, section Purpose.\" However, the specific content or recommendations from that section are not p",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the ESC Guidelines for Pericardial Diseases, specifically the section titled \"Purpose.\" However, the detailed content of the guideline on pericardial diseases is not provided in ",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1384,14 +1388,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about pulmonary hypertension?",
       "http_status": 200,
-      "latency_ms": 9577,
+      "latency_ms": 4297,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following values:\n\n- Allergy: Penicillin, reaction: Skin rash (Moderate)\n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded result)\n- Condition: Hy",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved ESC Guidelines for Pulmonary Hypertension section Purpose does not provide specific recommendations or detailed information on pulmonary hypertension in the retrieved evidence. Therefore, I cannot",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1401,14 +1405,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about endocarditis?",
       "http_status": 200,
-      "latency_ms": 8797,
+      "latency_ms": 11546,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following patient data for P1063:\n\n- Allergy: Aspirin, reaction: Nausea (Mild)  \n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded result)  \n- Con",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the ESC Guidelines for Endocarditis, specifically the section titled \"Purpose.\" However, the detailed content or recommendations from this section are not provided in the retriev",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1418,14 +1422,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital guideline say about cardiovascular disease prevention?",
       "http_status": 200,
-      "latency_ms": 9358,
+      "latency_ms": 12921,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe hospital guideline relevant to cardiovascular disease prevention is the **ESC Guidelines for Cardiovascular Disease Prevention, section Purpose** (retrieved policy evidence). Although the full guideline tex",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe ESC Guidelines for Cardiovascular Disease Prevention emphasize the purpose of guiding clinicians in reducing the overall burden of cardiovascular disease through risk factor management and lifestyle interve",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1435,14 +1439,14 @@
       "category": "I_rag_policy",
       "question": "What does the hospital protocol say about anticoagulation and antiplatelet therapy?",
       "http_status": 200,
-      "latency_ms": 13125,
+      "latency_ms": 9500,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following patient data for P1077 relevant to anticoagulation and antiplatelet therapy considerations:\n\n- Allergy: None known\n- Condition: Hypertension (Moderate, Active, diag",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the \"Anticoagulation / Antiplatelet Therapy Protocol\" document, but only its \"Purpose\" section was retrieved and is available. This section does not provide specific recommendati",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1452,16 +1456,16 @@
       "category": "I_rag_policy",
       "question": "What does the hospital hospital policy say about cardiology medication and monitoring?",
       "http_status": 200,
-      "latency_ms": 8031,
+      "latency_ms": 11734,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the following values explicitly:\n\n- Patient P1089 is currently prescribed Atorvastatin 20mg once daily (Active).\n- Hospital Cardiology Medication & Monitoring Policy, section Pur",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved hospital policy evidence consists only of the \"Purpose\" sections of various ESC Guidelines (Pericardial Diseases, Cardiomyopathies, Ventricular Arrhythmias & Sudden Cardiac Death, Atrial Fibrillat",
       "tool_routing_pass": true,
-      "citation_grounding_pass": true,
+      "citation_grounding_pass": false,
       "answer_grounding_pass": true
     },
     {
@@ -1469,7 +1473,7 @@
       "category": "J_combined",
       "question": "Review this patient's Warfarin therapy against the anticoagulation protocol.",
       "http_status": 200,
-      "latency_ms": 10563,
+      "latency_ms": 18483,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
@@ -1477,7 +1481,7 @@
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1003's current medication list includes Lisinopril 10mg once daily. There is no documented prescription or administration of Warfarin in the retrieved patient record evidence.\n\nThe patient has the foll",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient record for Jordan Patel (DOB 1949-12-27) does not indicate current Warfarin therapy; her active medication is Lisinopril 10mg once daily. There is no evidence retrieved regarding Warfarin dosing, IN",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1487,7 +1491,7 @@
       "category": "J_combined",
       "question": "Review this patient's Lisinopril therapy against the hospital medication policy.",
       "http_status": 200,
-      "latency_ms": 9718,
+      "latency_ms": 8859,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
@@ -1495,7 +1499,7 @@
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1005 is currently prescribed Lisinopril 10mg once daily (Active).\n\nThe retrieved evidence includes:\n- Patient record evidence for P1005: medication: Lisinopril 10mg Once daily (Active)\n- OpenFDA la",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1005 is currently prescribed Lisinopril 10mg once daily, consistent with the medication record. The retrieved evidence includes the OpenFDA label for Lisinopril and several ESC guideline sections a",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1505,7 +1509,7 @@
       "category": "J_combined",
       "question": "Review this patient's Atorvastatin therapy against the dyslipidaemia guideline.",
       "http_status": 200,
-      "latency_ms": 11186,
+      "latency_ms": 15765,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
@@ -1513,7 +1517,7 @@
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1012 is a male born 1976-06-24, with active moderate hypertension diagnosed 2020-04-10, currently on Atorvastatin 20mg once daily (generic name ATORVASTATIN CALCIUM). His latest lab result shows a low ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1012, Riley Reed, is on Atorvastatin 20 mg once daily for dyslipidaemia management. The retrieved evidence includes the active medication Atorvastatin 20 mg daily and the ESC Guidelines for Dyslipi",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1523,7 +1527,7 @@
       "category": "J_combined",
       "question": "Review this patient's Atorvastatin therapy against the chronic coronary syndromes guideline.",
       "http_status": 200,
-      "latency_ms": 8452,
+      "latency_ms": 33812,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
@@ -1531,7 +1535,7 @@
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1017 is a male born 1950-02-05, currently a smoker, with a diagnosis of Atrial fibrillation (Moderate, Active, diagnosed 2020-04-10). His current medication includes Atorvastatin 20mg once daily (Activ",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1017 is currently on Atorvastatin 20 mg once daily and has a history of atrial fibrillation with elevated creatinine (140.2 synthetic-unit) and hypertension (BP 166/85). The retrieved evidence incl",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1541,7 +1545,7 @@
       "category": "J_combined",
       "question": "Review this patient's Metoprolol therapy against the atrial fibrillation guideline.",
       "http_status": 200,
-      "latency_ms": 11859,
+      "latency_ms": 14453,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
@@ -1549,7 +1553,7 @@
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1021 is a male born 1999-06-13 with atrial fibrillation (Moderate, Active, diagnosed 2020-04-10). Current medication includes Metoprolol 25mg once daily (Active). Vital signs recorded on 2026-08-13",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient Alex Shaw, diagnosed with moderate active atrial fibrillation since 2020-04-10, is currently prescribed Metoprolol 25mg once daily. His vital signs show BP 125/81 and HR 96 bpm, with no known allerg",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1559,7 +1563,7 @@
       "category": "J_combined",
       "question": "Review this patient's Metoprolol therapy against the heart failure guideline.",
       "http_status": 200,
-      "latency_ms": 8172,
+      "latency_ms": 14657,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
@@ -1567,7 +1571,7 @@
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1028 is a female born 1955-07-13 with moderate, active coronary artery disease diagnosed 2020-04-10. Current medications include Metoprolol 25mg once daily (active). Vitals on 2026-08-13 show BP 133/10",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient Avery Morgan (DOB 1955-07-13) with moderate active coronary artery disease is on Metoprolol 25mg once daily. Her heart rate is 58 bpm, blood pressure 133/101 mmHg, and oxygen saturation 96%. She is a cu",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1577,7 +1581,7 @@
       "category": "J_combined",
       "question": "Review this patient's Metoprolol therapy against the hospital cardiology monitoring policy.",
       "http_status": 200,
-      "latency_ms": 10000,
+      "latency_ms": 11969,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
@@ -1585,7 +1589,7 @@
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes:\n\n- Patient record evidence for P1033: cardiology test: Echocardiogram on 2026-07-20T14:00:00Z -- Synthetic recorded result (no specific echocardiogram findings or parameters are",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence includes the patient's echocardiogram result dated 2026-07-20 and the OpenFDA drug label for Metoprolol, along with the purpose sections of several ESC cardiology guidelines. However, no ",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1595,7 +1599,7 @@
       "category": "J_combined",
       "question": "Review this patient's Lisinopril therapy against the hypertension guideline.",
       "http_status": 200,
-      "latency_ms": 7968,
+      "latency_ms": 12062,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool",
@@ -1603,7 +1607,7 @@
         "cardiology_rag_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1050 is currently prescribed Lisinopril 10mg once daily. Relevant retrieved values include:\n\n- Medication: Lisinopril 10mg Once daily (Active)  \n- Condition: Coronary artery disease (Moderate, Acti",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nPatient P1050, Taylor Shaw, is on Lisinopril 10 mg once daily for coronary artery disease and has a blood pressure of 142/91 mmHg (above the 140/90 threshold for hypertension). The ESC Guidelines for Hypertensi",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1613,7 +1617,7 @@
       "category": "K_edge",
       "question": "Can you review this patient's overall status?",
       "http_status": 200,
-      "latency_ms": 6078,
+      "latency_ms": 11828,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
@@ -1621,7 +1625,7 @@
       "actual_errors": [
         "Patient record information is temporarily unavailable."
       ],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nNo patient-specific clinical data, vital signs, laboratory results, medication information, diagnoses, or other relevant status indicators were retrieved. Therefore, I cannot review this patient's overall statu",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nNo patient-specific data was retrieved to review this patient's overall status. Please provide the patient's clinical information or records for an evidence-based assessment.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1631,29 +1635,29 @@
       "category": "K_edge",
       "question": "Can you review this patient's overall status?",
       "http_status": 200,
-      "latency_ms": 4515,
+      "latency_ms": 7343,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence states: \"No corresponding information was found in the available patient record.\" Therefore, no specific patient data such as vital signs, laboratory results, diagnoses, medications, or o",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nNo patient-specific information was retrieved to review the patient's overall status. Please provide the patient's clinical data or relevant records for assessment.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
-      "answer_grounding_pass": true
+      "answer_grounding_pass": false
     },
     {
       "id": "Q096",
       "category": "K_edge",
       "question": "What is this patient's gender?",
       "http_status": 200,
-      "latency_ms": 8813,
+      "latency_ms": 12062,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's gender is recorded as \"Non-binary\" in the retrieved evidence for patient P1005.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's gender is recorded as Non-binary according to the patient profile for Riley Shaw (P1005) in the retrieved evidence. Please consider this information in clinical decision-making and consult with th",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1663,13 +1667,13 @@
       "category": "K_edge",
       "question": "What is this patient's smoking status?",
       "http_status": 200,
-      "latency_ms": 6984,
+      "latency_ms": 5171,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's smoking status is documented as \"Never smoker\" in the retrieved evidence.",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient's smoking status is documented as \"Never smoker\" according to the patient profile for Riley Reed (P1012) in the retrieved evidence.",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
@@ -1679,14 +1683,15 @@
       "category": "K_edge",
       "question": "Is aspirin safe to combine with this patient's other medications?",
       "http_status": 200,
-      "latency_ms": 8468,
+      "latency_ms": 10453,
       "no_crash_pass": true,
       "actual_tools": [
-        "patient_database_tool"
+        "patient_database_tool",
+        "openfda_drug_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence states that the patient P1005 is currently taking Lisinopril 10mg once daily (Active). There is no additional information on other medications, allergies, lab results, or clinical guideli",
-      "tool_routing_pass": true,
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe patient P1005 is currently taking Lisinopril 10mg once daily. The retrieved evidence includes the aspirin drug label (generic name ASPIRIN) but does not specify any direct drug interaction or contraindicati",
+      "tool_routing_pass": false,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true
     },
@@ -1694,26 +1699,31 @@
       "id": "Q099",
       "category": "K_edge",
       "question": "Any concerns about WARFARIN for this patient?",
-      "http_status": null,
-      "latency_ms": 5360,
-      "no_crash_pass": false,
-      "tool_routing_pass": false,
-      "citation_grounding_pass": false,
-      "answer_grounding_pass": false,
-      "error": "RemoteProtocolError: Server disconnected without sending a response."
+      "http_status": 200,
+      "latency_ms": 14391,
+      "no_crash_pass": true,
+      "actual_tools": [
+        "patient_database_tool",
+        "openfda_drug_tool"
+      ],
+      "actual_errors": [],
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nFor patient P1005, Riley Shaw, the following relevant facts are noted from the evidence:\n\n- Allergy: Aspirin with mild nausea reaction.\n- Condition: Moderate active hypertension.\n- Lab result: Potassium level i",
+      "tool_routing_pass": true,
+      "citation_grounding_pass": true,
+      "answer_grounding_pass": true
     },
     {
       "id": "Q100",
       "category": "K_edge",
       "question": "Please check this patient's insurance policyholder status.",
       "http_status": 200,
-      "latency_ms": 8577,
+      "latency_ms": 10734,
       "no_crash_pass": true,
       "actual_tools": [
         "patient_database_tool"
       ],
       "actual_errors": [],
-      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved evidence for patient P1005 includes the following values:\n\n- Allergy: Aspirin, reaction: Nausea (Mild)  \n- Cardiology test: Echocardiogram on 2026-07-20T14:00:00Z (Synthetic recorded result)  \n- C",
+      "answer_preview": "Decision support only; a qualified healthcare professional must review this information.\n\nThe retrieved patient record for P1005 (Riley Shaw) does not contain any information regarding insurance policyholder status. Please consult the relevant administrative or insurance database for this informatio",
       "tool_routing_pass": true,
       "citation_grounding_pass": true,
       "answer_grounding_pass": true

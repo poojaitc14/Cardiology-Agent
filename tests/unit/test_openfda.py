@@ -81,6 +81,26 @@ def test_timeout_is_hidden_from_user():
     assert not result.available and "private detail" not in result.user_message
 
 
+def test_404_is_reported_as_not_found_not_unavailable():
+    """OpenFDA returns 404, not 200-with-empty-results, when a search term
+    doesn't match anything -- this is 'not found,' not an outage, and matters
+    more now that drug-name extraction isn't capped at a known-good list."""
+    request = httpx.Request("GET", "https://example.test")
+    error = httpx.HTTPStatusError("not found", request=request, response=httpx.Response(404, request=request))
+    result = OpenFDAService(client=FakeClient(FakeResponse({}, error)), retry_backoff_seconds=0).search_drug_label("metmorphin")
+    assert result.available
+    assert not result.found
+    assert result.user_message == "No matching drug-label information was found in OpenFDA."
+
+
+def test_404_is_not_retried():
+    request = httpx.Request("GET", "https://example.test")
+    error = httpx.HTTPStatusError("not found", request=request, response=httpx.Response(404, request=request))
+    client = SequencedFakeClient([FakeResponse({}, error), FakeResponse(LABEL_PAYLOAD)])
+    OpenFDAService(client=client, retry_backoff_seconds=0).search_drug_label("metmorphin")
+    assert client.call_count == 1
+
+
 def test_http_error_is_hidden_from_user():
     result = OpenFDAService(client=FakeClient(FakeResponse({}, httpx.HTTPStatusError("provider detail", request=httpx.Request("GET", "https://example.test"), response=httpx.Response(500, request=httpx.Request("GET", "https://example.test"))))), retry_backoff_seconds=0).search_drug_label("Warfarin")
     assert not result.available and "provider detail" not in result.user_message

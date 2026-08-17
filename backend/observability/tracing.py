@@ -41,17 +41,28 @@ class TracingSpan:
         name: str,
         span_type: str = "span",
         metadata: dict[str, Any] | None = None,
+        model: str | None = None,
+        input: Any | None = None,
     ):
         """Initialize a tracing span.
-        
+
         Args:
             name: Name of the span
             span_type: Type of span (span, generation, event)
             metadata: Additional metadata to capture
+            model: For span_type="generation", the model name/deployment
+                used -- lets Langfuse show which model answered and, together
+                with usage (see set_output), compute cost automatically.
+            input: For span_type="generation", the prompt/messages sent to
+                the model.
         """
         self.name = name
         self.span_type = span_type
         self.metadata = metadata or {}
+        self.model = model
+        self.input = input
+        self.output: Any | None = None
+        self.usage: dict[str, Any] | None = None
         self.start_time = None
         self.end_time = None
         self.langfuse_span = None
@@ -60,18 +71,20 @@ class TracingSpan:
     def __enter__(self):
         """Enter the span context."""
         self.start_time = time.time()
-        
+
         if self.client is None:
             return self
-        
+
         try:
             trace_id = get_trace_id()
-            
+
             if self.span_type == "generation":
                 self.langfuse_span = self.client.generation(
                     name=self.name,
                     trace_id=trace_id,
                     metadata=self.metadata,
+                    model=self.model,
+                    input=self.input,
                 )
             else:
                 self.langfuse_span = self.client.span(
@@ -81,39 +94,60 @@ class TracingSpan:
                 )
         except Exception as e:
             logger.debug(f"Failed to create Langfuse span: {e}")
-        
+
         return self
+
+    def set_output(self, output: Any, usage: dict[str, Any] | None = None, model: str | None = None) -> None:
+        """Record a generation's result, sent to Langfuse when the span ends.
+
+        Args:
+            output: The generated content.
+            usage: Token usage in Langfuse's ModelUsage shape, e.g.
+                {"input": N, "output": N, "total": N, "unit": "TOKENS"} --
+                this is what lets Langfuse compute and display cost, using
+                its own pricing table for `model`.
+            model: The resolved model name/version, if more precise than
+                what was known when the span was created (e.g. a dated
+                snapshot like "gpt-4.1-mini-2025-04-14" vs. the deployment
+                name "gpt-4.1-mini").
+        """
+        self.output = output
+        if usage is not None:
+            self.usage = usage
+        if model is not None:
+            self.model = model
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Exit the span context."""
         self.end_time = time.time()
         latency_ms = (self.end_time - self.start_time) * 1000
-        
+
         if self.langfuse_span is None:
             return False
-        
+
         try:
-            # Record latency
-            if hasattr(self.langfuse_span, "end"):
-                self.langfuse_span.end(
-                    metadata={"latency_ms": latency_ms},
-                )
-            
-            # Record error if occurred
+            end_kwargs: dict[str, Any] = {"metadata": {"latency_ms": latency_ms}}
+            if self.output is not None:
+                end_kwargs["output"] = self.output
+            if self.usage is not None:
+                end_kwargs["usage"] = self.usage
+            if self.model is not None:
+                end_kwargs["model"] = self.model
+
             if exc_type is not None:
                 error_msg = f"{exc_type.__name__}: {exc_val}"
-                if hasattr(self.langfuse_span, "end"):
-                    self.langfuse_span.end(
-                        metadata={"error": error_msg, "latency_ms": latency_ms},
-                    )
+                end_kwargs["metadata"]["error"] = error_msg
                 logger.debug(f"Span '{self.name}' failed: {error_msg}")
             else:
                 logger.debug(
                     f"Span '{self.name}' completed in {latency_ms:.2f}ms"
                 )
+
+            if hasattr(self.langfuse_span, "end"):
+                self.langfuse_span.end(**end_kwargs)
         except Exception as e:
             logger.debug(f"Failed to end Langfuse span: {e}")
-        
+
         return False
 
     def update_metadata(self, key: str, value: Any) -> None:
@@ -154,7 +188,7 @@ async def trace_query(
         try:
             langfuse_trace = client.trace(
                 name="clinical_query",
-                trace_id=trace_id,
+                id=trace_id,
                 metadata={
                     "patient_id": patient_id,
                     "question_length": len(question),

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from backend.agent.cardiology_agent import CardiologistAgent, TOOL_SCHEMAS
+from backend.agent.cardiology_agent import CardiologistAgent, TOOL_SCHEMAS, extract_drug_name
 from backend.models.patient import PatientDataResult, PatientRecordScope
 from backend.services.openfda import DrugLabel, OpenFDAResult
 from rag.models import DocumentMetadata, RetrievalResponse, RetrievalResult
@@ -148,3 +148,36 @@ def test_no_llm_call_when_no_tools_matched():
     response = a.review("Hello there")
     assert not calls
     assert "Please provide a patient ID" in response.content
+
+
+class TestExtractDrugName:
+    """Regression coverage for removing the KNOWN_DRUG_NAMES ceiling: any drug
+    name should now be recognized, not just the curated cardiology list."""
+
+    def test_curated_list_matches_regardless_of_phrasing(self):
+        assert extract_drug_name("Warfarin interactions") == "Warfarin"
+        assert extract_drug_name("what is Lisinopril") == "Lisinopril"
+
+    def test_uncurated_drug_is_extracted_via_explain_this_thing_phrasing(self):
+        assert extract_drug_name("Get the information of metformin") == "Metformin"
+        assert extract_drug_name("Get the information of metmorphin") == "Metmorphin"
+        assert extract_drug_name("What are the side effects of ibuprofen?") == "Ibuprofen"
+        assert extract_drug_name("Is amoxicillin safe for this patient?") == "Amoxicillin"
+        assert extract_drug_name("Are there any interactions with omeprazole?") == "Omeprazole"
+
+    def test_curated_list_takes_priority_over_the_fallback(self):
+        # "of Warfarin" would also match the fallback pattern -- the curated,
+        # phrasing-independent match should win and return the same result either way.
+        assert extract_drug_name("Tell me about Warfarin please") == "Warfarin"
+
+    def test_no_false_positive_on_ordinary_patient_questions(self):
+        assert extract_drug_name("Review patient P1005's cardiovascular history") is None
+        assert extract_drug_name("What medications does P1005 take?") is None
+        assert extract_drug_name("Compare P1005 against P1099's history") is None
+
+    def test_stopword_guard_skips_non_drug_candidates(self):
+        assert extract_drug_name("Please provide information about this patient") is None
+        assert extract_drug_name("What medications is this patient on?") is None
+
+    def test_no_match_returns_none(self):
+        assert extract_drug_name("Hello there") is None

@@ -56,6 +56,75 @@ KNOWN_DRUG_NAMES: tuple[str, ...] = (
 )
 KNOWN_DRUGS = re.compile(r"\b(" + "|".join(KNOWN_DRUG_NAMES) + r")\b", re.IGNORECASE)
 
+# Fallback drug-name extraction: not limited to KNOWN_DRUG_NAMES. Captures the
+# word right after phrasing that specifically signals "this question is about
+# a drug" ("side effects of X", "is X safe", "information about X",
+# "interactions with X", ...), which is how a drug name usually appears in a
+# clinical question regardless of whether it's one of the ~90 names above.
+# The candidate is never treated as a confirmed drug on its own -- it's just
+# what gets looked up; OpenFDA's own response (and the now-visible
+# tool_status) is what actually confirms or rejects it, so a wrong guess
+# costs nothing worse than a harmless "no data found" status.
+#
+# Deliberately NOT anchored on bare prepositions ("of", "for", "about",
+# "with") alone -- those are far too common in ordinary clinical questions
+# that have nothing to do with a drug ("date of birth", "results for the lab
+# test", "history of hypertension"), and a first version of this pattern that
+# did use bare prepositions misfired "date of birth" into an OpenFDA lookup
+# for "Birth". Each anchor phrase below is specific enough that a drug name
+# is what's actually expected to follow it. Tried first, across the whole
+# question, ahead of the weaker bare "is"/"are" pattern below -- so "Are
+# there any interactions with omeprazole?" matches on "interactions with
+# omeprazole" rather than the bare "are there" earlier in the same sentence.
+DRUG_CANDIDATE_TRIGGER_STRONG = re.compile(
+    r"\b(?:"
+    r"information (?:on|about|of|for)|"
+    r"side effects? of|"
+    r"interactions? (?:with|of)|"
+    r"dosage (?:of|for)|"
+    r"warnings? (?:for|about|of)|"
+    r"contraindications? (?:for|of)"
+    r")\s+([A-Za-z][A-Za-z\-]{2,})\b",
+    re.IGNORECASE,
+)
+DRUG_CANDIDATE_TRIGGER_WEAK = re.compile(
+    r"\b(?:what is|what are|is|are)\s+([A-Za-z][A-Za-z\-]{2,})\b",
+    re.IGNORECASE,
+)
+# Words that can follow those trigger phrases without being a drug name --
+# excluded so an ordinary clinical question doesn't misfire an OpenFDA
+# lookup. Covers this app's own record/category vocabulary (date, gender,
+# history, ...) as well as generic pronouns/determiners.
+DRUG_CANDIDATE_STOPWORDS = frozenset({
+    "this", "that", "these", "those", "the", "patient", "patients", "him", "her",
+    "them", "it", "medication", "medications", "any", "known", "hospital", "our",
+    "your", "my", "concern", "concerns", "their", "he", "she", "they",
+    "date", "birth", "gender", "age", "status", "history", "record", "records",
+    "profile", "name", "condition", "conditions", "allergy", "allergies",
+    "result", "results", "test", "tests", "vital", "vitals", "lab", "labs",
+    "guideline", "guidelines", "policy", "policies", "protocol", "protocols",
+})
+
+
+def extract_drug_name(question: str) -> str | None:
+    """Extract a drug name to look up via OpenFDA -- not capped at KNOWN_DRUG_NAMES.
+
+    Checks the curated list first (fast, deterministic, correct regardless of
+    phrasing for the cardiology drugs it covers), then the strong drug-specific
+    phrasing pattern across the whole question, and only then the weaker bare
+    "is"/"are" pattern -- verified live by the OpenFDA call itself rather than
+    pre-restricted to a fixed list.
+    """
+    match = KNOWN_DRUGS.search(question)
+    if match:
+        return match.group(1).title()
+    for pattern in (DRUG_CANDIDATE_TRIGGER_STRONG, DRUG_CANDIDATE_TRIGGER_WEAK):
+        for candidate in pattern.finditer(question):
+            word = candidate.group(1)
+            if word.lower() not in DRUG_CANDIDATE_STOPWORDS:
+                return word.title()
+    return None
+
 # Clinically relevant fields per DynamoDB entity type, rendered for the LLM. This is
 # an explicit allow-list -- internal fields (PK, SK, created_at, record_status, ...)
 # are never included.
@@ -233,8 +302,7 @@ class CardiologistAgent:
 
     @staticmethod
     def _drug_name(question: str) -> str | None:
-        match = KNOWN_DRUGS.search(question)
-        return match.group(1).title() if match else None
+        return extract_drug_name(question)
 
     @staticmethod
     def _summarize_records(records: list[dict[str, Any]]) -> str:

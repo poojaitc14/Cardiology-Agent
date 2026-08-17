@@ -21,16 +21,17 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import END, StateGraph
 
 from backend.agent.cardiology_agent import (
-    KNOWN_DRUGS,
     PATIENT_ID,
     AgentResponse,
     Citation,
     CardiologistAgent,
     ToolStatus,
+    extract_drug_name,
 )
 from backend.agent.guardrails import check_answer
 from backend.agent.prompts import SYSTEM_PROMPT, build_human_message
 from backend.models.patient import PatientDataResult, PatientRecordScope
+from backend.observability.tracing import TracingSpan
 from backend.services.openfda import OpenFDAResult
 from rag.models import RetrievalResponse
 
@@ -63,8 +64,7 @@ def _extract_patient_id(question: str) -> str | None:
 
 
 def _extract_drug_name(question: str) -> str | None:
-    match = KNOWN_DRUGS.search(question)
-    return match.group(1).title() if match else None
+    return extract_drug_name(question)
 
 
 def build_graph(
@@ -214,7 +214,29 @@ def build_graph(
             try:
                 patient_summary = state.get("patient_summary") or "No specific patient record was retrieved for this question."
                 human_content = build_human_message(patient_summary, state["question"], facts)
-                response = chat_model.invoke([SystemMessage(content=SYSTEM_PROMPT), HumanMessage(content=human_content)])
+                deployment_name = getattr(chat_model, "deployment_name", None) or getattr(chat_model, "model_name", None)
+                with TracingSpan(
+                    "llm_generation",
+                    span_type="generation",
+                    model=deployment_name,
+                    input=[
+                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {"role": "user", "content": human_content},
+                    ],
+                    metadata={"question_length": len(state["question"])},
+                ) as generation_span:
+                    response = chat_model.invoke([SystemMessage(content=SYSTEM_PROMPT), HumanMessage(content=human_content)])
+                    usage_metadata = getattr(response, "usage_metadata", None) or {}
+                    usage = None
+                    if usage_metadata:
+                        usage = {
+                            "input": usage_metadata.get("input_tokens"),
+                            "output": usage_metadata.get("output_tokens"),
+                            "total": usage_metadata.get("total_tokens"),
+                            "unit": "TOKENS",
+                        }
+                    resolved_model = getattr(response, "response_metadata", {}).get("model_name")
+                    generation_span.set_output(response.content, usage=usage, model=resolved_model)
                 generated = response.content
                 steps.append("Answer synthesis complete.")
                 return {"draft_answer": generated, "answer_source": "llm", "steps": steps, "facts": facts, "errors": errors}
