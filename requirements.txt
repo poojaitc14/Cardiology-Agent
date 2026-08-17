@@ -13,4 +13,10 @@ mypy>=1.10,<2.0
 python-dotenv>=1.0,<2.0
 
 # Azure OpenAI - required for Azure OpenAI embeddings/LLM features
-openai>=1.0,<2.0
+openai>=3.0,<4.0
+
+# Agent orchestration (LangGraph) and RAG (LangChain + Azure OpenAI embeddings/chat)
+langgraph>=1.2,<2.0
+langchain-core>=1.5,<2.0
+langchain-openai>=1.5,<2.0
+langchain-community>=0.4,<0.5

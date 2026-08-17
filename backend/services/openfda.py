@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import logging
 import os
+import time
 from typing import Any, Protocol
 
 import httpx
@@ -11,6 +12,8 @@ import httpx
 LOGGER = logging.getLogger(__name__)
 DEFAULT_BASE_URL = "https://api.fda.gov/drug/label.json"
 DEFAULT_TIMEOUT_SECONDS = 10.0
+DEFAULT_MAX_RETRIES = 2
+DEFAULT_RETRY_BACKOFF_SECONDS = 0.3
 
 
 class HttpResponse(Protocol):
@@ -48,32 +51,56 @@ class OpenFDAResult:
 
 class OpenFDAService:
     """Retrieve and normalize one drug-label result from OpenFDA."""
-    def __init__(self, client: HttpClient | None = None, base_url: str | None = None, timeout_seconds: float | None = None, api_key: str | None = None) -> None:
+    def __init__(
+        self,
+        client: HttpClient | None = None,
+        base_url: str | None = None,
+        timeout_seconds: float | None = None,
+        api_key: str | None = None,
+        max_retries: int = DEFAULT_MAX_RETRIES,
+        retry_backoff_seconds: float = DEFAULT_RETRY_BACKOFF_SECONDS,
+    ) -> None:
         self._client = client or httpx.Client()
         self._base_url = base_url or os.environ.get("OPENFDA_BASE_URL", DEFAULT_BASE_URL)
         self._timeout_seconds = timeout_seconds if timeout_seconds is not None else self._environment_timeout()
         self._api_key = api_key or os.environ.get("OPENFDA_API_KEY", "")
+        self._max_retries = max_retries
+        self._retry_backoff_seconds = retry_backoff_seconds
 
     def search_drug_label(self, drug_name: str) -> OpenFDAResult:
         name = drug_name.strip()
         if not name:
             return OpenFDAResult("", False, True, None, None, "A drug name is required to search the available drug-label information.")
-        try:
-            params = {"search": self._search_expression(name), "limit": 1}
-            if self._api_key:
-                params["api_key"] = self._api_key
-            response = self._client.get(self._base_url, params=params, timeout=self._timeout_seconds)
-            response.raise_for_status()
-            payload = response.json()
-        except httpx.TimeoutException:
-            LOGGER.warning("OpenFDA request timed out", extra={"drug_name": name})
+        params = {"search": self._search_expression(name), "limit": 1}
+        if self._api_key:
+            params["api_key"] = self._api_key
+
+        payload = None
+        for attempt in range(self._max_retries + 1):
+            try:
+                response = self._client.get(self._base_url, params=params, timeout=self._timeout_seconds)
+                response.raise_for_status()
+                payload = response.json()
+                break
+            except httpx.TimeoutException:
+                LOGGER.warning("OpenFDA request timed out (attempt %d/%d)", attempt + 1, self._max_retries + 1, extra={"drug_name": name})
+            except httpx.HTTPStatusError as e:
+                if e.response.status_code < 500:
+                    # A 4xx is not transient -- retrying the identical request won't help.
+                    LOGGER.warning("OpenFDA request rejected", extra={"drug_name": name}, exc_info=True)
+                    return self._unavailable_result(name)
+                LOGGER.warning("OpenFDA server error (attempt %d/%d)", attempt + 1, self._max_retries + 1, extra={"drug_name": name})
+            except httpx.HTTPError:
+                LOGGER.warning("OpenFDA request failed (attempt %d/%d)", attempt + 1, self._max_retries + 1, extra={"drug_name": name}, exc_info=True)
+            except (TypeError, ValueError):
+                LOGGER.warning("OpenFDA returned an unreadable response", extra={"drug_name": name})
+                return self._unavailable_result(name)
+            if attempt < self._max_retries:
+                time.sleep(self._retry_backoff_seconds * (attempt + 1))
+        if payload is None:
+            LOGGER.warning("OpenFDA request failed after %d attempt(s)", self._max_retries + 1, extra={"drug_name": name})
             return self._unavailable_result(name)
-        except httpx.HTTPError:
-            LOGGER.warning("OpenFDA request failed", extra={"drug_name": name}, exc_info=True)
-            return self._unavailable_result(name)
-        except (TypeError, ValueError):
-            LOGGER.warning("OpenFDA returned an unreadable response", extra={"drug_name": name})
-            return self._unavailable_result(name)
+
         label = self._extract_label(payload)
         if label is None:
             return OpenFDAResult(name, False, True, None, None, "No matching drug-label information was found in OpenFDA.")

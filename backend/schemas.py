@@ -40,6 +40,14 @@ class QueryRequest(BaseModel):
         return v.strip()
 
 
+class ToolStatusEntry(BaseModel):
+    """The outcome of one tool invocation for this query."""
+
+    tool: str = Field(..., description="Tool name, e.g. 'openfda_drug_tool'")
+    status: str = Field(..., description="'ok' | 'no_data' | 'error'")
+    detail: str = Field(..., description="Human-readable explanation of the outcome")
+
+
 class QueryResponse(BaseModel):
     """Response model for the /query endpoint."""
 
@@ -56,6 +64,9 @@ class QueryResponse(BaseModel):
     trace_id: str = Field(..., description="Unique trace ID for observability")
     steps: list[str] = Field(
         default_factory=list, description="The agent's tool-routing trace, in order, for display before the final answer"
+    )
+    tool_status: list[ToolStatusEntry] = Field(
+        default_factory=list, description="Per-tool outcome (ok/no_data/error) for every tool invoked during this query"
     )
 
 

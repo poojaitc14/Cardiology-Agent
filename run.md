@@ -195,35 +195,75 @@ python -m pytest tests/integration/test_tools_integration.py
 ## 9. Index the RAG documents into OpenSearch Serverless
 
 The cardiology-guideline RAG tool needs the collection's index to exist and
-contain the 15 synthetic documents before it will return anything. This is an
-operator-only step, already done once for this project (see
-[`infra/opensearch-serverless.md`](infra/opensearch-serverless.md)), but here's
-how to redo it:
+contain the 15 synthetic documents before it will return anything, embedded
+with Azure OpenAI's `text-embedding-3-small` via LangChain (see
+[`rag/langchain_vectorstore.py`](rag/langchain_vectorstore.py)). This is an
+operator-only step:
 
 ```powershell
-python -m rag.ingestion.index_dummy_documents_cli
+python -m rag.ingestion.reembed_documents_cli
 ```
 
-This creates the k-NN index (if it doesn't already exist) with a vector
-dimension matching `RAG_EMBEDDING_DIMENSIONS`, then chunks, embeds, and indexes
-all 15 documents. **OpenSearch Serverless has no idempotent upsert** here — the
-ingestion pipeline can't specify a custom document ID (Serverless rejects it),
-so re-running this script appends duplicate documents rather than replacing
-them. If you need a clean re-index, delete and recreate the index first.
+This **deletes and recreates the index from scratch**, then chunks, embeds
+(real Azure embeddings, not a placeholder), and indexes all 15 documents. It
+deliberately doesn't try to reuse an existing index -- see the module
+docstring for why a straight upsert isn't safe here. Re-running it is safe any
+time you want a clean re-index; it always starts from zero.
+
+**If the backend is already running, restart it after this script finishes.**
+Deleting and recreating the index out from under a live backend process can
+leave that process's OpenSearch connection returning stale/empty results even
+after the reindex succeeds -- a fresh process picks up the rebuilt index
+correctly.
+
+To add, replace, or remove individual documents afterwards, use the running
+API's `/rag/documents` endpoints (or the **📚 Manage Guidelines** tab in the
+Streamlit UI) rather than this script -- see
+[`rag/ingestion/admin.py`](rag/ingestion/admin.py).
 
 ## Notes
 
-- When `AZURE_OPENAI_API_KEY`/`AZURE_OPENAI_ENDPOINT` are configured, the agent
-  (`backend/agent/cardiology_agent.py`, `backend/observability/instrumented_agent.py`)
-  calls `AzureOpenAILLM.generate_clinical_response()` to synthesize the final
-  `/query` answer from the retrieved patient/drug/RAG facts. If Azure OpenAI is
-  not configured, or the call fails or times out (30s timeout, no retries), the
-  agent falls back to a deterministic templated summary of the same retrieved
-  facts — the response is always grounded in tool output either way, never
-  fabricated by the LLM alone.
-- The patient database, OpenFDA, and cardiology-RAG tools are read-only by
-  design; nothing in the agent runtime can write to DynamoDB or the search
-  index.
+- **Agent orchestration** (`backend/agent/graph.py`) is a LangGraph
+  `StateGraph`: the same deterministic, regex-based tool routing the app has
+  always used (not an LLM choosing which tools to call -- kept intentionally
+  predictable and auditable for a clinical safety tool), re-platformed as an
+  explicit graph of nodes with a guardrail-gated synthesis step.
+- **Answer synthesis** uses `langchain_openai.AzureChatOpenAI` with a single
+  system prompt (`backend/agent/prompts.py`) covering scope, grounding rules,
+  untrusted-content/prompt-injection handling, and clinical safety boundaries.
+  If Azure OpenAI is not configured, or the call fails or times out (30s
+  timeout, no retries), the agent falls back to a deterministic templated
+  summary of the same retrieved facts -- the response is always grounded in
+  tool output either way, never fabricated by the LLM alone.
+- **Guardrails** (`backend/agent/guardrails.py`) run after synthesis, before
+  an answer is returned: a prescriptive/diagnostic-language check, a
+  prompt-injection-leak check, and a heuristic fabrication check (does the
+  answer name a drug that never appeared in the retrieved evidence?). Any
+  violation discards the generated answer and falls back to the same
+  deterministic evidence summary used when the LLM itself fails -- the
+  intervention is recorded in the response's `errors` and `steps` fields, never
+  silent.
+- **Drug-name detection** (`KNOWN_DRUG_NAMES` in `backend/agent/cardiology_agent.py`)
+  is an explicit allow-list of ~70 cardiology-relevant generic and brand names,
+  not a general entity extractor -- a question about a drug not on that list
+  never triggers `openfda_drug_tool` at all. Same deliberate
+  determinism-over-flexibility tradeoff as the rest of the tool routing.
+- **OpenFDA retries**: `backend/services/openfda.py` retries up to twice (3
+  attempts total, short backoff) on a `5xx` or timeout from `api.fda.gov`,
+  which is a free public API known to be occasionally flaky. A `4xx` is not
+  retried (retrying the identical request won't fix a client error).
+- **Tool status**: every `/query` response includes a `tool_status` field --
+  one `{tool, status, detail}` entry per tool actually invoked, `status` being
+  `"ok"` / `"no_data"` / `"error"`. The frontend renders this as a colored card
+  per tool (including tools *not* used this query, shown neutrally) so a
+  failure like an OpenFDA outage is visible and explained, not just silently
+  reflected in a vaguer answer.
+- The patient database, OpenFDA, and cardiology-RAG *retrieval* tools are
+  read-only by design; nothing in the agent runtime can write to DynamoDB or
+  the search index. Writes only happen through the explicit
+  `POST /patients` and `/rag/documents` endpoints, never from agent tool calls.
 - `POST /query` uses the `patient_id` field from the request directly (falling
   back to extracting one from the question text only if `patient_id` is
-  empty) — you don't need to repeat the patient ID inside your question.
+  empty) — you don't need to repeat the patient ID inside your question. Its
+  response now also includes a `steps` field: the agent's own ordered
+  tool-routing trace, which the frontend replays before showing the answer.

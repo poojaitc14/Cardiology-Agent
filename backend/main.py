@@ -17,9 +17,10 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from backend.agent.cardiology_agent import CardiologistAgent
+from langchain_openai import AzureChatOpenAI
+
+from backend.agent.graph import LangGraphCardiologistAgent
 from backend.models.patient import PatientRecordScope
-from backend.observability.instrumented_agent import InstrumentedCardiologistAgent
 from backend.observability.tracing import (
     clear_trace_context,
     get_trace_id,
@@ -38,12 +39,13 @@ from backend.schemas import (
     RAGDocumentInfo,
     RAGDocumentUpsertRequest,
     RAGDocumentUpsertResponse,
+    ToolStatusEntry,
 )
-from backend.services.azure_openai import AzureOpenAIConfig, AzureOpenAILLM
+from backend.services.azure_openai import AzureOpenAIConfig
 from backend.services.openfda import OpenFDAService
 from backend.services.patient_repository import PatientAlreadyExistsError, PatientRepository
 from rag.ingestion.admin import RAGDocumentAdminService
-from rag.retrieval.cardiology_rag import CardiologyRAGService
+from rag.retrieval.langchain_cardiology_rag import LangChainCardiologyRAGService
 
 # Configure logging
 logging.basicConfig(
@@ -56,9 +58,9 @@ logger = logging.getLogger(__name__)
 # Global service instances
 patient_repository: PatientRepository | None = None
 openfda_service: OpenFDAService | None = None
-cardiology_rag_service: CardiologyRAGService | None = None
+cardiology_rag_service: LangChainCardiologyRAGService | None = None
 rag_admin_service: RAGDocumentAdminService | None = None
-agent: CardiologistAgent | None = None
+agent: LangGraphCardiologistAgent | None = None
 
 
 @asynccontextmanager
@@ -76,12 +78,13 @@ async def lifespan(app: FastAPI):
         openfda_service = OpenFDAService()
         logger.info("OpenFDAService initialized")
 
-        # RAG service initialization is optional (may fail gracefully)
+        # RAG service initialization is optional (may fail gracefully). Backed by
+        # LangChain's OpenSearchVectorSearch + Azure text-embedding-3-small.
         try:
-            cardiology_rag_service = CardiologyRAGService.from_environment()
-            logger.info("CardiologyRAGService initialized")
+            cardiology_rag_service = LangChainCardiologyRAGService.from_environment()
+            logger.info("LangChainCardiologyRAGService initialized")
         except Exception as e:
-            logger.warning(f"CardiologyRAGService initialization failed: {e}")
+            logger.warning(f"LangChainCardiologyRAGService initialization failed: {e}")
             cardiology_rag_service = None
 
         # RAG document admin (write path for the "Manage Guidelines" UI) is optional
@@ -93,28 +96,36 @@ async def lifespan(app: FastAPI):
             rag_admin_service = None
 
         # LLM-backed answer generation is optional (may fail gracefully)
-        llm_tool = None
+        chat_model = None
         try:
             llm_config = AzureOpenAIConfig()
             if llm_config.is_configured():
-                llm_tool = AzureOpenAILLM(llm_config).generate_clinical_response
-                logger.info("Azure OpenAI LLM initialized for answer generation")
+                chat_model = AzureChatOpenAI(
+                    azure_endpoint=llm_config.endpoint,
+                    api_key=llm_config.api_key,
+                    api_version=llm_config.api_version,
+                    azure_deployment=llm_config.deployment_name,
+                    temperature=0.5,
+                    timeout=30.0,
+                    max_retries=1,
+                )
+                logger.info("Azure OpenAI chat model initialized for answer generation")
             else:
                 logger.info("Azure OpenAI is not configured; agent will summarize retrieved evidence only")
         except Exception as e:
-            logger.warning(f"Azure OpenAI LLM initialization failed: {e}")
-            llm_tool = None
+            logger.warning(f"Azure OpenAI chat model initialization failed: {e}")
+            chat_model = None
 
-        # Initialize agent with all three tools
-        agent = InstrumentedCardiologistAgent(
+        # Initialize the LangGraph-orchestrated agent with all three tools
+        agent = LangGraphCardiologistAgent(
             patient_database_tool=patient_repository.get_records,
             openfda_drug_tool=openfda_service.search_drug_label,
             cardiology_rag_tool=cardiology_rag_service.retrieve
             if cardiology_rag_service
             else _dummy_rag_tool,
-            llm_tool=llm_tool,
+            chat_model=chat_model,
         )
-        logger.info("InstrumentedCardiologistAgent initialized successfully")
+        logger.info("LangGraphCardiologistAgent initialized successfully")
 
     except Exception as e:
         logger.error(f"Failed to initialize services: {e}")
@@ -225,9 +236,16 @@ async def query(request: QueryRequest) -> QueryResponse:
                 for citation in agent_response.citations
             ]
 
-            # steps is a newer field; tolerate older/mocked AgentResponse objects that lack it
+            # steps/tool_status are newer fields; tolerate older/mocked AgentResponse objects that lack them
             raw_steps = getattr(agent_response, "steps", ())
             steps = list(raw_steps) if isinstance(raw_steps, (list, tuple)) else []
+
+            raw_tool_status = getattr(agent_response, "tool_status", ())
+            tool_status = (
+                [ToolStatusEntry(tool=ts.tool, status=ts.status, detail=ts.detail) for ts in raw_tool_status]
+                if isinstance(raw_tool_status, (list, tuple))
+                else []
+            )
 
             response = QueryResponse(
                 answer=agent_response.content,
@@ -236,6 +254,7 @@ async def query(request: QueryRequest) -> QueryResponse:
                 errors=list(agent_response.errors),
                 trace_id=trace_id,
                 steps=steps,
+                tool_status=tool_status,
             )
 
             logger.debug(f"Query response prepared with trace ID: {trace_id}")

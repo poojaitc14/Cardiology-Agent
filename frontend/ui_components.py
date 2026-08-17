@@ -15,23 +15,22 @@ TOOL_META: dict[str, dict[str, str]] = {
     "openfda_drug_tool": {"emoji": "💊", "label": "OpenFDA Drug Label", "color": "#FB8500"},
     "cardiology_rag_tool": {"emoji": "📖", "label": "Guideline Search", "color": "#8338EC"},
 }
+KNOWN_TOOLS: tuple[str, ...] = tuple(TOOL_META.keys())
 DOCUMENT_CARD_PALETTE = ("#8338EC", "#3A86FF", "#FB8500", "#06D6A0", "#EF476F", "#FFB703")
+
+# Status outcome -> visual treatment. Deliberately distinct from TOOL_META's
+# per-tool colors: this encodes *what happened*, not *which tool*.
+STATUS_META: dict[str, dict[str, str]] = {
+    "ok": {"emoji": "✅", "label": "OK", "color": "#06D6A0"},
+    "no_data": {"emoji": "➖", "label": "No data found", "color": "#FFB703"},
+    "error": {"emoji": "⚠️", "label": "Error", "color": "#EF476F"},
+    "not_used": {"emoji": "⚪", "label": "Not used for this query", "color": "#6C757D"},
+}
 
 
 def _tool_meta(tool_name: str) -> dict[str, str]:
     return TOOL_META.get(
         tool_name, {"emoji": "🔧", "label": tool_name.replace("_", " ").title(), "color": "#6C757D"}
-    )
-
-
-def render_tool_badge(tool_name: str) -> str:
-    """Return an inline-HTML pill badge for one tool, colored consistently across the app."""
-    meta = _tool_meta(tool_name)
-    return (
-        f'<span style="display:inline-flex;align-items:center;gap:6px;'
-        f'background:{meta["color"]}1A;color:{meta["color"]};border:1px solid {meta["color"]}55;'
-        f'padding:4px 12px;border-radius:999px;font-size:0.85rem;font-weight:600;'
-        f'margin:2px 8px 2px 0;">{meta["emoji"]} {meta["label"]}</span>'
     )
 
 
@@ -103,6 +102,46 @@ def display_thinking_process(steps: list[str], animate: bool = True) -> None:
                 st.write(f"• {step}")
 
 
+def display_tool_status(tool_status: list[dict[str, Any]]) -> None:
+    """Display per-tool outcome (ok/no data/error/not used) for one query.
+
+    This is what actually answers "what is happening" when a tool doesn't
+    return what was expected: a colored card per known tool naming the
+    specific outcome, not just a generic answer or a buried log line.
+
+    Args:
+        tool_status: The API response's `tool_status` list -- one
+            {"tool", "status", "detail"} entry per tool actually invoked.
+    """
+    by_tool = {entry["tool"]: entry for entry in tool_status}
+    cols = st.columns(len(KNOWN_TOOLS))
+    for col, tool_name in zip(cols, KNOWN_TOOLS):
+        tool_meta = _tool_meta(tool_name)
+        entry = by_tool.get(tool_name)
+        status_key = entry["status"] if entry else "not_used"
+        status_meta = STATUS_META.get(status_key, STATUS_META["error"])
+        detail = entry["detail"] if entry else "This tool was not needed for this question."
+        with col:
+            st.markdown(
+                f"""
+                <div style="border:1px solid {status_meta['color']}55;border-left:5px solid {status_meta['color']};
+                            border-radius:10px;padding:12px 14px;background:{status_meta['color']}0D;
+                            min-height:120px;">
+                    <div style="font-weight:700;font-size:0.92rem;color:{tool_meta['color']};">
+                        {tool_meta['emoji']} {tool_meta['label']}
+                    </div>
+                    <div style="font-weight:600;font-size:0.85rem;color:{status_meta['color']};margin-top:6px;">
+                        {status_meta['emoji']} {status_meta['label']}
+                    </div>
+                    <div style="font-size:0.78rem;opacity:0.75;margin-top:4px;">
+                        {detail}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+
 def display_agent_response(response: dict[str, Any]) -> None:
     """Display agent response with all components.
 
@@ -129,30 +168,19 @@ def display_agent_response(response: dict[str, Any]) -> None:
         # Add visual separator
         st.divider()
 
-        # Create columns for metadata
-        col1, col2 = st.columns(2)
+        # Tool status: what each tool actually did for this query
+        st.subheader("🛠️ Tool Status")
+        display_tool_status(response.get("tool_status", []))
 
-        # Tools used
-        with col1:
-            st.subheader("🛠️ Tools Used")
-            tools_used = response.get("tools_used", [])
-            if tools_used:
-                st.markdown(
-                    "".join(render_tool_badge(tool) for tool in tools_used),
-                    unsafe_allow_html=True,
-                )
-            else:
-                st.info("No tools were used for this query")
-
-        # Errors
-        with col2:
-            errors = response.get("errors", [])
-            if errors:
-                st.subheader("⚠️ Errors")
+        # Errors (a catch-all: guardrail interventions, LLM failures, etc. --
+        # not every error maps to one specific tool)
+        errors = response.get("errors", [])
+        if errors:
+            with st.expander(f"⚠️ {len(errors)} error(s) encountered", expanded=True):
                 for error in errors:
                     st.warning(error)
-            else:
-                st.success("✓ No errors encountered")
+        else:
+            st.success("✓ No errors encountered")
 
         # Sources/Citations
         st.subheader("📚 Sources & Citations")

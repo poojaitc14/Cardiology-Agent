@@ -23,7 +23,38 @@ TOOL_SCHEMAS: tuple[dict[str, Any], ...] = (
 )
 
 PATIENT_ID = re.compile(r"\b(P\d{4,12})\b", re.IGNORECASE)
-KNOWN_DRUGS = re.compile(r"\b(warfarin|atorvastatin|lisinopril|metoprolol)\b", re.IGNORECASE)
+
+# Cardiology-relevant drug names the agent recognizes in a question, grouped by
+# class for readability. Deliberately an explicit allow-list rather than a
+# general-purpose NLP entity extractor -- keeps drug detection as auditable
+# and deterministic as the rest of the agent's tool routing, at the cost of
+# only covering the drugs listed here.
+KNOWN_DRUG_NAMES: tuple[str, ...] = (
+    # Anticoagulants
+    "warfarin", "heparin", "enoxaparin", "dabigatran", "rivaroxaban", "apixaban", "edoxaban", "fondaparinux",
+    # Antiplatelets
+    "aspirin", "clopidogrel", "ticagrelor", "prasugrel", "dipyridamole",
+    # Statins
+    "atorvastatin", "rosuvastatin", "simvastatin", "pravastatin", "fluvastatin", "lovastatin", "pitavastatin",
+    # Beta-blockers
+    "metoprolol", "bisoprolol", "carvedilol", "atenolol", "propranolol", "nebivolol", "labetalol", "sotalol", "esmolol",
+    # ACE inhibitors
+    "lisinopril", "ramipril", "enalapril", "captopril", "perindopril", "fosinopril", "quinapril", "trandolapril",
+    # ARBs
+    "losartan", "valsartan", "candesartan", "irbesartan", "telmisartan", "olmesartan",
+    # Calcium channel blockers
+    "amlodipine", "diltiazem", "verapamil", "nifedipine", "felodipine", "nicardipine",
+    # Diuretics
+    "furosemide", "bumetanide", "torsemide", "spironolactone", "eplerenone", "hydrochlorothiazide", "indapamide", "chlorthalidone", "metolazone",
+    # Antiarrhythmics
+    "amiodarone", "digoxin", "flecainide", "dronedarone", "propafenone", "dofetilide",
+    # Other cardiology agents
+    "nitroglycerin", "isosorbide", "hydralazine", "clonidine", "ivabradine", "ranolazine", "sacubitril",
+    # Common brand names clinicians say instead of the generic
+    "coumadin", "eliquis", "xarelto", "plavix", "lipitor", "crestor", "lasix", "toprol", "cozaar", "diovan",
+    "norvasc", "cordarone", "entresto", "brilinta", "effient", "pradaxa", "savaysa",
+)
+KNOWN_DRUGS = re.compile(r"\b(" + "|".join(KNOWN_DRUG_NAMES) + r")\b", re.IGNORECASE)
 
 # Clinically relevant fields per DynamoDB entity type, rendered for the LLM. This is
 # an explicit allow-list -- internal fields (PK, SK, created_at, record_status, ...)
@@ -74,12 +105,24 @@ class Citation:
 
 
 @dataclass(frozen=True)
+class ToolStatus:
+    """The outcome of one tool invocation for one query, surfaced to the
+    frontend so the clinician can see what actually happened -- not just that
+    a tool was "used," but whether it succeeded, found nothing, or failed."""
+
+    tool: str
+    status: str  # "ok" | "no_data" | "error"
+    detail: str
+
+
+@dataclass(frozen=True)
 class AgentResponse:
     content: str
     citations: tuple[Citation, ...]
     tools_used: tuple[str, ...]
     errors: tuple[str, ...]
     steps: tuple[str, ...] = ()
+    tool_status: tuple[ToolStatus, ...] = ()
 
 
 class CardiologistAgent:
