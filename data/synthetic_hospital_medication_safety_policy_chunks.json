@@ -1,0 +1,192 @@
+[
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "1. Purpose and Scope",
+    "page": "2",
+    "text": "1. Purpose and Scope\n\nThe purpose of this synthetic policy is to describe a demonstration framework for safe medication review within an inpatient or outpatient cardiology workflow. The policy focuses on information verification, medication reconciliation, allergy and intolerance checking, high-risk medicines, monitoring information, escalation, documentation, and evidence provenance. The policy applies only to the software demonstration environment. It is intentionally written as an organisational policy source that a retrieval-augmented generation system can search. Any retrieved passage must be presented as supporting evidence for clinician review rather than as an autonomous diagnosis, prescription, dose calculation, medication order, or treatment decision."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "1.1 Core safety principles",
+    "page": "2",
+    "text": "1.1 Core safety principles\n\nVerification: Patient-specific medication information should be checked against an authoritative source record before being relied upon. Conflicting or incomplete information should be clearly identified rather than silently reconciled by the software. Minimum necessary information: The review workflow should retrieve only information required for the stated review purpose. Patient identifiers and clinical facts should not be included in telemetry, logs, prompts, or external systems unless explicitly authorised. Evidence provenance: Every patient fact or policy statement surfaced by the system should retain a source identifier and, where available, document version, section, date, and page reference. Human oversight: Safety-relevant observations require clinician verification. The system must not represent a retrieved document or API result as a clinical decision."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "2. Medication Reconciliation",
+    "page": "2",
+    "text": "2. Medication Reconciliation\n\nMedication reconciliation is the structured comparison of the medicines recorded in available sources. For this demonstration, the review should identify the current medication list, medication status, indication when recorded, prescriber when recorded, and the source and timestamp of the record. When two records disagree, the application should preserve the discrepancy as a limitation or attention item. It should not infer that one record is correct solely because it is newer. Missing dose, route, frequency, or start-date information should be reported as missing rather than generated. Medicines recorded as stopped or inactive should not automatically be treated as current therapy. The clinical reviewer remains responsible for confirming the active medication list."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "3. Allergy and Intolerance Verification",
+    "page": "3",
+    "text": "3. Allergy and Intolerance Verification\n\nBefore medication-related decisions, the reviewer should verify recorded allergies and intolerances. The review should distinguish an allergy from an intolerance when that distinction exists in the source record. Where reaction details are absent, the system should state that the reaction is not recorded or requires source-record verification. A recorded allergy or intolerance should generate an attention item linked to the originating patient record. The software should not independently determine whether a proposed medicine is safe for a particular patient; it may surface relevant label or policy evidence for clinician review."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "3.1 Incomplete allergy information",
+    "page": "3",
+    "text": "3.1 Incomplete allergy information\n\nIf the allergy list is unavailable, contradictory, or contains non-specific entries, the limitation should be visible in the final review. Absence of an allergy record must not be described as proof that the patient has no allergies."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "4. High-Risk Medicines",
+    "page": "3",
+    "text": "4. High-Risk Medicines\n\nHigh-risk medicines require additional attention because errors may have serious consequences. For this synthetic policy, anticoagulants are used as the principal cardiology-related example. Other high-risk medicine categories may be represented in future versions of the demonstration dataset."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "4.1 Anticoagulants",
+    "page": "3",
+    "text": "4.1 Anticoagulants\n\nWhen an anticoagulant is present in the medication record, the review should surface the medicine name, recorded indication if available, relevant recent laboratory or monitoring information if available, allergy information, and any approved organisational policy passage retrieved for the question. The application may also retrieve official drug-label metadata indicating that boxed-warning, contraindication, or drug-interaction sections are present. Such metadata is a navigation and safety signal only; the clinician must review the authoritative label and patient context. The software must not recommend starting, stopping, withholding, switching, or changing the dose of an anticoagulant. Questions requesting such actions should be answered with evidence, limitations, and a clear requirement for clinician judgement."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "5. Renal Function and Laboratory Monitoring",
+    "page": "4",
+    "text": "5. Renal Function and Laboratory Monitoring\n\nRenal function and other laboratory results may be relevant to medication review. The system should present the recorded test name, value, unit, interpretation, date, and source when those fields are available. A value without units or an uncertain timestamp should be labelled as incomplete. The application must not calculate or infer a medication dose from laboratory results. If a calculation such as creatinine clearance is not explicitly provided by an approved clinical service, the system should not generate it as a medication recommendation."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "5.1 Missing or stale results",
+    "page": "4",
+    "text": "5.1 Missing or stale results\n\nIf a relevant laboratory result is missing, unavailable, or apparently old, the review may identify this as a limitation requiring clinician verification. The software should not invent a replacement value or assume that an unobserved result is normal."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "6. Cardiovascular History and Observations",
+    "page": "4",
+    "text": "6. Cardiovascular History and Observations\n\nThe review may summarise recorded cardiovascular conditions such as hypertension or coronary heart disease and may present available observations such as blood pressure, heart rate, oxygen saturation, and weight. Each item should retain provenance to the patient record. Historical conditions should not automatically be interpreted as active disease unless the source record states the current status. Similarly, isolated observations should not be converted into a diagnosis by the software."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "7. External Medication Information",
+    "page": "4",
+    "text": "7. External Medication Information\n\nExternal medication information may be retrieved from a trusted drug-information service such as openFDA for demonstration purposes. The application should request only bounded metadata required for the review and should use timeouts and graceful failure handling. If the external service is disabled, unavailable, or returns no matching label, that state should be reported as a limitation. The system must not substitute model-generated drug information for a failed authoritative lookup."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "8. Approved Knowledge Retrieval and RAG Controls",
+    "page": "5",
+    "text": "8. Approved Knowledge Retrieval and RAG Controls\n\nOnly documents with an explicit approval status of APPROVED may be returned by the clinical knowledge retrieval tool. Documents marked DRAFT, EXPIRED, SUPERSEDED, ARCHIVED, or with a missing approval The vector-search layer should apply an approval-status filter during retrieval and the application should independently validate the returned metadata before displaying a result. This defence-in-depth approach reduces the chance that an incorrectly indexed draft document is surfaced."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "8.1 Structure-aware chunking",
+    "page": "5",
+    "text": "8.1 Structure-aware chunking\n\nPolicy ingestion should preserve natural document structure. Headings, numbered sections, and subsections should be preferred as chunk boundaries. Large sections may be divided into smaller chunks with limited overlap while retaining the parent section title and page reference. For this demonstration knowledge base, a practical target is approximately 400-700 tokens per chunk. Where a section must be divided, approximately 50-100 tokens of overlap may be used to preserve local context. Natural policy boundaries take priority over an exact fixed token count."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "8.2 Required metadata",
+    "page": "5",
+    "text": "8.2 Required metadata\n\nField Purpose document_id Stable identifier for the policy title Human-readable policy title Approval filter; must equal APPROVED for retrieval effective_date Policy currency / governance context section Structure-aware retrieval and citation page Location in the source PDF text Extracted chunk content embedding Vector used for similarity search A retrieved chunk should be returned with citation-linked metadata so that the clinician can identify which policy and section supported the observation."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "9. Escalation and Uncertainty",
+    "page": "6",
+    "text": "9. Escalation and Uncertainty\n\nThe application should make uncertainty visible. Examples include missing patient records, unavailable drug-label services, absent approved policy passages, conflicting records, incomplete timestamps, and fields that require source-record verification. Safety-relevant uncertainty should be expressed as an attention item or limitation rather than hidden. The software should not attempt to resolve uncertainty by fabricating facts or presenting probabilistic model output as established clinical information."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "9.1 Escalation principle",
+    "page": "6",
+    "text": "9.1 Escalation principle\n\nWhere the available evidence is insufficient for a medication-related decision, the system should indicate that clinician verification or escalation through the organisation's normal clinical pathway is required. The software itself does not initiate emergency, prescribing, or medication-order actions."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "10. Audit, Privacy and Observability",
+    "page": "6",
+    "text": "10. Audit, Privacy and Observability\n\nApplication observability should record technical events required for troubleshooting and evaluation without unnecessarily capturing patient-identifiable information. Where tracing is used, raw clinical inputs and outputs should be excluded unless an explicitly approved secure workflow exists. Secrets such as API keys, database credentials, OpenSearch passwords, and cloud credentials must be supplied through approved secret-management or environment mechanisms. They must not be embedded in source code, committed to version control, or included in policy chunks."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "11. Evaluation Requirements",
+    "page": "6",
+    "text": "11. Evaluation Requirements\n\nBefore any production consideration, the RAG workflow should be evaluated for retrieval quality, groundedness, citation correctness, failure behaviour, approval-status filtering, and resistance to unsupported clinical conclusions. Evaluation datasets should use synthetic or appropriately governed data."
+  },
+  {
+    "document_id": "SYNTH-HMSP-001",
+    "title": "Synthetic Hospital Medication Safety Policy",
+    "version": "1.0",
+    "status": "APPROVED",
+    "effective_date": "2026-08-14",
+    "section": "12. Document Governance",
+    "page": "6",
+    "text": "12. Document Governance\n\nThis demonstration document is labelled APPROVED only so that the software project can test approved-only retrieval. The approval is fictional and applies solely to the synthetic software demonstration. A real healthcare organisation would require formal ownership, review, approval, version control, expiry, and supersession processes before a policy could be relied upon. End of synthetic policy. Do not use this document for real clinical care."
+  }
+]
