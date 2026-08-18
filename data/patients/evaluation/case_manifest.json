@@ -66,7 +66,7 @@
   {
     "patient_id": "P1009",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -74,7 +74,7 @@
   {
     "patient_id": "P1010",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -82,7 +82,7 @@
   {
     "patient_id": "P1011",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -90,7 +90,7 @@
   {
     "patient_id": "P1012",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -98,7 +98,7 @@
   {
     "patient_id": "P1013",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -106,7 +106,7 @@
   {
     "patient_id": "P1014",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -114,7 +114,7 @@
   {
     "patient_id": "P1015",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -122,7 +122,7 @@
   {
     "patient_id": "P1016",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -130,7 +130,7 @@
   {
     "patient_id": "P1017",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -138,7 +138,7 @@
   {
     "patient_id": "P1018",
     "scenario_tags": [
-      "routine_complete_history"
+      "treatment_not_started"
     ],
     "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
@@ -146,273 +146,277 @@
   {
     "patient_id": "P1019",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1020",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1021",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1022",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1023",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1024",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1025",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1026",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1027",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1028",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1029",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1030",
     "scenario_tags": [
-      "routine_complete_history"
+      "stale_monitoring"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1031",
     "scenario_tags": [
-      "routine_complete_history"
+      "preliminary_cardiology_test"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1032",
     "scenario_tags": [
-      "routine_complete_history"
+      "preliminary_cardiology_test"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1033",
     "scenario_tags": [
-      "routine_complete_history"
+      "preliminary_cardiology_test"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1034",
     "scenario_tags": [
-      "routine_complete_history"
+      "preliminary_cardiology_test"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1035",
     "scenario_tags": [
-      "routine_complete_history"
+      "preliminary_cardiology_test"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1036",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_status_unknown"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1037",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_status_unknown"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1038",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_status_unknown"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1039",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_status_unknown"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1040",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_status_unknown"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "INSUFFICIENT_EVIDENCE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1041",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_medication_conflict"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1042",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_medication_conflict"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1043",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_medication_conflict"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1044",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_medication_conflict"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1045",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_medication_conflict"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1046",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_medication_conflict"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1047",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_medication_conflict"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1048",
     "scenario_tags": [
-      "routine_complete_history"
+      "allergy_medication_conflict"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "CONFLICT_REQUIRES_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1049",
     "scenario_tags": [
-      "routine_complete_history"
+      "high_potassium",
+      "ace_or_arb_active"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1050",
     "scenario_tags": [
-      "routine_complete_history"
+      "high_potassium",
+      "ace_or_arb_active"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1051",
     "scenario_tags": [
-      "routine_complete_history"
+      "high_potassium",
+      "ace_or_arb_active"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
     "patient_id": "P1052",
     "scenario_tags": [
-      "routine_complete_history"
+      "high_potassium",
+      "ace_or_arb_active"
     ],
-    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "expected_review_status": "URGENT_CLINICAL_REVIEW",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
   },
   {
@@ -815,5 +819,245 @@
     ],
     "expected_review_status": "SYSTEM_UNAVAILABLE",
     "notes": "Evaluation metadata only; not part of the DynamoDB patient item"
+  },
+  {
+    "patient_id": "P1101",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1102",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1103",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1104",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1105",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1106",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1107",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1108",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1109",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1110",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1111",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1112",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1113",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1114",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1115",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1116",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1117",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1118",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1119",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1120",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1121",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1122",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1123",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1124",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1125",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1126",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1127",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1128",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1129",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
+  },
+  {
+    "patient_id": "P1130",
+    "scenario_tags": [
+      "mild_cardiac_condition"
+    ],
+    "expected_review_status": "DRAFT_FOR_CLINICIAN_REVIEW",
+    "notes": "Mild non-urgent cardiac condition for training demos."
   }
 ]

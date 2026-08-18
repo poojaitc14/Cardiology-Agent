@@ -10,7 +10,7 @@ def main():
     ap.add_argument("--allow-nonempty",action="store_true")
     args=ap.parse_args()
     patients=json.loads(Path(args.file).read_text())
-    assert len(patients)==100 and len({p["patient_id"] for p in patients})==100
+    assert len(patients)==130 and len({p["patient_id"] for p in patients})==130
     if args.dry_run:
         print(f"Validated {len(patients)} items for {args.table} in {args.region}")
         return

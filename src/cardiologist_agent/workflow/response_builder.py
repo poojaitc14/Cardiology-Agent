@@ -33,6 +33,7 @@ from cardiologist_agent.safety.status import (
     safest_next_action,
     select_review_status,
 )
+from cardiologist_agent.ui.care_plan import _by_id, _load_staff, build_care_plan
 
 
 def _allergy_summary(patient: Patient, assessment: SafetyAssessment) -> str:
@@ -61,6 +62,45 @@ def _latest_vitals_summary(patient: Patient) -> str | None:
     return "; ".join(parts) if parts else None
 
 
+def _recent_medicines_summary(patient: Patient) -> str:
+    active = [m for m in patient.medications if m.medication_status.lower() == "active"]
+    if not active:
+        return "No active heart medicines are listed on the record at the moment."
+    count = len(active)
+    word = "medicines" if count != 1 else "medicine"
+    return f"The record shows {count} active heart {word} on file."
+
+
+def _recent_labs_summary(patient: Patient) -> str:
+    labs = sorted(
+        [lab for lab in patient.lab_results if lab.test_date],
+        key=lambda item: item.test_date or datetime.min,
+        reverse=True,
+    )
+    if not labs:
+        return "No recent blood test results are on file."
+    latest = labs[0]
+    names = ", ".join(dict.fromkeys(lab.test_name for lab in labs[:3]))
+    when = latest.test_date.strftime("%d %B %Y") if latest.test_date else "recently"
+    return f"Recent blood tests on file ({names}) date from {when}."
+
+
+def _recent_care_summary(patient: Patient) -> str:
+    tests = sorted(
+        [test for test in patient.cardiology_tests if test.performed_date],
+        key=lambda item: item.performed_date or datetime.min,
+        reverse=True,
+    )
+    if not tests:
+        return "No recent heart clinic tests or visits are recorded."
+    latest = tests[0]
+    when = latest.performed_date.strftime("%d %B %Y") if latest.performed_date else "recently"
+    return (
+        f"The most recent heart test on file is "
+        f"{latest.test_or_procedure_name.lower()}, from {when}."
+    )
+
+
 def build_patient_snapshot(patient: Patient, assessment: SafetyAssessment) -> PatientSnapshot:
     active_meds = [
         f"{m.drug_name} {m.dose}{m.dose_unit or ''} ({m.medication_status})"
@@ -83,6 +123,9 @@ def build_patient_snapshot(patient: Patient, assessment: SafetyAssessment) -> Pa
         active_medications=active_meds,
         allergy_summary=_allergy_summary(patient, assessment),
         latest_vitals_summary=_latest_vitals_summary(patient),
+        recent_medicines_summary=_recent_medicines_summary(patient),
+        recent_labs_summary=_recent_labs_summary(patient),
+        recent_care_summary=_recent_care_summary(patient),
     )
 
 
@@ -131,6 +174,19 @@ def build_response(
         status, assessment, retrieval, authorization_status, dependencies
     )
 
+    staff_list, _ = _load_staff()
+    staff = _by_id(staff_list)
+    nurse = staff.get("NURSE201")
+    nurse_name = nurse.name if nurse else "Sister Margaret Walsh"
+
+    care = build_care_plan(
+        patient=patient,
+        assessment=assessment,
+        status=status,
+        retrieval=retrieval,
+        clinical_question=clinical_question,
+    )
+
     claims: list[Claim] = []
     for cond in patient.conditions[:5]:
         claims.append(
@@ -161,11 +217,13 @@ def build_response(
 
     rationale = (
         llm_payload.get("clinical_rationale")
-        if llm_payload
-        else "Automated review based on structured patient data and retrieved policy evidence."
+        if llm_payload and llm_payload.get("clinical_rationale")
+        else care.clinical_rationale
     )
     attention = list(assessment.flags)
     attention_items = [f"[{f.severity}] {f.message}" for f in attention]
+    if care.attention_items:
+        attention_items.extend(care.attention_items)
     if llm_payload and llm_payload.get("attention_items"):
         attention_items.extend(str(x) for x in llm_payload["attention_items"])
 
@@ -174,11 +232,11 @@ def build_response(
         required_tests.append(
             RequiredTest(
                 test=gap.field or gap.category,
-                purpose="Refresh stale monitoring data before medication decisions.",
-                target_date_or_window="Within 14 days",
-                booking_owner="Cardiology clinic",
-                results_owner="Primary cardiologist",
-                escalation="Escalate if delayed or unavailable.",
+                purpose="We need up-to-date blood results before any medicine changes.",
+                target_date_or_window="Within 2 weeks",
+                booking_owner=nurse_name,
+                results_owner=patient.primary_cardiologist or "Dr Amelia Hartley",
+                escalation=f"Contact {staff.get('DUTY501').name if staff.get('DUTY501') else 'duty cardiology'} if delayed.",
             )
         )
 
@@ -217,12 +275,8 @@ def build_response(
             if f.severity.value in {"URGENT", "EMERGENCY", "CRITICAL"}
         ],
         required_tests=required_tests,
-        future_appointments=[],
-        future_course_of_action=(
-            llm_payload.get("future_course_of_action", [])
-            if llm_payload
-            else ["Clinician review of draft recommendation."]
-        ),
+        future_appointments=care.future_appointments,
+        future_course_of_action=care.future_course_of_action,
         missing_or_stale_data=assessment.missing + assessment.stale,
         conflicts=assessment.conflicts,
         unavailable_dependencies=[d for d in dependencies if not d.available],

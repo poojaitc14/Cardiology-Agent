@@ -1,0 +1,81 @@
+# Fictional Northbridge Cardiology staff — training data only.
+staff:
+  - id: DR101
+    name: Dr Amelia Hartley
+    title: Consultant cardiologist
+    contact: "Cardiology Suite A, ext. 4101"
+    handles:
+      - hypertension
+      - hyperlipidaemia
+      - general cardiology
+      - mild valve disease
+  - id: DR102
+    name: Dr Raj Patel
+    title: Heart failure specialist
+    contact: "Heart Failure Clinic, ext. 4102"
+    handles:
+      - heart failure
+      - fluid management
+      - diuretics
+  - id: DR103
+    name: Dr Sophie Chen
+    title: Arrhythmia specialist
+    contact: "Arrhythmia Service, ext. 4103"
+    handles:
+      - atrial fibrillation
+      - palpitations
+      - bradycardia
+      - anticoagulation
+  - id: DR104
+    name: Dr James Okonkwo
+    title: Preventive cardiology lead
+    contact: "Preventive Cardiology, ext. 4104"
+    handles:
+      - lifestyle
+      - mild conditions
+      - screening
+      - treatment initiation
+  - id: NURSE201
+    name: Sister Margaret Walsh
+    title: Cardiology nurse specialist
+    contact: "Cardiology nurses desk, ext. 4201"
+    handles:
+      - blood tests
+      - monitoring
+      - appointments
+      - patient education
+  - id: ADMIN301
+    name: Mr Daniel Brooks
+    title: Bookings coordinator
+    contact: "Cardiology reception, ext. 4301"
+    handles:
+      - appointments
+      - referrals
+      - scheduling
+  - id: PHARM401
+    name: Ms Elena Vasquez
+    title: Cardiology pharmacist
+    contact: "Pharmacy liaison, ext. 4401"
+    handles:
+      - medication conflicts
+      - allergy reconciliation
+      - medicine changes
+  - id: DUTY501
+    name: Dr Fatima Al-Rashid
+    title: Duty cardiologist on call
+    contact: "Cardiology bleep 501 - available 24/7"
+    handles:
+      - urgent review
+      - emergencies
+      - same-day escalation
+
+condition_routing:
+  hypertension: DR101
+  hyperlipidaemia: DR104
+  palpitations: DR103
+  atrial fibrillation: DR103
+  heart failure: DR102
+  valve: DR101
+  anticoagulation: DR103
+  mild: DR104
+  default: DR101

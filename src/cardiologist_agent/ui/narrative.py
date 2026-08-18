@@ -4,46 +4,29 @@ from typing import Any
 
 STATUS_PHRASES = {
     "DRAFT_FOR_CLINICIAN_REVIEW": (
-        "A draft summary has been prepared for clinician review. "
-        "It is not a final authorised medication plan."
+        "Everything looks broadly stable from what we can see in the record. "
+        "A heart doctor still needs to sign off any medicine changes."
     ),
     "INSUFFICIENT_EVIDENCE": (
-        "There is not yet enough reliable information to make a safe recommendation. "
-        "Further checks or updated records are needed first."
+        "We do not yet have enough up-to-date information to give confident advice. "
+        "Some tests or checks need to happen first."
     ),
     "CONFLICT_REQUIRES_REVIEW": (
-        "Conflicting information was found in the record. "
-        "A clinician must review and resolve this before any medication action is taken."
+        "Something in the record does not add up — usually about medicines or allergies. "
+        "This needs sorting out before anyone changes treatment."
     ),
     "URGENT_CLINICAL_REVIEW": (
-        "Urgent clinical review is recommended today because of flagged safety concerns."
+        "Something needs attention today. Please do not wait for a routine appointment."
     ),
     "EMERGENCY_ESCALATION": (
-        "Emergency escalation is advised. Immediate clinical assessment is required."
+        "This may be an emergency. Immediate medical help is needed."
     ),
     "SYSTEM_UNAVAILABLE": (
-        "The review could not be completed because the patient record is unavailable or inactive."
+        "We could not open this patient’s record, so a full review was not possible."
     ),
     "FINAL_AUTHORIZED": (
-        "A fully authorised medication recommendation is available for release."
+        "A signed treatment plan is on file and ready to share with the care team."
     ),
-}
-
-GRADE_PHRASES = {
-    "HIGH": "The available evidence is strong and complete.",
-    "MODERATE": "The available evidence is reasonably complete, though some items remain open.",
-    "LOW": "The available evidence is limited; please treat recommendations with extra caution.",
-    "INSUFFICIENT": "The evidence available is not sufficient to support a confident recommendation.",
-}
-
-ACTION_PHRASES = {
-    "CONTINUE": "Continue current treatment as documented, subject to clinician approval.",
-    "START": "Starting a new medicine may be appropriate once authorisation is confirmed.",
-    "ADJUST": "A dose or regimen adjustment may be needed after clinician review.",
-    "HOLD": "A temporary hold may be appropriate pending further review.",
-    "STOP": "Stopping a medicine may be appropriate after clinician review.",
-    "NO_CHANGE": "No change to medicines is suggested at this time.",
-    "NO_RECOMMENDATION": "No medication recommendation can be made safely at this time.",
 }
 
 
@@ -62,7 +45,7 @@ def _format_list_as_prose(items: list[str], *, empty: str) -> str:
     return f"{body}; and {items[-1]}"
 
 
-def _attention_items(data: dict[str, Any]) -> list[str]:
+def _plain_attention(data: dict[str, Any]) -> list[str]:
     items: list[str] = []
     for raw in data.get("attention_items") or []:
         text = str(raw).strip()
@@ -75,8 +58,26 @@ def _attention_items(data: dict[str, Any]) -> list[str]:
     for warning in data.get("warnings_and_red_flags") or []:
         text = str(warning).strip()
         if text and text not in items:
-            items.append(text)
+            items.append(_simplify_medical_text(text))
     return items
+
+
+def _simplify_medical_text(text: str) -> str:
+    replacements = {
+        "Potassium": "potassium (salt level in the blood)",
+        "ACE/ARB": "blood-pressure tablets that can affect potassium",
+        "SpO2": "oxygen level",
+        "mmol/L": "",
+        "bpm": "beats per minute",
+    }
+    result = text
+    for old, new in replacements.items():
+        result = result.replace(old, new)
+    return " ".join(result.split())
+
+
+def _snapshot(data: dict[str, Any]) -> dict[str, Any]:
+    return data.get("patient_snapshot") or {}
 
 
 def _medication_paragraph(data: dict[str, Any]) -> str:
@@ -84,92 +85,112 @@ def _medication_paragraph(data: dict[str, Any]) -> str:
     auth_status = auth.get("authorization_status", "UNAVAILABLE")
     instructions = data.get("medication_instructions") or []
     action = data.get("recommendation_action", "NO_RECOMMENDATION")
-    action_text = ACTION_PHRASES.get(action, "No medication action has been confirmed.")
+    snapshot = _snapshot(data)
+    recent = (snapshot.get("recent_medicines_summary") or "").strip()
+
+    if action == "NO_CHANGE":
+        action_text = "Nothing suggests an immediate change to heart medicines."
+    elif action == "NO_RECOMMENDATION":
+        action_text = "We cannot safely recommend a medicine change right now."
+    else:
+        action_text = "A medicine change might be worth discussing once a doctor has reviewed the file."
+
+    parts = [action_text]
+    if recent:
+        parts.append(recent)
 
     if auth_status == "UNAVAILABLE" or not any(i.get("authorized") for i in instructions):
-        return _join_sentences(
-            [
-                action_text,
-                "Medicines appear on the record, but no signed orders are available to confirm "
-                "exact administration instructions. Please do not act on undocumented directions "
-                "until a clinician has authorised them.",
-            ]
-        )
+        active_count = sum(1 for i in instructions if i.get("medication_name"))
+        if active_count:
+            parts.append(
+                "There are medicines on the record, but none have a signed prescription attached "
+                "in this system. Please wait for a doctor to confirm what the patient should "
+                "actually take."
+            )
+        elif not recent:
+            parts.append("The patient is not on active heart treatment in the record at the moment.")
+        return _join_sentences(parts)
 
-    lines = [action_text, "The following authorised instructions apply:"]
-    for med in instructions:
-        if not med.get("authorized"):
-            continue
-        detail = med.get("medication_name") or "Medication"
-        if med.get("dose") and med.get("dose_unit"):
-            detail += f" {med['dose']}{med['dose_unit']}"
-        if med.get("route"):
-            detail += f", {med['route']}"
-        if med.get("frequency"):
-            detail += f", {med['frequency']}"
-        lines.append(detail + ".")
-    return " ".join(lines)
+    return _join_sentences(parts)
 
 
 def _tests_paragraph(data: dict[str, Any]) -> str:
     tests = data.get("required_tests") or []
-    if not tests:
-        return (
-            "No additional blood tests or investigations need to be arranged on the basis of "
-            "this review at present."
-        )
+    snapshot = _snapshot(data)
+    recent = (snapshot.get("recent_labs_summary") or "").strip()
     parts: list[str] = []
+
+    if recent:
+        parts.append(recent)
+
+    if not tests:
+        parts.append("No extra blood tests need booking right now on the basis of this review.")
+        return _join_sentences(parts)
+
+    booking_parts: list[str] = []
     for test in tests:
-        name = test.get("test") or "Investigation"
-        purpose = test.get("purpose") or "Clinical monitoring"
+        name = test.get("test") or "Blood test"
+        purpose = test.get("purpose") or "Routine monitoring"
         timing = test.get("target_date_or_window")
         owner = test.get("booking_owner")
-        sentence = f"{name} is recommended for {purpose.lower().rstrip('.')}"
+        sentence = purpose.rstrip(".")
+        if name.lower() not in sentence.lower():
+            sentence = f"A {name.lower()} test is needed. {sentence}"
         if timing:
-            sentence += f", ideally {timing.lower()}"
+            sentence += f" Please arrange this {timing.lower()}."
         if owner:
-            sentence += f", to be booked by {owner}"
+            sentence += f" {owner} can help book it."
         sentence += "."
-        parts.append(sentence)
-    intro = "The following tests or monitoring checks should be arranged:"
-    return intro + " " + _format_list_as_prose(parts, empty="")
+        booking_parts.append(sentence)
+    parts.append("Tests to arrange: " + _format_list_as_prose(booking_parts, empty=""))
+    return _join_sentences(parts)
 
 
 def _appointments_paragraph(data: dict[str, Any]) -> str:
     appointments = data.get("future_appointments") or []
-    if not appointments:
-        return (
-            "No follow-up appointments need to be scheduled at this time. "
-            "Routine clinic arrangements may continue as already planned."
-        )
+    snapshot = _snapshot(data)
+    recent = (snapshot.get("recent_care_summary") or "").strip()
     parts: list[str] = []
+
+    if recent:
+        parts.append(recent)
+
+    if not appointments:
+        parts.append(
+            "No new appointments need scheduling from this review. "
+            "Any existing clinic dates can stay as they are."
+        )
+        return _join_sentences(parts)
+
+    booking_parts: list[str] = []
     for appt in appointments:
         appt_type = appt.get("appointment_type") or "Appointment"
-        purpose = appt.get("purpose") or "Clinical review"
+        purpose = appt.get("purpose") or "Heart check-up"
         timing = appt.get("target_date_or_window")
         service = appt.get("responsible_service")
-        sentence = f"A {appt_type.lower()} is suggested for {purpose.lower().rstrip('.')}"
+        sentence = f"Book a {appt_type.lower()} for {purpose.lower().rstrip('.')}"
         if timing:
-            sentence += f", target window {timing.lower()}"
+            sentence += f", ideally {timing.lower()}"
         if service:
-            sentence += f", with {service}"
+            sentence += f". Contact: {service}"
         sentence += "."
-        parts.append(sentence)
-    intro = "Please arrange the following appointments:"
-    return intro + " " + _format_list_as_prose(parts, empty="")
+        booking_parts.append(sentence)
+    parts.append("Appointments: " + _format_list_as_prose(booking_parts, empty=""))
+    return _join_sentences(parts)
 
 
 def _gaps_paragraph(data: dict[str, Any]) -> str | None:
-    gaps = (data.get("missing_or_stale_data") or []) + []
+    gaps = data.get("missing_or_stale_data") or []
     if not gaps:
         return None
-    parts = [g.get("description") for g in gaps if g.get("description")]
+    parts = []
+    for g in gaps:
+        desc = g.get("description")
+        if desc:
+            parts.append(_simplify_medical_text(desc))
     if not parts:
         return None
-    return (
-        "Some information in the record is missing, outdated, or not yet finalised: "
-        + _format_list_as_prose(parts, empty="")
-    )
+    return "Information that needs updating: " + _format_list_as_prose(parts, empty="")
 
 
 def _conflicts_paragraph(data: dict[str, Any]) -> str | None:
@@ -179,50 +200,40 @@ def _conflicts_paragraph(data: dict[str, Any]) -> str | None:
     parts: list[str] = []
     for item in conflicts:
         desc = item.get("description")
-        withheld = item.get("withheld")
-        if desc and withheld:
-            parts.append(f"{desc} Until this is resolved, {withheld.lower()} should be withheld.")
-        elif desc:
-            parts.append(desc)
+        if desc:
+            parts.append(_simplify_medical_text(desc))
     if not parts:
         return None
-    return "The following conflicts require attention: " + _format_list_as_prose(parts, empty="")
+    return "Please resolve the following before changing medicines: " + _format_list_as_prose(parts, empty="")
 
 
-def _dependencies_paragraph(data: dict[str, Any]) -> str | None:
-    deps = [d for d in (data.get("unavailable_dependencies") or []) if not d.get("available")]
-    if not deps:
-        return None
-    parts = []
-    for dep in deps:
-        name = dep.get("name") or "external source"
-        message = dep.get("message") or "This source was unavailable."
-        parts.append(f"{name}: {message}")
+def _next_steps_paragraph(data: dict[str, Any]) -> str:
+    future = [str(x).strip() for x in (data.get("future_course_of_action") or []) if str(x).strip()]
+    safest = (data.get("safest_next_action") or "").strip()
+
+    if future:
+        bullets = "\n".join(f"• {item}" for item in future)
+        return f"Here is what I recommend happens next:\n{bullets}"
+    if safest:
+        return f"What to do next:\n• {safest}"
     return (
-        "Please note that some supporting information could not be retrieved: "
-        + _format_list_as_prose(parts, empty="")
+        "Please read through the summary above and follow your usual ward or clinic process "
+        "for heart patients."
     )
 
 
 def format_secretary_letter(data: dict[str, Any], *, clinician_id: str) -> str:
-    """Turn a review API payload into a single secretary-style letter without patient identifiers."""
+    """Plain-English letter for non-clinical hospital staff. No patient identifiers."""
     status = data.get("review_status", "UNKNOWN")
-    grade = data.get("evidence_grade", "INSUFFICIENT")
     rationale = (data.get("clinical_rationale") or "").strip()
-    safest = (data.get("safest_next_action") or "").strip()
-    future = [str(x).strip() for x in (data.get("future_course_of_action") or []) if str(x).strip()]
-
-    attention = _attention_items(data)
+    attention = _plain_attention(data)
     paragraphs: list[str] = []
 
-    salutation = f"Dear Colleague ({clinician_id}),"
+    salutation = f"Hello,"
     opening = _join_sentences(
         [
-            "Thank you for your review request.",
-            "I have completed a structured check of the record, practice policies, and "
-            "available supporting sources.",
-            STATUS_PHRASES.get(status, "The review has been completed."),
-            GRADE_PHRASES.get(grade, ""),
+            "Thank you — I have looked through the heart record, hospital policies, and supporting notes.",
+            STATUS_PHRASES.get(status, "The review is complete."),
         ]
     )
     paragraphs.extend([salutation, opening])
@@ -232,16 +243,11 @@ def format_secretary_letter(data: dict[str, Any], *, clinician_id: str) -> str:
 
     if attention:
         paragraphs.append(
-            "Matters that need your attention: "
-            + _format_list_as_prose(attention, empty="None were identified.")
+            "Please pay special attention to the following: "
+            + _format_list_as_prose(attention, empty="Nothing urgent was flagged.")
         )
 
     paragraphs.append(_medication_paragraph(data))
-
-    auth = data.get("authorization") or {}
-    auth_message = (auth.get("message") or "").strip()
-    if auth_message:
-        paragraphs.append(f"Authorisation note: {auth_message}")
 
     conflict_text = _conflicts_paragraph(data)
     if conflict_text:
@@ -253,35 +259,62 @@ def format_secretary_letter(data: dict[str, Any], *, clinician_id: str) -> str:
 
     paragraphs.append(_tests_paragraph(data))
     paragraphs.append(_appointments_paragraph(data))
-
-    if future:
-        paragraphs.append(
-            "Recommended next steps in the clinic workflow: "
-            + _format_list_as_prose(future, empty="")
-        )
-    elif safest:
-        paragraphs.append(f"Recommended next step: {safest}")
-    else:
-        paragraphs.append(
-            "Please review the summary above and proceed according to your usual clinical workflow."
-        )
-
-    dep_text = _dependencies_paragraph(data)
-    if dep_text:
-        paragraphs.append(dep_text)
+    paragraphs.append(_next_steps_paragraph(data))
 
     limitations = [str(x).strip() for x in (data.get("limitations") or []) if str(x).strip()]
     if limitations:
         paragraphs.append(
-            "Important reminders: "
-            + _format_list_as_prose(limitations, empty="This is a fictional training environment.")
+            "Please remember: this is a training system with made-up patients — "
+            "not for real medical decisions."
         )
 
     closing = (
-        "Kind regards,\n"
-        "Cardiology Administration Support\n"
-        "(Northbridge Training System — fictional synthetic data only; not for real patient care.)"
+        "With best wishes,\n"
+        "Cardiology Office\n"
+        "Northbridge Hospital (training system only)"
     )
     paragraphs.append(closing)
 
+    return "\n\n".join(paragraphs)
+
+
+QUERY_MODE_INTROS = {
+    "patient_db": (
+        "I looked this up directly in the patient record — "
+        "no policy search or drug label service was used."
+    ),
+    "medical_api": (
+        "This answer comes from the openFDA drug label service — "
+        "not from the hospital record or policy library."
+    ),
+    "hospital_rag": (
+        "This answer comes from the hospital staff directory and policy guidance — "
+        "not from the patient's medical record."
+    ),
+}
+
+
+def format_query_response(data: dict[str, Any], *, clinician_id: str) -> str:
+    """Plain-English answer for routed factual, medical, or hospital questions."""
+    mode = data.get("query_mode", "unknown")
+    review = data.get("review")
+    if mode == "full_review" and review:
+        return format_secretary_letter(review, clinician_id=clinician_id)
+
+    answer = (data.get("answer") or "").strip()
+    intro = QUERY_MODE_INTROS.get(mode, "Here is what I found:")
+    paragraphs = [
+        "Hello,",
+        intro,
+        answer or "I couldn't find an answer for that question.",
+        (
+            "Please remember: this is a training system with made-up patients — "
+            "not for real medical decisions."
+        ),
+        (
+            "With best wishes,\n"
+            "Cardiology Office\n"
+            "Northbridge Hospital (training system only)"
+        ),
+    ]
     return "\n\n".join(paragraphs)

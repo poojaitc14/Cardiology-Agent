@@ -24,6 +24,7 @@ dependencies = [
   "scikit-learn>=1.5.0",
   "numpy>=1.26.0",
   "requests>=2.32.0",
+  "fpdf2>=2.8.0",
 ]
 
 [project.optional-dependencies]
@@ -47,7 +48,8 @@ cardio-ingest = "cardiologist_agent.scripts.ingest_policies:main"
 cardio-eval = "cardiologist_agent.scripts.run_evaluation:main"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["src", "."]
+include = ["cardiologist_agent*", "streamlit_app*"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

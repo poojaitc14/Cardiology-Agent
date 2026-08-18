@@ -1,95 +1,93 @@
 from __future__ import annotations
 
-import html
-import os
-
 import requests
 import streamlit as st
 
-from cardiologist_agent.ui.narrative import format_secretary_letter
-
-API_URL = (
-    os.getenv("API_BASE_URL")
-    or os.getenv("STREAMLIT_API_URL")
-    or "http://127.0.0.1:8000"
+from ui_shared import (
+    API_URL,
+    inject_styles,
+    render_hero,
+    render_summary_letter,
 )
 
 st.set_page_config(
-    page_title="Cardiology Review Assistant",
-    page_icon="🫀",
+    page_title="Heart Care Summary",
+    page_icon="💙",
     layout="centered",
+    initial_sidebar_state="collapsed",
 )
 
-st.markdown(
-    """
-    <style>
-    .letter-box {
-        background: #fafafa;
-        border: 1px solid #e6e6e6;
-        border-radius: 12px;
-        padding: 1.75rem 2rem;
-        line-height: 1.7;
-        font-size: 1.05rem;
-        color: #222;
-        white-space: pre-wrap;
-    }
-    .app-caption {
-        color: #666;
-        font-size: 0.95rem;
-        margin-bottom: 1.5rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
+inject_styles()
+render_hero(
+    icon="💙",
+    title="Heart Care Summary",
+    subtitle=(
+        "Ask anything in plain English — mention a patient by number (P1001) or name, "
+        "or ask about medicines, hospital staff, and policies."
+    ),
 )
 
-st.title("Cardiology Review Assistant")
-st.markdown(
-    '<p class="app-caption">Training environment only — fictional records, not for real patient care.</p>',
-    unsafe_allow_html=True,
+question = st.text_area(
+    "What do you need to know?",
+    value=(
+        "For patient P1001, please check the heart record, medicines, recent test results, "
+        "and tell me clearly what should happen next."
+    ),
+    height=120,
+    help=(
+        "Examples:\n"
+        "• For P1001, what should happen next? (full care summary)\n"
+        "• When did Training Record 105 last have a heart test? (patient record)\n"
+        "• What are the side effects of warfarin? (drug label API)\n"
+        "• Who handles heart failure cases? (hospital staff & policies)"
+    ),
+    label_visibility="visible",
 )
 
-with st.form("review_form", clear_on_submit=False):
-    patient_id = st.text_input("Patient record reference", value="P1001", help="Enter the patient ID to review.")
-    clinician_id = st.text_input("Your clinician ID", value="DR101")
-    question = st.text_area(
-        "What would you like reviewed?",
-        value=(
-            "Please review the cardiovascular record, current medicines, recent results, "
-            "and any safety concerns that need attention."
-        ),
-        height=100,
-    )
-    submit = st.form_submit_button("Prepare summary", type="primary", use_container_width=True)
+st.page_link("pages/2_Add_New_Patient.py", label="Add a new patient to the database", icon="➕")
+
+submit = st.button("Get my answer", type="primary", use_container_width=True)
 
 if submit:
-    if not patient_id.strip():
-        st.error("Please enter a patient record reference.")
+    question_text = question.strip()
+    if not question_text:
+        st.error("Please enter a question.")
         st.stop()
 
-    with st.spinner("Preparing your summary…"):
+    with st.spinner("Finding the best answer for your question…"):
         try:
             resp = requests.post(
-                f"{API_URL}/api/v1/reviews",
+                f"{API_URL}/api/v1/queries",
                 json={
-                    "patient_id": patient_id.strip(),
-                    "clinician_id": clinician_id.strip(),
-                    "clinical_question": question.strip(),
+                    "clinical_question": question_text,
+                    "mode": "auto",
                 },
                 timeout=120,
             )
             resp.raise_for_status()
             data = resp.json()
+        except requests.HTTPError:
+            detail = ""
+            try:
+                detail = resp.json().get("detail", "")
+            except Exception:  # noqa: BLE001
+                pass
+            st.error(detail or "Sorry — the service is not available right now.")
+            st.stop()
         except requests.RequestException:
             st.error(
-                "The review service is temporarily unavailable. "
-                "Please try again shortly or contact your system administrator."
+                "Sorry — the summary service is not available right now. "
+                "Please try again in a few minutes."
             )
             st.stop()
 
-    letter = format_secretary_letter(data, clinician_id=clinician_id.strip() or "Colleague")
-    st.markdown("### Summary for your attention")
-    st.markdown(
-        f'<div class="letter-box">{html.escape(letter)}</div>',
-        unsafe_allow_html=True,
-    )
+    mode_labels = {
+        "full_review": "Full care summary",
+        "patient_db": "Patient record lookup",
+        "medical_api": "Drug label lookup (openFDA)",
+        "hospital_rag": "Hospital staff & policies",
+    }
+    mode = data.get("query_mode", "unknown")
+    st.caption(f"Answer source: {mode_labels.get(mode, mode)}")
+
+    render_summary_letter(data, clinician_id="Colleague")

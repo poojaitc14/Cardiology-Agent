@@ -32,7 +32,7 @@ class FakeLLMProvider(LLMProvider):
                     "No signed medication order is available."
                 ),
                 "attention_items": ["Review active medications and monitoring data."],
-                "future_course_of_action": ["Complete clinician review of draft recommendation."],
+                "future_course_of_action": [],
             }
         )
 

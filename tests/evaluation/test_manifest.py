@@ -2,9 +2,9 @@
 from cardiologist_agent.evaluation.manifest import CaseManifestDataset
 
 
-def test_manifest_has_100_cases() -> None:
+def test_manifest_has_130_cases() -> None:
     manifest = CaseManifestDataset()
-    assert len(manifest) == 100
+    assert len(manifest) == 130
 
 
 def test_manifest_no_final_authorized_expected() -> None:

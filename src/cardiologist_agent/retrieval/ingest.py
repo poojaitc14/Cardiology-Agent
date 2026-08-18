@@ -64,6 +64,55 @@ def _chunk_text(text: str, chunk_size: int = 800, overlap: int = 100) -> list[st
     return chunks
 
 
+def ingest_staff_directory_chunks(settings: Settings | None = None) -> list[PolicyChunk]:
+    settings = settings or get_settings()
+    path = settings.resolve(Path("config/staff_directory.yaml"))
+    if not path.exists():
+        return []
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    now = datetime.now(UTC)
+    chunks: list[PolicyChunk] = []
+    lines = [
+        "Northbridge Cardiology Practice staff directory (fictional training). "
+        "Use named contacts instead of generic clinician referrals."
+    ]
+    for member in data.get("staff", []):
+        lines.append(
+            f"{member['name']} ({member['id']}) - {member['title']}. "
+            f"Contact: {member['contact']}. "
+            f"Handles: {', '.join(member.get('handles', []))}."
+        )
+    routing = data.get("condition_routing", {})
+    for key, staff_id in routing.items():
+        lines.append(f"For {key.replace('_', ' ')} cases, route to staff id {staff_id}.")
+
+    body = " ".join(lines)
+    for idx, piece in enumerate(_chunk_text(body, chunk_size=400, overlap=50)):
+        content_hash = hashlib.sha256(piece.encode()).hexdigest()
+        chunks.append(
+            PolicyChunk(
+                chunk_id=f"NB-ADM-007-staff-c{idx}",
+                document_id="NB-ADM-007",
+                canonical_title="Staff directory and contact routes",
+                version="1.1",
+                effective_date="2026-01-01",
+                review_date=None,
+                status="active",
+                owner="Medical secretary",
+                document_category="staff_directory",
+                corpus_eligibility="runtime",
+                synthetic=True,
+                section_path="staff_directory.yaml",
+                page=1,
+                source_path="config/staff_directory.yaml",
+                content_hash=content_hash,
+                text=piece,
+                ingestion_timestamp=now,
+            )
+        )
+    return chunks
+
+
 def ingest_runtime_policies(settings: Settings | None = None) -> list[PolicyChunk]:
     settings = settings or get_settings()
     inventory = load_inventory(settings)
@@ -110,6 +159,7 @@ def ingest_runtime_policies(settings: Settings | None = None) -> list[PolicyChun
                         ingestion_timestamp=now,
                     )
                 )
+    chunks.extend(ingest_staff_directory_chunks(settings))
     return chunks
 
 

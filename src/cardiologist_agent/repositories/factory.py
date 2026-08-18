@@ -22,7 +22,10 @@ def build_patient_repository(settings: Settings | None = None) -> PatientReposit
             table_name=settings.dynamodb_patients_table,
             region=settings.aws_region,
         )
-    return LocalJsonPatientRepository(settings.patients_file)
+    return LocalJsonPatientRepository(
+        settings.patients_file,
+        custom_path=settings.custom_patients_file,
+    )
 
 
 def build_medication_order_repository(

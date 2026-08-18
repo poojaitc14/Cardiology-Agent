@@ -125,6 +125,9 @@ class PatientSnapshot(BaseModel):
     active_medications: list[str] = Field(default_factory=list)
     allergy_summary: str
     latest_vitals_summary: str | None = None
+    recent_medicines_summary: str | None = None
+    recent_labs_summary: str | None = None
+    recent_care_summary: str | None = None
 
 
 class MedicationRecommendationResponse(BaseModel):
@@ -156,6 +159,49 @@ class ReviewRequest(BaseModel):
     clinical_question: str
     clinician_id: str = "DR101"
     request_id: str | None = None
+
+
+class QueryRequest(BaseModel):
+    patient_id: str | None = None
+    clinical_question: str
+    clinician_id: str = "Reception"
+    mode: str = "auto"
+    request_id: str | None = None
+
+
+class QueryResponse(BaseModel):
+    request_id: str
+    query_mode: str
+    patient_id: str | None = None
+    answer: str
+    sources: list[Citation] = Field(default_factory=list)
+    review: MedicationRecommendationResponse | None = None
+
+
+class CreatePatientRequest(BaseModel):
+    patient_id: str | None = None
+    condition_name: str
+    on_medication: bool = False
+    medication_name: str | None = None
+    primary_cardiologist: str = "DR104"
+    clinician_id: str = "Reception"
+    clinical_question: str = (
+        "Please check the heart record, medicines, recent test results, "
+        "and tell me clearly what should happen next."
+    )
+    run_review: bool = True
+
+
+class PatientListResponse(BaseModel):
+    patient_ids: list[str]
+    suggested_next_id: str
+    total: int
+
+
+class CreatePatientResponse(BaseModel):
+    patient_id: str
+    created: bool = True
+    review: MedicationRecommendationResponse | None = None
 
 
 class HealthResponse(BaseModel):

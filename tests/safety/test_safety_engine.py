@@ -18,7 +18,7 @@ def patient_repo() -> LocalJsonPatientRepository:
 @pytest.mark.asyncio
 async def test_patient_count(patient_repo: LocalJsonPatientRepository) -> None:
     ids = await patient_repo.list_patient_ids()
-    assert len(ids) == 100
+    assert len(ids) == 130
 
 
 def test_no_evaluation_pdfs_in_runtime_ingest() -> None:

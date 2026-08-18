@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     patients_json_path: Path = Path("data/patients/runtime/patients.json")
     case_manifest_path: Path = Path("data/patients/evaluation/case_manifest.json")
     corpus_inventory_path: Path = Path("config/corpus_inventory.yaml")
+    custom_patients_json_path: Path = Path(".local/custom_patients.json")
     local_index_path: Path = Path(".local/policy_index.json")
     audit_log_path: Path = Path(".local/audit.log")
 
@@ -73,6 +74,10 @@ class Settings(BaseSettings):
     @property
     def inventory_file(self) -> Path:
         return self.resolve(self.corpus_inventory_path)
+
+    @property
+    def custom_patients_file(self) -> Path:
+        return self.resolve(self.custom_patients_json_path)
 
     @property
     def index_file(self) -> Path:
