@@ -66,6 +66,8 @@ def test_query_hospital_rag(client: TestClient) -> None:
     body = resp.json()
     assert body["query_mode"] == "hospital_rag"
     assert "Dr Raj Patel" in body["answer"] or "heart failure" in body["answer"].lower()
+    assert body["sources"]
+    assert "Northbridge Cardiology Practice" not in body["answer"]
 
 
 def test_query_full_review(client: TestClient) -> None:

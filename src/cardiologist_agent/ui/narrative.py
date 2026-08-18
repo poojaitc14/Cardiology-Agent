@@ -294,6 +294,61 @@ QUERY_MODE_INTROS = {
 }
 
 
+def _format_citation_line(citation: dict[str, Any]) -> str | None:
+    source_type = citation.get("source_type", "")
+    if source_type == "staff_directory":
+        staff_id = citation.get("section") or citation.get("document_id") or "staff entry"
+        return f"• Hospital staff directory — {staff_id}"
+    if source_type == "policy":
+        title = citation.get("section") or citation.get("document_id") or "Policy document"
+        doc_id = citation.get("document_id")
+        page = citation.get("page")
+        line = f"• {title}"
+        if doc_id and doc_id != title:
+            line += f" ({doc_id})"
+        if page:
+            line += f", page {page}"
+        return line
+    if source_type == "openfda":
+        drug = citation.get("document_id") or "drug label"
+        url = citation.get("url")
+        line = f"• openFDA drug label — {drug}"
+        if url:
+            line += f" ({url})"
+        return line
+    if source_type == "patient_record":
+        field = (citation.get("patient_field") or "record").replace("_", " ")
+        return f"• Patient record — {field}"
+    if source_type:
+        return f"• {source_type}"
+    return None
+
+
+def _format_sources_section(sources: list[Any]) -> str | None:
+    if not sources:
+        return None
+    lines: list[str] = []
+    seen: set[tuple[Any, ...]] = set()
+    for source in sources:
+        citation = source if isinstance(source, dict) else source.model_dump()
+        key = (
+            citation.get("source_type"),
+            citation.get("document_id"),
+            citation.get("section"),
+            citation.get("patient_field"),
+            citation.get("page"),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        line = _format_citation_line(citation)
+        if line:
+            lines.append(line)
+    if not lines:
+        return None
+    return "Sources:\n" + "\n".join(lines)
+
+
 def format_query_response(data: dict[str, Any], *, clinician_id: str) -> str:
     """Plain-English answer for routed factual, medical, or hospital questions."""
     mode = data.get("query_mode", "unknown")
@@ -307,14 +362,23 @@ def format_query_response(data: dict[str, Any], *, clinician_id: str) -> str:
         "Hello,",
         intro,
         answer or "I couldn't find an answer for that question.",
-        (
-            "Please remember: this is a training system with made-up patients — "
-            "not for real medical decisions."
-        ),
-        (
-            "With best wishes,\n"
-            "Cardiology Office\n"
-            "Northbridge Hospital (training system only)"
-        ),
     ]
+
+    sources_text = _format_sources_section(data.get("sources") or [])
+    if sources_text:
+        paragraphs.append(sources_text)
+
+    paragraphs.extend(
+        [
+            (
+                "Please remember: this is a training system with made-up patients — "
+                "not for real medical decisions."
+            ),
+            (
+                "With best wishes,\n"
+                "Cardiology Office\n"
+                "Northbridge Hospital (training system only)"
+            ),
+        ]
+    )
     return "\n\n".join(paragraphs)

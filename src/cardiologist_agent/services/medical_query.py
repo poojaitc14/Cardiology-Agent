@@ -44,24 +44,18 @@ async def answer_medical_question(
                 )
             )
             excerpt = " ".join(result.label_excerpt.split())
-            sections.append(
-                f"For {drug}, the drug label notes: {excerpt[:400].rstrip()}…"
-                if len(excerpt) > 400
-                else f"For {drug}, the drug label notes: {excerpt}"
-            )
+            if len(excerpt) > 400:
+                excerpt = excerpt[:400].rstrip() + "…"
+            sections.append(f"• {drug}: {excerpt}")
         elif result.error:
             sections.append(
-                f"I could not retrieve a current openFDA label for {drug} ({result.error}). "
+                f"• {drug}: I could not retrieve a current openFDA label ({result.error}). "
                 "Please check with the cardiology pharmacist instead."
             )
         else:
             sections.append(
-                f"No openFDA label excerpt was returned for {drug}. "
+                f"• {drug}: No openFDA label excerpt was returned. "
                 "Please check with the cardiology pharmacist for verified information."
             )
 
-    intro = (
-        "This answer comes from the openFDA drug label service only — "
-        "not from the patient's hospital record."
-    )
-    return (intro + " " + " ".join(sections), citations)
+    return ("\n\n".join(sections), citations)

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import yaml
@@ -45,6 +46,25 @@ def _match_staff(question: str, staff_directory: dict) -> list[dict]:
     return deduped[:3]
 
 
+def _clean_policy_excerpt(text: str) -> str:
+    cleaned = re.sub(
+        r"Northbridge Cardiology Practice \| Fictional training corpus Page \d+\s*",
+        "",
+        " ".join(text.split()),
+    )
+    if "Document control and RAG metadata" in cleaned:
+        return "Refer to the full policy document for complete guidance."
+    for sentence in re.split(r"(?<=[.!?])\s+", cleaned):
+        sentence = sentence.strip()
+        if len(sentence) < 30:
+            continue
+        if any(token in sentence for token in ("Field Value", "Canonical title", "Document ID")):
+            continue
+        return sentence
+    trimmed = cleaned[:220].rstrip()
+    return trimmed + ("…" if len(cleaned) > 220 else "")
+
+
 async def answer_hospital_question(
     question: str,
     policy_retriever: PolicyRetriever,
@@ -61,7 +81,7 @@ async def answer_hospital_question(
                 source_type="policy",
                 document_id=chunk.document_id,
                 version=chunk.version,
-                section=chunk.section_path,
+                section=chunk.canonical_title or chunk.section_path,
                 page=chunk.page,
                 chunk_id=chunk.chunk_id,
                 retrieved_at=chunk.ingestion_timestamp,
@@ -76,7 +96,7 @@ async def answer_hospital_question(
         for member in staff_matches:
             handles = ", ".join(member.get("handles", [])[:4])
             staff_lines.append(
-                f"{member['name']} ({member['title']}) — contact: {member['contact']}. "
+                f"• {member['name']} ({member['title']}) — contact: {member['contact']}. "
                 f"They handle: {handles}."
             )
             citations.append(
@@ -86,17 +106,15 @@ async def answer_hospital_question(
                     section=member.get("id"),
                 )
             )
-        parts.append("Based on the hospital staff directory: " + " ".join(staff_lines))
+        parts.append("Hospital staff who may be able to help:\n" + "\n".join(staff_lines))
 
     if chunks:
-        excerpt_bits = []
+        policy_lines = []
         for chunk in chunks:
-            text = " ".join(chunk.text.split())
-            excerpt_bits.append(text[:280].rstrip() + ("…" if len(text) > 280 else ""))
-        parts.append(
-            "From hospital policy and contact guidance: "
-            + " ".join(excerpt_bits)
-        )
+            title = chunk.canonical_title or chunk.document_id
+            summary = _clean_policy_excerpt(chunk.text)
+            policy_lines.append(f"• {title}: {summary}")
+        parts.append("Relevant hospital policy guidance:\n" + "\n".join(policy_lines))
     elif not staff_matches:
         return (
             "I could not find relevant hospital staff or policy information for that question.",
@@ -108,4 +126,4 @@ async def answer_hospital_question(
             "Note: policy coverage was limited for this question — please double-check with reception if unsure."
         )
 
-    return (" ".join(parts), citations)
+    return ("\n\n".join(parts), citations)

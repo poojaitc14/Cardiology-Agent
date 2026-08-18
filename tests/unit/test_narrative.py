@@ -41,6 +41,42 @@ def test_secretary_letter_excludes_patient_snapshot_fields() -> None:
     assert "• Continue the current heart medicines" in letter
 
 
+def test_query_response_formats_sources_separately() -> None:
+    from cardiologist_agent.ui.narrative import format_query_response
+
+    letter = format_query_response(
+        {
+            "query_mode": "hospital_rag",
+            "answer": (
+                "Hospital staff who may be able to help:\n"
+                "• Dr Raj Patel (Heart failure specialist) — contact: Heart Failure Clinic, ext. 4102. "
+                "They handle: heart failure, fluid management, diuretics.\n\n"
+                "Relevant hospital policy guidance:\n"
+                "• Staff Directory and Contact Routes: Contact the bookings coordinator for appointments."
+            ),
+            "sources": [
+                {
+                    "source_type": "staff_directory",
+                    "document_id": "NB-ADM-007",
+                    "section": "DR102",
+                },
+                {
+                    "source_type": "policy",
+                    "document_id": "NB-OPS-302",
+                    "section": "Staff Directory and Contact Routes",
+                    "page": 2,
+                },
+            ],
+        },
+        clinician_id="Colleague",
+    )
+    assert "Hospital staff who may be able to help:" in letter
+    assert "• Dr Raj Patel" in letter
+    assert "Sources:" in letter
+    assert "• Staff Directory and Contact Routes (NB-OPS-302), page 2" in letter
+    assert letter.index("• Dr Raj Patel") < letter.index("Sources:")
+
+
 def test_secretary_letter_includes_urgency_and_tests() -> None:
     data = {
         "review_status": "URGENT_CLINICAL_REVIEW",
