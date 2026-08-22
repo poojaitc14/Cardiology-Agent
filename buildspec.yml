@@ -18,8 +18,10 @@ phases:
       - TESTS_PASSED=true
       - test -n "$AWS_ACCOUNT_ID"
       - test -n "$AWS_DEFAULT_REGION"
-      - test -n "$IMAGE_REPO_NAME"
-      - REPOSITORY_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME"
+      - test -n "$BACKEND_REPO_NAME"
+      - test -n "$FRONTEND_REPO_NAME"
+      - BACKEND_REPOSITORY_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$BACKEND_REPO_NAME"
+      - FRONTEND_REPOSITORY_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$FRONTEND_REPO_NAME"
       - COMMIT_TAG="$(printf '%s' "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c 1-12)"
       - test -n "$COMMIT_TAG"
       - aws ecr get-login-password --region "$AWS_DEFAULT_REGION" | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
@@ -27,14 +29,17 @@ phases:
   build:
     commands:
       - test "$TESTS_PASSED" = "true"
-      - docker build --file Dockerfile.backend --tag "$REPOSITORY_URI:$COMMIT_TAG" --tag "$REPOSITORY_URI:latest" .
+      - docker build --file Dockerfile.backend --tag "$BACKEND_REPOSITORY_URI:$COMMIT_TAG" --tag "$BACKEND_REPOSITORY_URI:latest" .
+      - docker build --file Dockerfile.frontend --tag "$FRONTEND_REPOSITORY_URI:$COMMIT_TAG" --tag "$FRONTEND_REPOSITORY_URI:latest" .
 
   post_build:
     commands:
       - test "$TESTS_PASSED" = "true"
-      - docker push "$REPOSITORY_URI:$COMMIT_TAG"
-      - docker push "$REPOSITORY_URI:latest"
-      - printf '{"repositoryUri":"%s","imageTag":"%s","imageUri":"%s"}\n' "$REPOSITORY_URI" "$COMMIT_TAG" "$REPOSITORY_URI:$COMMIT_TAG" > image-detail.json
+      - docker push "$BACKEND_REPOSITORY_URI:$COMMIT_TAG"
+      - docker push "$BACKEND_REPOSITORY_URI:latest"
+      - docker push "$FRONTEND_REPOSITORY_URI:$COMMIT_TAG"
+      - docker push "$FRONTEND_REPOSITORY_URI:latest"
+      - printf '{"backendImageUri":"%s","frontendImageUri":"%s","imageTag":"%s"}\n' "$BACKEND_REPOSITORY_URI:$COMMIT_TAG" "$FRONTEND_REPOSITORY_URI:$COMMIT_TAG" "$COMMIT_TAG" > image-detail.json
 
 artifacts:
   files:

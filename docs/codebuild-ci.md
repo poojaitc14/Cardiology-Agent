@@ -1,16 +1,18 @@
-# AWS CodeBuild CI: test, build, and push the backend image
+# AWS CodeBuild CI: test, build, and push both application images
 
 The repository-root `buildspec.yml` runs the Python tests first. If `pytest`
 returns a non-zero exit code, CodeBuild stops before `docker build` and no image
-is pushed. A successful build pushes both an immutable commit tag and `latest`.
+is pushed. A successful build pushes backend and frontend images with both an
+immutable commit tag and `latest`.
 
 ## Required resources
 
 Use the same AWS Region for CodeBuild and ECR. These instructions use
 `eu-west-2`; substitute your deployment Region if different.
 
-1. In **Amazon ECR > Private repositories**, create a repository such as
-   `cardio-clinical-agent-backend`. Enable tag immutability if the later
+1. In **Amazon ECR > Private repositories**, create two repositories, such as
+   `cardio-clinical-agent-backend-geetha` and
+   `cardio-clinical-agent-frontend-geetha`. Enable tag immutability if the later
    deployment will use only commit tags; the current buildspec also updates
    `latest`, so leave immutability disabled while using both tags.
 2. In **AWS CodeBuild > Build projects**, create a project and choose **GitHub**
@@ -23,7 +25,8 @@ Use the same AWS Region for CodeBuild and ECR. These instructions use
 
    - `AWS_ACCOUNT_ID`: the 12-digit account that owns the ECR repository
    - `AWS_DEFAULT_REGION`: for example `eu-west-2`
-   - `IMAGE_REPO_NAME`: for example `cardio-clinical-agent-backend`
+   - `BACKEND_REPO_NAME`: for example `cardio-clinical-agent-backend-geetha`
+   - `FRONTEND_REPO_NAME`: for example `cardio-clinical-agent-frontend-geetha`
 
 Do not add application secrets, DynamoDB settings, or medication API keys to
 this CI project. They belong in the later runtime/deployment configuration.
@@ -54,7 +57,10 @@ role. Replace the account, Region, and repository name in `Resource`.
         "ecr:PutImage",
         "ecr:UploadLayerPart"
       ],
-      "Resource": "arn:aws:ecr:eu-west-2:123456789012:repository/cardio-clinical-agent-backend"
+      "Resource": [
+        "arn:aws:ecr:eu-west-2:123456789012:repository/cardio-clinical-agent-backend-geetha",
+        "arn:aws:ecr:eu-west-2:123456789012:repository/cardio-clinical-agent-frontend-geetha"
+      ]
     }
   ]
 }
