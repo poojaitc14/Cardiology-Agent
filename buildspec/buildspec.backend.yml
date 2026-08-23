@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     AWS_REGION: eu-west-2
-    ECR_REPO: cardio-clinical-agent-geetha-backend
+    ECR_REPO: ci-cd-pooja-backend
     AWS_ACCOUNT_ID: 666127452756
     IMAGE_TAG: latest
 
