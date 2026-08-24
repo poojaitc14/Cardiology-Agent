@@ -38,13 +38,15 @@ phases:
       - mkdir -p deploy-artifacts/backend deploy-artifacts/frontend
       - printf '{"ImageURI":"%s"}' "$BACKEND_IMAGE_URI" > deploy-artifacts/backend/imageDetail.json
       - printf '{"ImageURI":"%s"}' "$FRONTEND_IMAGE_URI" > deploy-artifacts/frontend/imageDetail.json
-
 artifacts:
+  files:
+    - deploy-artifacts/**/*
   secondary-artifacts:
     BackendImageArtifact:
       files:
         - imageDetail.json
       base-directory: deploy-artifacts/backend
+
     FrontendImageArtifact:
       files:
         - imageDetail.json
