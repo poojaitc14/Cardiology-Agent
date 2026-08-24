@@ -129,6 +129,3 @@ def test_prompt_injection_is_rejected_without_exposing_protected_information() -
     assert "system prompt" not in response.text.lower()
     assert "secret" not in response.text.lower()
     assert "credential" not in response.text.lower()
-
-def test_codebuild_failure_gate_demo() -> None:
-    assert False, "Intentional CodeBuild failure-gate demonstration"
