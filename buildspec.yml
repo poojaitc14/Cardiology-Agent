@@ -1,0 +1,51 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_REGION: eu-west-2
+    ECR_REPO_BACKEND: ci-milan-backend
+    ECR_REPO_FRONTEND: ci-milan-frontend
+    IMAGE_TAG: latest
+
+phases:
+  pre_build:
+    commands:
+      - echo "Checking AWS identity..."
+      - aws sts get-caller-identity
+      - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+      - REGISTRY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+      - BACKEND_IMAGE_URI=$REGISTRY_URI/$ECR_REPO_BACKEND:$IMAGE_TAG
+      - FRONTEND_IMAGE_URI=$REGISTRY_URI/$ECR_REPO_FRONTEND:$IMAGE_TAG
+      - echo "Checking ECR repositories..."
+      - aws ecr describe-repositories --repository-names "$ECR_REPO_BACKEND" "$ECR_REPO_FRONTEND" --region "$AWS_REGION"
+      - echo "Logging into ECR..."
+      - aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$REGISTRY_URI"
+
+  build:
+    commands:
+      # Add the project's real test commands here before building the images.
+      - echo "Building backend image..."
+      - docker build --tag "$BACKEND_IMAGE_URI" --file Dockerfile.backend .
+      - echo "Building frontend image..."
+      - docker build --tag "$FRONTEND_IMAGE_URI" --file Dockerfile.frontend .
+
+  post_build:
+    commands:
+      - echo "Pushing both images..."
+      - docker push "$BACKEND_IMAGE_URI"
+      - docker push "$FRONTEND_IMAGE_URI"
+      - echo "Writing CodeDeploy image detail artifacts..."
+      - mkdir -p deploy-artifacts/backend deploy-artifacts/frontend
+      - printf '{"ImageURI":"%s"}' "$BACKEND_IMAGE_URI" > deploy-artifacts/backend/imageDetail.json
+      - printf '{"ImageURI":"%s"}' "$FRONTEND_IMAGE_URI" > deploy-artifacts/frontend/imageDetail.json
+
+artifacts:
+  secondary-artifacts:
+    BackendImageArtifact:
+      files:
+        - imageDetail.json
+      base-directory: deploy-artifacts/backend
+    FrontendImageArtifact:
+      files:
+        - imageDetail.json
+      base-directory: deploy-artifacts/frontend
