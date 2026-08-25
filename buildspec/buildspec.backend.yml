@@ -32,35 +32,8 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:$IMAGE_TAG
 
       - echo "Writing imagedefinitions.json..."
-      - printf '[{"name":"Main","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:$IMAGE_TAG > imagedefinitions.json
-
-      - echo "Building taskdef.json from the currently registered task definition..."
-      - aws ecs describe-task-definition --task-definition ci-cd-pooja-backend --query 'taskDefinition' > raw-taskdef.json
-      - >
-        python3 -c "
-        import json;
-        d = json.load(open('raw-taskdef.json'));
-        d['containerDefinitions'][0]['image'] = '$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:$IMAGE_TAG';
-        [d.pop(k, None) for k in ('taskDefinitionArn','revision','status','requiresAttributes','compatibilities','registeredAt','registeredBy')];
-        json.dump(d, open('taskdef.json', 'w'))
-        "
-
-      - echo "Writing appspec.yaml..."
-      - |
-        cat > appspec.yaml << 'EOF'
-        version: 0.0
-        Resources:
-          - TargetService:
-              Type: AWS::ECS::Service
-              Properties:
-                TaskDefinition: <TASK_DEFINITION>
-                LoadBalancerInfo:
-                  ContainerName: "Main"
-                  ContainerPort: 8000
-        EOF
+      - printf '[{"name":"backend","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:$IMAGE_TAG > imagedefinitions.json
 
 artifacts:
   files:
     - imagedefinitions.json
-    - taskdef.json
-    - appspec.yaml
