@@ -49,3 +49,5 @@ Langfuse creates traces for the review and tool nodes. Do not send patient ident
 3. Add an approved medication API adapter.
 4. Add the open-source inference node behind a structured-output validator and clinical evaluation suite.
 5. Put configuration/secrets in AWS Secrets Manager and deploy the container to a development ECS environment.
+
+This is Geetha branch
