@@ -1,53 +1,51 @@
-# Cardiologist Clinical Review Agent
+# Cardiologist Clinical Patient Review Agent
 
-Beginner-safe development starter using FastAPI, LangGraph, and Langfuse. It uses synthetic data only and is read-only.
+This project is clinical decision support for qualified healthcare professionals. It does not diagnose, prescribe, alter medication doses, or make final treatment decisions.
 
-## 1. Create the environment
+## DynamoDB patient data layer
 
-In PowerShell:
+The patient database uses the `PatientClinicalRecords` single-table design. Every item is partitioned with `PK=PATIENT#<patient_id>` and has an entity-specific `SK` such as `PROFILE`, `MEDICATION#<date>#<id>`, or `LAB#<timestamp>#<id>`. The agent-facing `PatientRepository` only supports exact patient-ID reads; it does not scan, write, or query across patient partitions.
 
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-Copy-Item .env.example .env
-```
+The repository is configured using `AWS_REGION` and `DYNAMODB_PATIENT_TABLE`. AWS authentication is deliberately left to boto3's standard credential provider chain, such as an ECS IAM role or an AWS profile. No credentials are accepted or stored in source code.
 
-Leave `LANGFUSE_TRACING_ENABLED=false` until your hospital has approved telemetry. This code deliberately sets `capture_input=False` and `capture_output=False` on Langfuse observations, because prompts and outputs can contain patient data.
+Copy `.env.example` to an uncommitted `.env` only if your local configuration loader needs it. Do not commit `.env`.
 
-## Configuration
+## Synthetic data
 
-Copy `.env.example` to `.env` and fill in values only when the matching service is ready. `.env` is ignored by Git—never commit API keys. See the configuration guidance in `project spec.md` before using patient-identifiable data or sending telemetry outside the hospital environment.
+The generator creates 100 deterministic synthetic patient partitions (`P1001`-`P1100`) with seven records each: profile, condition, medication, allergy, lab, vital sign, and cardiology test. It is labelled `Synthetic training dataset` on every record.
 
-## 2. Run and test
+After creating the DynamoDB table and supplying an IAM identity that has write access for this administrative task, run:
 
 ```powershell
-uvicorn app.main:app --reload
-pytest
+$env:AWS_REGION = "eu-west-2"
+$env:DYNAMODB_PATIENT_TABLE = "PatientClinicalRecords"
+python -m database.seed_synthetic_patients --count 100
 ```
 
-Before you create or push a GitHub repository, follow [CONTRIBUTING.md](CONTRIBUTING.md). It installs a pre-push test gate and explains the required GitHub Actions branch-protection check.
+The seed command is operator-only. It is separate from the agent runtime, which must use read-only IAM permissions.
 
-Open `http://127.0.0.1:8000/docs` and use `POST /v1/reviews` with:
+## OpenFDA drug-label service
 
-```json
-{"patient_id":"P1005","requesting_user_id":"clinician-demo","question":"Review cardiovascular history, current medication, labs, and approved policy."}
+`OpenFDAService` performs read-only generic-name or brand-name searches against OpenFDA drug labels and normalizes factual label fields (names, manufacturer, purpose, warnings, contraindications, adverse reactions, and dosage-and-administration text). It does not make clinical recommendations.
+
+Configure the public endpoint and timeout through the environment:
+
+```powershell
+$env:OPENFDA_BASE_URL = "https://api.fda.gov/drug/label.json"
+$env:OPENFDA_TIMEOUT_SECONDS = "10"
 ```
 
-## 3. What LangGraph does here
+OpenFDA requires no credential. Timeouts, HTTP errors, and malformed provider responses are logged internally and returned as a generic unavailable state; provider error details are never exposed in a user-facing result.
 
-The compiled graph executes four auditable nodes in order: retrieve patient data, retrieve approved RAG knowledge, retrieve medication facts, and synthesize a schema-validated review. It currently uses deterministic synthesis, intentionally: connect an evaluated, approved open-source model only after the retrieval and safety tests are dependable.
+## Cardiology RAG pipeline
 
-## 4. What Langfuse does here
+The RAG layer performs `documents → extraction → chunking → embeddings → OpenSearch`. Its retrieval interface accepts a query and returns document, section, content, metadata, and similarity score. The [15-document synthetic list](rag/documents/dummy_cardiology_documents.json) is loaded by `index_dummy_documents()` and indexed through the same pipeline. It contains no clinical guidance and must be replaced with licensed, approved source documents before use.
 
-Langfuse creates traces for the review and tool nodes. Do not send patient identifiers, prompts, retrieved records, or generated clinical output to a hosted observability service unless your hospital has formally approved the data flow and retention. For production, configure self-hosting or an approved regional deployment, identity controls, retention, and a data-processing agreement as required.
+## Tests
 
-## 5. Next implementation tasks
+```powershell
+python -m pytest
+```
 
-1. Replace the synthetic `get_patient_clinical_context` function with authorization plus DynamoDB access.
-2. Index only approved policy documents in OpenSearch, then replace `search_approved_clinical_knowledge`.
-3. Add an approved medication API adapter.
-4. Add the open-source inference node behind a structured-output validator and clinical evaluation suite.
-5. Put configuration/secrets in AWS Secrets Manager and deploy the container to a development ECS environment.
-
-This is Geetha branch
+# test version 1
+This is ps

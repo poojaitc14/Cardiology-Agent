@@ -1,0 +1,62 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: cardiology-backend
+    ports:
+      - "8000:8000"
+    environment:
+      AWS_REGION: ${AWS_REGION:-eu-west-2}
+      DYNAMODB_PATIENT_TABLE: ${DYNAMODB_PATIENT_TABLE:-PatientClinicalRecords}
+      OPENFDA_API_KEY: ${OPENFDA_API_KEY}
+      OPENFDA_BASE_URL: ${OPENFDA_BASE_URL:-https://api.fda.gov/drug/label.json}
+      OPENFDA_TIMEOUT_SECONDS: ${OPENFDA_TIMEOUT_SECONDS:-10}
+      AZURE_OPENAI_API_KEY: ${AZURE_OPENAI_API_KEY}
+      AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT}
+      AZURE_OPENAI_API_VERSION: ${AZURE_OPENAI_API_VERSION:-2024-08-01-preview}
+      AZURE_OPENAI_DEPLOYMENT_NAME: ${AZURE_OPENAI_DEPLOYMENT_NAME:-gpt-4o-mini}
+      AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME: ${AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME:-text-embedding-3-small}
+      AZURE_OPENAI_EMBEDDING_MODEL: ${AZURE_OPENAI_EMBEDDING_MODEL:-text-embedding-3-small}
+      # Bare hostname of the OpenSearch Serverless collection (no scheme), e.g.
+      # abc123xyz.eu-west-2.aoss.amazonaws.com -- authenticated via AWS SigV4
+      # using the same credentials mounted below, not a username/password.
+      OPENSEARCH_HOST: ${OPENSEARCH_HOST}
+      OPENSEARCH_INDEX: ${OPENSEARCH_INDEX:-cardiology-approved-documents}
+      RAG_EMBEDDING_DIMENSIONS: ${RAG_EMBEDDING_DIMENSIONS:-1536}
+      LANGFUSE_ENABLED: ${LANGFUSE_ENABLED:-false}
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY}
+      LANGFUSE_HOST: ${LANGFUSE_HOST:-https://cloud.langfuse.com}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+    volumes:
+      - .:/app
+      # Reuses the host's AWS CLI profile via boto3's default credential chain.
+      # On Linux/macOS, replace ${USERPROFILE} with ${HOME}.
+      - ${USERPROFILE}/.aws:/root/.aws:ro
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - cardiology-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: cardiology-frontend
+    ports:
+      - "8501:8501"
+    environment:
+      FASTAPI_URL: http://backend:8000
+      API_TIMEOUT: 30
+    volumes:
+      - .:/app
+    depends_on:
+      - backend
+    command: streamlit run frontend/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+    networks:
+      - cardiology-network
+
+networks:
+  cardiology-network:
+    driver: bridge
