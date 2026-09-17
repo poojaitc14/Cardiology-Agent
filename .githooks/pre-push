@@ -1,0 +1,11 @@
+#!/bin/sh
+# Block a Git push unless the local Python test process exits successfully.
+# This hook must be installed with: git config core.hooksPath .githooks
+
+python -m pytest tests -q
+status=$?
+
+if [ "$status" -ne 0 ]; then
+  echo "Push blocked: unit tests failed or could not run. Fix the test environment and try again."
+  exit "$status"
+fi
